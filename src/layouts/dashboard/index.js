@@ -15,6 +15,7 @@ Coded by www.creative-tim.com
 
 // @mui material components
 import Grid from "@mui/material/Grid";
+import burceMars from "assets/images/bruce-mars.jpg";
 
 // React components
 import MDBox from "components/MDBox";
@@ -26,6 +27,8 @@ import Footer from "examples/Footer";
 import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
+import MDTypography from "components/MDTypography";
+import MDAvatar from "components/MDAvatar";
 
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
@@ -33,7 +36,6 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
@@ -42,6 +44,21 @@ function Dashboard() {
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
+        <Grid container py={5} spacing={3} alignItems="center">
+          <Grid item>
+            <MDAvatar src={burceMars} alt="profile-image" size="xl" shadow="sm" />
+          </Grid>
+          <Grid item>
+            <MDBox height="100%" mt={0.5} lineHeight={1}>
+              <MDTypography variant="h5" fontWeight="medium">
+                Ayan Pathak
+              </MDTypography>
+              <MDTypography variant="button" color="text" fontWeight="regular">
+                CSA | Workverse university
+              </MDTypography>
+            </MDBox>
+          </Grid>
+        </Grid>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
