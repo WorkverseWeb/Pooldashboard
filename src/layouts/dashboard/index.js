@@ -46,7 +46,7 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="dark"
+                color="primary"
                 icon="weekend"
                 title="User"
                 count={281}
@@ -61,6 +61,7 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
+                color="primary"
                 icon="person_add"
                 title="Total Purchased Users"
                 count="300"
@@ -75,7 +76,7 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="success"
+                color="primary"
                 icon="store"
                 title="Total amount paid"
                 count="34k"
@@ -108,7 +109,7 @@ function Dashboard() {
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsBarChart
-                  color="info"
+                  color="success"
                   title="Active Users"
                   description="Last week Performance"
                   date="sent 2 days ago"
