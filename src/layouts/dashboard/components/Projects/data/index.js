@@ -242,7 +242,7 @@ export default function data() {
         ),
       },
       {
-        companies: <Company image={logoBulb} name="roductivity Management" />,
+        companies: <Company image={logoBulb} name="Productivity Management" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([

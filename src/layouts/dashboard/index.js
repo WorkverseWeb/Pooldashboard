@@ -54,7 +54,7 @@ function Dashboard() {
                 Ayan Pathak
               </MDTypography>
               <MDTypography variant="button" color="text" fontWeight="regular">
-                CSA | Workverse university
+                CSA | Workverse University
               </MDTypography>
             </MDBox>
           </Grid>
