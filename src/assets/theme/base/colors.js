@@ -98,8 +98,8 @@ const colors = {
 
   gradients: {
     primary: {
-      main: "#EC407A",
-      state: "#D81B60",
+      main: "#07EDC4",
+      state: "#07EDC4",
     },
 
     secondary: {
@@ -113,8 +113,8 @@ const colors = {
     },
 
     success: {
-      main: "#66BB6A",
-      state: "#43A047",
+      main: "#086655",
+      state: "#086655",
     },
 
     warning: {
