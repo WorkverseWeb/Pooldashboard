@@ -52,6 +52,7 @@ import {
   setMiniSidenav,
   setOpenConfigurator,
 } from "context";
+import { dark } from "@mui/material/styles/createPalette";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -127,14 +128,14 @@ function DashboardNavbar({ absolute, light, isMini }) {
     <AppBar
       position={absolute ? "absolute" : navbarType}
       color="inherit"
-      sx={(theme) => navbar(theme, { transparentNavbar, absolute, light, darkMode })}
+      sx={(darkMode) => navbar(darkMode, { transparentNavbar, absolute, light, darkMode })}
     >
-      <Toolbar sx={(theme) => navbarContainer(theme)}>
-        <MDBox color="inherit" mb={{ xs: 1, md: 0 }} sx={(theme) => navbarRow(theme, { isMini })}>
-          <Breadcrumbs icon="home" title={route[route.length - 1]} route={route} light={light} />
+      <Toolbar sx={(darkMode) => navbarContainer(darkMode)}>
+        <MDBox mb={{ xs: 1, md: 0 }} sx={(darkMode) => navbarRow(darkMode, { isMini })}>
+          <Breadcrumbs icon="home" title={route[route.length - 1]} route={route} />
         </MDBox>
         {isMini ? null : (
-          <MDBox sx={(theme) => navbarRow(theme, { isMini })}>
+          <MDBox sx={(darkMode) => navbarRow(darkMode, { isMini })}>
             <MDBox pr={1}>
               <MDInput label="Search here" />
             </MDBox>

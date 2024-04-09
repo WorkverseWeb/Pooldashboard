@@ -85,7 +85,7 @@ function DefaultNavbar({ transparent, light, action }) {
         width="calc(100% - 48px)"
         borderRadius="lg"
         shadow={transparent ? "none" : "md"}
-        color={light ? "white" : "dark"}
+        color={"dark"}
         display="flex"
         justifyContent="space-between"
         alignItems="center"
@@ -98,8 +98,8 @@ function DefaultNavbar({ transparent, light, action }) {
         }) => ({
           backgroundColor: transparent
             ? transparentColor.main
-            : rgba(darkMode ? background.sidenav : white.main, 0.8),
-          backdropFilter: transparent ? "none" : `saturate(200%) blur(30px)`,
+            : rgba(darkMode ? background.default : background.default),
+          backdropFilter: transparent ? "none" : `blur(3px)`,
         })}
       >
         <MDBox
