@@ -24,7 +24,7 @@ import MDProgress from "components/MDProgress";
 
 // Images
 
-import logoBulb from "assets/images/small-logos/icon-bulb.svg";
+import logoBulb from "assets/images/small-logos/icon-bulb.png";
 
 import team1 from "assets/images/team-1.jpg";
 import team2 from "assets/images/team-2.jpg";
@@ -92,7 +92,7 @@ export default function data() {
         ),
         completion: (
           <MDBox width="8rem" textAlign="left">
-            <MDProgress value={100} color="success" variant="gradient" label={false} />
+            <MDProgress value={100} color="info" variant="gradient" label={false} />
           </MDBox>
         ),
       },
@@ -115,7 +115,7 @@ export default function data() {
         ),
         completion: (
           <MDBox width="8rem" textAlign="left">
-            <MDProgress value={100} color="success" variant="gradient" label={false} />
+            <MDProgress value={100} color="info" variant="gradient" label={false} />
           </MDBox>
         ),
       },
