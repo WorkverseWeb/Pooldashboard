@@ -106,7 +106,7 @@ function Basic() {
                 sign in
               </MDButton>
             </MDBox>
-            <MDBox mt={3} mb={1} textAlign="center">
+            <MDBox mt={3} mb={1} textAlign="centnpm starter">
               <MDTypography variant="button" color="text">
                 Don&apos;t have an account?{" "}
                 <MDTypography

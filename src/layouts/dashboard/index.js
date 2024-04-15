@@ -1,18 +1,3 @@
-/**
-=========================================================
-* React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // @mui material components
 import Grid from "@mui/material/Grid";
 import burceMars from "assets/images/bruce-mars.jpg";
@@ -33,32 +18,40 @@ import MDAvatar from "components/MDAvatar";
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
-
+import { useAuth0 } from "@auth0/auth0-react";
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
+  if (isLoading) {
+    return <div>Loading ...</div>;
+  }
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
-        <Grid container py={5} spacing={3} alignItems="center">
-          <Grid item>
-            <MDAvatar src={burceMars} alt="profile-image" size="xl" shadow="sm" />
+        {isAuthenticated && (
+          <Grid container py={5} spacing={3} alignItems="center">
+            <Grid item>
+              <MDAvatar src={burceMars} alt="profile-image" size="xl" shadow="sm" />
+            </Grid>
+            <Grid item>
+              <MDBox height="100%" mt={0.5} lineHeight={1}>
+                <MDTypography variant="h5" fontWeight="medium">
+                  {/* Ayan Pathak */}
+                  {user.name}
+                </MDTypography>
+                <MDTypography variant="button" color="text" fontWeight="regular">
+                  CSA | Workverse University
+                </MDTypography>
+              </MDBox>
+            </Grid>
           </Grid>
-          <Grid item>
-            <MDBox height="100%" mt={0.5} lineHeight={1}>
-              <MDTypography variant="h5" fontWeight="medium">
-                Ayan Pathak
-              </MDTypography>
-              <MDTypography variant="button" color="text" fontWeight="regular">
-                CSA | Workverse University
-              </MDTypography>
-            </MDBox>
-          </Grid>
-        </Grid>
+        )}
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>

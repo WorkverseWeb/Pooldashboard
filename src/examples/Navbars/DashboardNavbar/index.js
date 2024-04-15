@@ -1,18 +1,3 @@
-/**
-=========================================================
-* React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState, useEffect } from "react";
 
 // react-router components
@@ -27,7 +12,8 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import Icon from "@mui/material/Icon";
-
+import MDButton from "components/MDButton";
+import { useAuth0 } from "@auth0/auth0-react";
 // React components
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
@@ -55,6 +41,7 @@ import {
 import { dark } from "@mui/material/styles/createPalette";
 
 function DashboardNavbar({ absolute, light, isMini }) {
+  const { user, isAuthenticated, logout, loginWithRedirect, isLoading } = useAuth0();
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
@@ -74,10 +61,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
       setTransparentNavbar(dispatch, (fixedNavbar && window.scrollY === 0) || !fixedNavbar);
     }
 
-    /** 
-     The event listener that's calling the handleTransparentNavbar function when 
-     scrolling the window.
-    */
     window.addEventListener("scroll", handleTransparentNavbar);
 
     // Call the handleTransparentNavbar function to set the state with the initial value.
@@ -85,13 +68,13 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
     // Remove event listener on cleanup
     return () => window.removeEventListener("scroll", handleTransparentNavbar);
-  }, [dispatch, fixedNavbar]);
+  }, [dispatch, fixedNavbar, isAuthenticated]);
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
-
+  const { sidenavColor } = controller;
   // Render the notifications menu
   const renderMenu = () => (
     <Menu
@@ -110,7 +93,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
       <NotificationItem icon={<Icon>shopping_cart</Icon>} title="Payment successfully completed" />
     </Menu>
   );
-
   // Styles for the navbar icons
   const iconsStyle = ({ palette: { dark, white, text }, functions: { rgba } }) => ({
     color: () => {
@@ -124,56 +106,91 @@ function DashboardNavbar({ absolute, light, isMini }) {
     },
   });
 
+  // const isLoggedIn = isAuthenticated;
+  // const isSigningUp = !isAuthenticated;
+
   return (
-    <AppBar
-      position={absolute ? "absolute" : navbarType}
-      color="inherit"
-      sx={(darkMode) => navbar(darkMode, { transparentNavbar, absolute, light, darkMode })}
-    >
-      <Toolbar sx={(darkMode) => navbarContainer(darkMode)}>
-        <MDBox mb={{ xs: 1, md: 0 }} sx={(darkMode) => navbarRow(darkMode, { isMini })}>
-          <Breadcrumbs icon="home" title={route[route.length - 1]} route={route} />
-        </MDBox>
-        {isMini ? null : (
-          <MDBox sx={(darkMode) => navbarRow(darkMode, { isMini })}>
-            <MDBox pr={1}>
-              <MDInput label="Search here" />
-            </MDBox>
-            <MDBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in/basic">
-                <IconButton sx={navbarIconButton} size="small" disableRipple>
-                  <Icon sx={iconsStyle}>account_circle</Icon>
-                </IconButton>
-              </Link>
-              <IconButton
-                size="small"
-                disableRipple
-                color="inherit"
-                sx={navbarMobileMenu}
-                onClick={handleMiniSidenav}
-              >
-                <Icon sx={iconsStyle} fontSize="medium">
-                  {miniSidenav ? "menu_open" : "menu"}
-                </Icon>
-              </IconButton>
-              <IconButton
-                size="small"
-                disableRipple
-                color="inherit"
-                sx={navbarIconButton}
-                aria-controls="notification-menu"
-                aria-haspopup="true"
-                variant="contained"
-                onClick={handleOpenMenu}
-              >
-                <Icon sx={iconsStyle}>notifications</Icon>
-              </IconButton>
-              {renderMenu()}
-            </MDBox>
+    <>
+      <AppBar
+        position={absolute ? "absolute" : navbarType}
+        color="inherit"
+        sx={(darkMode) => navbar(darkMode, { transparentNavbar, absolute, light, darkMode })}
+      >
+        <Toolbar sx={(darkMode) => navbarContainer(darkMode)}>
+          <MDBox mb={{ xs: 1, md: 0 }} sx={(darkMode) => navbarRow(darkMode, { isMini })}>
+            <Breadcrumbs icon="home" title={route[route.length - 1]} route={route} />
           </MDBox>
-        )}
-      </Toolbar>
-    </AppBar>
+          {isMini ? null : (
+            <MDBox sx={(darkMode) => navbarRow(darkMode, { isMini })}>
+              <MDBox pr={1}>
+                <MDInput label="Search here" />
+              </MDBox>
+              <MDBox color={light ? "white" : "inherit"}>
+                <Link to="/authentication/sign-in/basic">
+                  <IconButton sx={navbarIconButton} size="small" disableRipple>
+                    <Icon sx={iconsStyle}>account_circle</Icon>
+                  </IconButton>
+                </Link>
+                <IconButton
+                  size="small"
+                  disableRipple
+                  color="inherit"
+                  sx={navbarMobileMenu}
+                  onClick={handleMiniSidenav}
+                >
+                  <Icon sx={iconsStyle} fontSize="medium">
+                    {miniSidenav ? "menu_open" : "menu"}
+                  </Icon>
+                </IconButton>
+                <IconButton
+                  size="small"
+                  disableRipple
+                  color="inherit"
+                  sx={navbarIconButton}
+                  aria-controls="notification-menu"
+                  aria-haspopup="true"
+                  variant="contained"
+                  onClick={handleOpenMenu}
+                >
+                  <Icon sx={iconsStyle}>notifications</Icon>
+                </IconButton>
+              </MDBox>
+              {isAuthenticated ? (
+                <>
+                  <MDButton
+                    // component=""
+                    // target="_blank"
+                    rel="noreferrer"
+                    variant="gradient"
+                    color={sidenavColor}
+                    onClick={() =>
+                      logout({
+                        logoutParams: { returnTo: window.location.origin },
+                      })
+                    }
+                  >
+                    Sign Out
+                  </MDButton>
+                </>
+              ) : (
+                <>
+                  <MDButton
+                    // component=""
+                    // target="_blank"
+                    rel="noreferrer"
+                    variant="gradient"
+                    color={sidenavColor}
+                    onClick={() => loginWithRedirect()}
+                  >
+                    Sign In
+                  </MDButton>
+                </>
+              )}
+            </MDBox>
+          )}
+        </Toolbar>
+      </AppBar>
+    </>
   );
 }
 
