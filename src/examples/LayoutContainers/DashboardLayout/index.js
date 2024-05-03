@@ -41,6 +41,11 @@ function DashboardLayout({ children }) {
       sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({
         p: 3,
         position: "relative",
+        minHeight: "100vh", // Ensure the layout covers the entire viewport height
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between", // Pushes the footer to the bottom
+        alignItems: "center",
 
         [breakpoints.up("xl")]: {
           marginLeft: miniSidenav ? pxToRem(120) : pxToRem(274),

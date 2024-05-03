@@ -22,6 +22,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
 
+// images
+import brandDark from "assets/images/login-bg-img.png";
+import brandWhite from "assets/images/login-icon-img.png";
+
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -33,116 +37,128 @@ function Dashboard() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox py={3}>
-        {isAuthenticated && (
-          <Grid container py={5} spacing={3} alignItems="center">
-            <Grid item>
-              <MDAvatar src={burceMars} alt="profile-image" size="xl" shadow="sm" />
+      <MDBox
+        py={3}
+        style={{
+          backgroundImage: `url(${isAuthenticated ? "" : brandDark})`,
+          backgroundSize: "cover",
+          minHeight: "70vh",
+          minWidth: "100vw",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {isAuthenticated ? (
+          <>
+            <Grid container py={5} spacing={3} alignItems="center">
+              <Grid item>
+                <MDAvatar src={burceMars} alt="profile-image" size="xl" shadow="sm" />
+              </Grid>
+              <Grid item>
+                <MDBox height="100%" mt={0.5} lineHeight={1}>
+                  <MDTypography variant="h5" fontWeight="medium">
+                    {/* Ayan Pathak */}
+                    {user.name}
+                  </MDTypography>
+                  <MDTypography variant="button" color="text" fontWeight="regular">
+                    CSA | Workverse University
+                  </MDTypography>
+                </MDBox>
+              </Grid>
             </Grid>
-            <Grid item>
-              <MDBox height="100%" mt={0.5} lineHeight={1}>
-                <MDTypography variant="h5" fontWeight="medium">
-                  {/* Ayan Pathak */}
-                  {user.name}
-                </MDTypography>
-                <MDTypography variant="button" color="text" fontWeight="regular">
-                  CSA | Workverse University
-                </MDTypography>
-              </MDBox>
+
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6} lg={3}>
+                <MDBox mb={1.5}>
+                  <ComplexStatisticsCard
+                    color="primary"
+                    icon="weekend"
+                    title="User"
+                    count={281}
+                    percentage={{
+                      color: "success",
+                      amount: "81",
+                      label: "Active players",
+                    }}
+                  />
+                </MDBox>
+              </Grid>
+              <Grid item xs={12} md={6} lg={3}>
+                <MDBox mb={1.5}>
+                  <ComplexStatisticsCard
+                    color="primary"
+                    icon="person_add"
+                    title="Total Purchased Users"
+                    count="300"
+                    percentage={{
+                      color: "success",
+                      amount: "19",
+                      label: "Slots avalable",
+                    }}
+                  />
+                </MDBox>
+              </Grid>
+              <Grid item xs={12} md={6} lg={3}>
+                <MDBox mb={1.5}>
+                  <ComplexStatisticsCard
+                    color="primary"
+                    icon="store"
+                    title="Total amount paid"
+                    count="34k"
+                    percentage={{
+                      color: "success",
+                      amount: "Paid",
+                      label: "Using credit card",
+                    }}
+                  />
+                </MDBox>
+              </Grid>
+              <Grid item xs={12} md={6} lg={3}>
+                <MDBox mb={1.5}>
+                  <ComplexStatisticsCard
+                    color="primary"
+                    icon="leaderboard"
+                    title="WIP generated"
+                    count="91"
+                    percentage={{
+                      color: "success",
+                      amount: "103",
+                      label: "Finished the game this month",
+                    }}
+                  />
+                </MDBox>
+              </Grid>
             </Grid>
-          </Grid>
-        )}
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="primary"
-                icon="weekend"
-                title="User"
-                count={281}
-                percentage={{
-                  color: "success",
-                  amount: "81",
-                  label: "Active players",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="primary"
-                icon="person_add"
-                title="Total Purchased Users"
-                count="300"
-                percentage={{
-                  color: "success",
-                  amount: "19",
-                  label: "Slots avalable",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="primary"
-                icon="store"
-                title="Total amount paid"
-                count="34k"
-                percentage={{
-                  color: "success",
-                  amount: "Paid",
-                  label: "Using credit card",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="primary"
-                icon="leaderboard"
-                title="WIP generated"
-                count="91"
-                percentage={{
-                  color: "success",
-                  amount: "103",
-                  label: "Finished the game this month",
-                }}
-              />
-            </MDBox>
-          </Grid>
-        </Grid>
-        <MDBox mt={4.5}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsBarChart
-                  color="success"
-                  title="Active Users"
-                  description="Last week Performance"
-                  date="sent 2 days ago"
-                  chart={reportsBarChartData}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsLineChart
-                  color="success"
-                  title="Monthly User Game Time"
-                  description={
-                    <>
-                      (<strong>+15%</strong>) increase in today playtime.
-                    </>
-                  }
-                  date="updated 4 min ago"
-                  chart={sales}
-                />
-              </MDBox>
-            </Grid>
-            {/* <Grid item xs={12} md={6} lg={4}>
+            <MDBox mt={4.5}>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={6} lg={4}>
+                  <MDBox mb={3}>
+                    <ReportsBarChart
+                      color="success"
+                      title="Active Users"
+                      description="Last week Performance"
+                      date="sent 2 days ago"
+                      chart={reportsBarChartData}
+                    />
+                  </MDBox>
+                </Grid>
+                <Grid item xs={12} md={6} lg={4}>
+                  <MDBox mb={3}>
+                    <ReportsLineChart
+                      color="success"
+                      title="Monthly User Game Time"
+                      description={
+                        <>
+                          (<strong>+15%</strong>) increase in today playtime.
+                        </>
+                      }
+                      date="updated 4 min ago"
+                      chart={sales}
+                    />
+                  </MDBox>
+                </Grid>
+                {/* <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsBarChart
                   color="info"
@@ -153,33 +169,40 @@ function Dashboard() {
                 />
               </MDBox>
             </Grid> */}
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsLineChart
-                  color="success"
-                  title="Monthly time spend with Neuroda"
-                  description={
-                    <>
-                      (<strong>+15%</strong>) increase in today chat-time.
-                    </>
-                  }
-                  date="updated 4 min ago"
-                  chart={sales}
-                />
-              </MDBox>
-            </Grid>
-          </Grid>
-        </MDBox>
-        <MDBox>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={8}>
-              <Projects />
-            </Grid>
-            {/* <Grid item xs={12} md={6} lg={4}>
+                <Grid item xs={12} md={6} lg={4}>
+                  <MDBox mb={3}>
+                    <ReportsLineChart
+                      color="success"
+                      title="Monthly time spend with Neuroda"
+                      description={
+                        <>
+                          (<strong>+15%</strong>) increase in today chat-time.
+                        </>
+                      }
+                      date="updated 4 min ago"
+                      chart={sales}
+                    />
+                  </MDBox>
+                </Grid>
+              </Grid>
+            </MDBox>
+            <MDBox>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={6} lg={8}>
+                  <Projects />
+                </Grid>
+                {/* <Grid item xs={12} md={6} lg={4}>
               <OrdersOverview />
             </Grid> */}
-          </Grid>
-        </MDBox>
+              </Grid>
+            </MDBox>
+          </>
+        ) : (
+          <div style={{ textAlign: "center" }}>
+            <img src={brandWhite} alt="Login Icon" style={{ width: "200px", height: "125px" }} />
+            <div>Kindly login</div>
+          </div>
+        )}
       </MDBox>
       <Footer />
     </DashboardLayout>
