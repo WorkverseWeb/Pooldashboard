@@ -22,9 +22,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
 
+import Login from "layouts/login";
+
 // images
 import brandDark from "assets/images/login-bg-img.png";
-import brandWhite from "assets/images/login-icon-img.png";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
@@ -42,11 +43,7 @@ function Dashboard() {
         style={{
           backgroundImage: `url(${isAuthenticated ? "" : brandDark})`,
           backgroundSize: "cover",
-          minHeight: "70vh",
-          minWidth: "100vw",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          minHeight: "85vh",
         }}
       >
         {isAuthenticated ? (
@@ -198,10 +195,7 @@ function Dashboard() {
             </MDBox>
           </>
         ) : (
-          <div style={{ textAlign: "center" }}>
-            <img src={brandWhite} alt="Login Icon" style={{ width: "200px", height: "125px" }} />
-            <div>Kindly login</div>
-          </div>
+          <Login />
         )}
       </MDBox>
       <Footer />
