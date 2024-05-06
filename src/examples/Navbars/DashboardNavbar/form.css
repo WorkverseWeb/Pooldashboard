@@ -1,0 +1,65 @@
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  z-index: 999;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+.popup-content {
+  padding: 20px;
+  max-width: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 5px 20px 0 #bafff7;
+  backdrop-filter: blur(20px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.popup-content form {
+  font-size: 14px;
+  padding: 10px 0px;
+}
+
+.popup-content .btn button {
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 2px 2px 2px 0 #bafff7;
+}
+
+.popup-content .btn button:hover {
+  background-color: #bafff7;
+}
+
+.popup-content form div {
+  margin-bottom: 10px;
+}
+
+.close-button {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  color: white;
+  transition: color 0.3s ease; /* Smooth transition */
+}
+
+.close-button:hover {
+  color: #000;
+}
