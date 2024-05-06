@@ -39,6 +39,9 @@ import {
   setOpenConfigurator,
 } from "context";
 import { dark } from "@mui/material/styles/createPalette";
+import ProfileForm from "./form";
+
+// import ProfileForm from "./form";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const { user, isAuthenticated, logout, loginWithRedirect, isLoading } = useAuth0();
@@ -68,7 +71,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
     // Remove event listener on cleanup
     return () => window.removeEventListener("scroll", handleTransparentNavbar);
-  }, [dispatch, fixedNavbar, isAuthenticated]);
+  }, [dispatch, fixedNavbar, isAuthenticated, isLoading, user]);
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
@@ -111,6 +114,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
   return (
     <>
+      <ProfileForm />
+
       <AppBar
         position={absolute ? "absolute" : navbarType}
         color="inherit"
