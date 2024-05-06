@@ -24,12 +24,27 @@ import Projects from "layouts/dashboard/components/Projects";
 
 import Login from "layouts/login";
 
+import React, { useState, useEffect } from "react";
+
 // images
 import brandDark from "assets/images/login-bg-img.png";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
   const { user, isAuthenticated, isLoading } = useAuth0();
+
+  // checking active users
+  const [activePlayers, setActivePlayers] = useState(0);
+
+  useEffect(() => {
+    const fetchActivePlayers = async () => {
+      return 0;
+    };
+
+    fetchActivePlayers().then((players) => {
+      setActivePlayers(players);
+    });
+  }, []);
 
   if (isLoading) {
     return <div>Loading ...</div>;
@@ -127,35 +142,38 @@ function Dashboard() {
                 </MDBox>
               </Grid>
             </Grid>
-            <MDBox mt={4.5}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={6} lg={4}>
-                  <MDBox mb={3}>
-                    <ReportsBarChart
-                      color="success"
-                      title="Active Users"
-                      description="Last week Performance"
-                      date="sent 2 days ago"
-                      chart={reportsBarChartData}
-                    />
-                  </MDBox>
-                </Grid>
-                <Grid item xs={12} md={6} lg={4}>
-                  <MDBox mb={3}>
-                    <ReportsLineChart
-                      color="success"
-                      title="Monthly User Game Time"
-                      description={
-                        <>
-                          (<strong>+15%</strong>) increase in today playtime.
-                        </>
-                      }
-                      date="updated 4 min ago"
-                      chart={sales}
-                    />
-                  </MDBox>
-                </Grid>
-                {/* <Grid item xs={12} md={6} lg={4}>
+
+            {activePlayers > 0 ? (
+              <>
+                <MDBox mt={4.5}>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} md={6} lg={4}>
+                      <MDBox mb={3}>
+                        <ReportsBarChart
+                          color="success"
+                          title="Active Users"
+                          description="Last week Performance"
+                          date="sent 2 days ago"
+                          chart={reportsBarChartData}
+                        />
+                      </MDBox>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={4}>
+                      <MDBox mb={3}>
+                        <ReportsLineChart
+                          color="success"
+                          title="Monthly User Game Time"
+                          description={
+                            <>
+                              (<strong>+15%</strong>) increase in today playtime.
+                            </>
+                          }
+                          date="updated 4 min ago"
+                          chart={sales}
+                        />
+                      </MDBox>
+                    </Grid>
+                    {/* <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsBarChart
                   color="info"
@@ -166,33 +184,46 @@ function Dashboard() {
                 />
               </MDBox>
             </Grid> */}
-                <Grid item xs={12} md={6} lg={4}>
-                  <MDBox mb={3}>
-                    <ReportsLineChart
-                      color="success"
-                      title="Monthly time spend with Neuroda"
-                      description={
-                        <>
-                          (<strong>+15%</strong>) increase in today chat-time.
-                        </>
-                      }
-                      date="updated 4 min ago"
-                      chart={sales}
-                    />
-                  </MDBox>
-                </Grid>
-              </Grid>
-            </MDBox>
-            <MDBox>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={6} lg={8}>
-                  <Projects />
-                </Grid>
-                {/* <Grid item xs={12} md={6} lg={4}>
+                    <Grid item xs={12} md={6} lg={4}>
+                      <MDBox mb={3}>
+                        <ReportsLineChart
+                          color="success"
+                          title="Monthly time spend with Neuroda"
+                          description={
+                            <>
+                              (<strong>+15%</strong>) increase in today chat-time.
+                            </>
+                          }
+                          date="updated 4 min ago"
+                          chart={sales}
+                        />
+                      </MDBox>
+                    </Grid>
+                  </Grid>
+                </MDBox>
+                <MDBox>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} md={6} lg={8}>
+                      <Projects />
+                    </Grid>
+                    {/* <Grid item xs={12} md={6} lg={4}>
               <OrdersOverview />
             </Grid> */}
-              </Grid>
-            </MDBox>
+                  </Grid>
+                </MDBox>
+              </>
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  minHeight: "50vh",
+                }}
+              >
+                Currently, there are no Players who started their game. Please check back later !
+              </div>
+            )}
           </>
         ) : (
           <Login />
