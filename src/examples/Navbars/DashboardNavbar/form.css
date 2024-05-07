@@ -116,8 +116,12 @@
   color: black;
 }
 
-.close-button{
+.registration-header span {
   width: 20px;
   cursor: pointer;
   color: white;
+}
+
+.registration-header span:hover {
+  color: #bafff7;
 }

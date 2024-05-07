@@ -100,9 +100,9 @@ function ProfileForm() {
           <div className="popup-content">
             <div className="registration-header">
               <h3>Registration Form</h3>
-              <p className="material-icons close-button" onClick={handleCloseForm}>
+              <span className="material-icons" onClick={handleCloseForm}>
                 &times;
-              </p>
+              </span>
             </div>
 
             <form onSubmit={handleSubmit}>
