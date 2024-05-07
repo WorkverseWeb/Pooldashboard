@@ -1,9 +1,25 @@
 import React, { useState, useEffect } from "react";
 import "./form.css";
+import brandWhite from "assets/images/graduated.png";
+import brandDark from "assets/images/employee-img.png";
 
 function ProfileForm() {
   const [showForm, setShowForm] = useState(true);
   const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const [isClicked, setIsClicked] = useState({ Employee: false, Student: false });
+
+  const handleButtonClick = (value) => {
+    if (formData.pool !== value) {
+      setFormData({ pool: value });
+      setIsClicked({ [value]: true });
+      setIsClicked((prevIsClicked) => ({
+        ...prevIsClicked,
+        [formData.pool]: false,
+      }));
+    }
+  };
+
   const [formData, setFormData] = useState({
     FullName: "",
     number: "",
@@ -83,10 +99,10 @@ function ProfileForm() {
         <div className="popup">
           <div className="popup-content">
             <div className="registration-header">
-              <h5>Registration Form</h5>
-              <span className="close-button" onClick={handleCloseForm}>
+              <h3>Registration Form</h3>
+              <p className="material-icons close-button" onClick={handleCloseForm}>
                 &times;
-              </span>
+              </p>
             </div>
 
             <form onSubmit={handleSubmit}>
@@ -114,34 +130,27 @@ function ProfileForm() {
               <div>
                 <label>Creating a pool for:</label>
 
-                <div style={{ display: "flex", gap: "10px" }}>
-                  <label>
-                    <input
-                      type="radio"
-                      name="pool"
-                      value="Employee"
-                      checked={formData.pool === "Employee"}
-                      onChange={handleInputChange}
-                      required
-                      style={{ display: "none" }}
-                    />
-                    &#x1F9D1; Employee
-                  </label>
+                <div style={{ display: "flex", gap: "20px" }}>
+                  <button
+                    className={isClicked.Employee ? "audio-button clicked" : "audio-button"}
+                    onClick={() => handleButtonClick("Employee")}
+                    type="button"
+                  >
+                    <img src={brandDark} alt="Employee Icon" style={{ width: "20px" }} />
+                    Employee
+                  </button>
 
-                  <label>
-                    <input
-                      type="radio"
-                      name="pool"
-                      value="Student"
-                      checked={formData.pool === "Student"}
-                      onChange={handleInputChange}
-                      required
-                      style={{ display: "none" }}
-                    />
-                    &#x1F393; Student
-                  </label>
+                  <button
+                    className={isClicked.Student ? "audio-button clicked" : "audio-button"}
+                    onClick={() => handleButtonClick("Student")}
+                    type="button"
+                  >
+                    <img src={brandWhite} alt="Employee Icon" style={{ width: "15px" }} />
+                    Student
+                  </button>
                 </div>
               </div>
+
               <div>
                 <input
                   type="text"
@@ -190,10 +199,11 @@ function ProfileForm() {
                   placeholder="LinkedIn"
                 />
               </div>
+
+              <div className="btn">
+                <button type="submit">Save Data</button>
+              </div>
             </form>
-            <div className="btn">
-              <button type="submit">Save Data</button>
-            </div>
           </div>
         </div>
       )}

@@ -26,25 +26,60 @@
   border: 1px solid rgba(255, 255, 255, 0.18);
   background: #ffffff17;
   box-shadow: 0 5px 50px 0 #bafff754;
-  padding: 30px;
+  padding: 15px;
+}
+
+.registration-header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.registration-header h3 {
+  margin: 0;
+  background-image: linear-gradient(to top, #49a09d, #5f2c82);
+  background-clip: text;
+  color: transparent;
+}
+
+.registration-header p {
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.registration-header p:hover {
+  color: #bafff7;
 }
 
 .popup-content form {
   font-size: 14px;
-  padding: 10px;
+  padding: 20px;
 }
 
 .popup-content form div {
-  margin-bottom: 13px !important;
+  margin-bottom: 13px;
 }
 
 .popup-content form input {
-  /* border-color: transparent;
-  backdrop-filter: blur(4px); */
   width: 100%;
+  color: white;
   padding: 7px;
   border-radius: 5px;
-  border: 1px solid #bafff7;
+  background-color: rgba(255, 255, 255, 0.33);
+  border: 1px solid #bdbdbd83;
+}
+
+.popup-content form input::placeholder {
+  color: white;
+}
+
+.popup-content .btn {
+  margin-top: 25px;
+  text-align: end;
 }
 
 .popup-content .btn button {
@@ -64,31 +99,25 @@
   box-shadow: 0px 2px 7px 0 #bafff788;
 }
 
-.popup-content form div {
-  margin-bottom: 10px;
-}
-
-.registration-header {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.registration-header h5 {
-  margin: 0; 
-}
-
-.close-button {
-  position: absolute;
-  top: 0;
-  right: 0;
+.audio-button {
+  padding: 7px;
+  background-color: rgba(255, 255, 255, 0.33);
+  border: none;
   cursor: pointer;
-  font-size: 24px;
-  color: white;
-  transition: color 0.3s ease; 
+  border-radius: 5px;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 
-.close-button:hover {
-  color: #bafff7;
+.audio-button.clicked {
+  background-color: #bafff7;
+  color: black;
+}
+
+.close-button{
+  width: 20px;
+  cursor: pointer;
+  color: white;
 }
