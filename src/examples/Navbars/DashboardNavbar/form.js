@@ -1,27 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./form.css";
-import brandWhite from "assets/images/graduated.png";
-import brandDark from "assets/images/employee-img.png";
 
 function ProfileForm() {
-  const [showForm, setShowForm] = useState(true);
-  const [formSubmitted, setFormSubmitted] = useState(false);
-
+  const [showForm, setShowForm] = useState(false);
+  const { isAuthenticated, user } = useAuth0();
   const [isClicked, setIsClicked] = useState({ Employee: false, Student: false });
 
   const handleButtonClick = (value) => {
     if (formData.pool !== value) {
       setFormData({ pool: value });
-      setIsClicked({ [value]: true });
-      setIsClicked((prevIsClicked) => ({
-        ...prevIsClicked,
-        [formData.pool]: false,
-      }));
+      setIsClicked({ [value]: true, [formData.pool]: false });
     }
   };
 
   const [formData, setFormData] = useState({
-    FullName: "",
+    fullname: "",
     number: "",
     pool: "",
     organization: "",
@@ -32,16 +26,19 @@ function ProfileForm() {
   });
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const successParam = urlParams.get("registration_success");
-    console.log(successParam);
-
-    if (successParam === "true") {
-      setTimeout(() => {
-        setShowForm(true);
-      }, 500);
+    if (
+      showForm ||
+      (isAuthenticated && user && user["dev-hzug8opma4uobruz.us.auth0.com/dashboard/"])
+    ) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
     }
-  }, []);
+
+    if (isAuthenticated && user && user["dev-hzug8opma4uobruz.us.auth0.com/dashboard/"]) {
+      setShowForm(true);
+    }
+  }, [showForm, isAuthenticated, user]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -51,14 +48,13 @@ function ProfileForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Handle form submission here
     const isValid = validateForm(formData);
     if (isValid) {
       console.log("Form data saved:", formData);
 
       // Reset
       setFormData({
-        FullName: "",
+        fullname: "",
         pool: "",
         number: "",
         organization: "",
@@ -85,14 +81,6 @@ function ProfileForm() {
     document.body.style.overflow = "";
   };
 
-  useEffect(() => {
-    if (showForm) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-  }, [showForm]);
-
   return (
     <div>
       {showForm && (
@@ -109,8 +97,8 @@ function ProfileForm() {
               <div>
                 <input
                   type="text"
-                  name="Full tName"
-                  value={formData.FullName}
+                  name="fullname"
+                  value={formData.fullname}
                   onChange={handleInputChange}
                   placeholder="Full Name"
                   required
@@ -127,28 +115,31 @@ function ProfileForm() {
                 />
               </div>
 
-              <div>
+              <div
+                style={{
+                  display: "inline-flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
                 <label>Creating a pool for:</label>
 
-                <div style={{ display: "flex", gap: "20px" }}>
-                  <button
-                    className={isClicked.Employee ? "audio-button clicked" : "audio-button"}
-                    onClick={() => handleButtonClick("Employee")}
-                    type="button"
-                  >
-                    <img src={brandDark} alt="Employee Icon" style={{ width: "20px" }} />
-                    Employee
-                  </button>
+                <button
+                  className={isClicked.Employee ? "audio-button clicked" : "audio-button"}
+                  onClick={() => handleButtonClick("Employee")}
+                  type="button"
+                >
+                  Employee
+                </button>
 
-                  <button
-                    className={isClicked.Student ? "audio-button clicked" : "audio-button"}
-                    onClick={() => handleButtonClick("Student")}
-                    type="button"
-                  >
-                    <img src={brandWhite} alt="Employee Icon" style={{ width: "15px" }} />
-                    Student
-                  </button>
-                </div>
+                <button
+                  className={isClicked.Student ? "audio-button clicked" : "audio-button"}
+                  onClick={() => handleButtonClick("Student")}
+                  type="button"
+                >
+                  Student
+                </button>
               </div>
 
               <div>

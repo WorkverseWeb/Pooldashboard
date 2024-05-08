@@ -28,6 +28,7 @@ import React, { useState, useEffect } from "react";
 
 // images
 import brandDark from "assets/images/login-bg-img.png";
+import { BorderAllRounded } from "@mui/icons-material";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
@@ -59,6 +60,11 @@ function Dashboard() {
           backgroundImage: `url(${isAuthenticated ? "" : brandDark})`,
           backgroundSize: "cover",
           minHeight: "85vh",
+          borderRadius: "10px",
+          overflow: "hidden",
+          display: isAuthenticated ? "block" : "flex",
+          justifyContent: isAuthenticated ? "initial" : "center",
+          alignItems: isAuthenticated ? "initial" : "center",
         }}
       >
         {isAuthenticated ? (
@@ -218,7 +224,8 @@ function Dashboard() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  minHeight: "50vh",
+                  // minHeight: "50vh",
+                  padding: "30px 0",
                 }}
               >
                 Currently, there are no Players who started their game. Please check back later !

@@ -9,12 +9,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
   z-index: 999;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
 .popup-content {
+  color: #fff !important;
   max-width: 410px;
   position: absolute;
   top: 50%;
@@ -24,7 +24,7 @@
   backdrop-filter: blur(20px);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  background: #ffffff17;
+  background: #2a40303d;
   box-shadow: 0 5px 50px 0 #bafff754;
   padding: 15px;
 }
@@ -34,20 +34,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0px 20px;
+  text-align: center;
 }
 
 .registration-header h3 {
   margin: 0;
-  background-image: linear-gradient(to top, #49a09d, #5f2c82);
-  background-clip: text;
-  color: transparent;
+  /* background-image: linear-gradient(to top, #00e641, #00e8f8);
+  background-clip: text; */
 }
 
 .registration-header p {
   cursor: pointer;
   font-weight: 600;
   margin: 0;
-  color: white;
   transition: color 0.3s ease;
 }
 
@@ -66,15 +66,13 @@
 
 .popup-content form input {
   width: 100%;
-  color: white;
   padding: 7px;
   border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.33);
-  border: 1px solid #bdbdbd83;
+  background-color: rgba(255, 255, 255, 0.14);
+  border: 0;
 }
 
 .popup-content form input::placeholder {
-  color: white;
 }
 
 .popup-content .btn {
@@ -86,10 +84,9 @@
   font-weight: 500;
   padding: 8px;
   border: 1px solid #bafff7;
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.14);
   border-radius: 5px;
   cursor: pointer;
-  color: white;
   box-shadow: 2px 2px 2px 0 #bafff78a;
 }
 
@@ -101,25 +98,22 @@
 
 .audio-button {
   padding: 7px;
-  background-color: rgba(255, 255, 255, 0.33);
+  background-color: rgba(255, 255, 255, 0.14);
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  color: #fff;
   display: inline-flex;
   align-items: center;
   gap: 5px;
 }
 
 .audio-button.clicked {
-  background-color: #bafff7;
-  color: black;
+  background-color: #47dc6c6c;
 }
 
 .registration-header span {
   width: 20px;
   cursor: pointer;
-  color: white;
 }
 
 .registration-header span:hover {
