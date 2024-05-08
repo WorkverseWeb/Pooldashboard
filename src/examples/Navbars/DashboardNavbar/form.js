@@ -9,6 +9,9 @@ import "./form.css";
 function ProfileForm() {
   const [showForm, setShowForm] = useState(false);
   const location = useLocation();
+
+  const { fontFamily } = typography;
+
   // const { isAuthenticated, user } = useAuth0();
   // const history = useHistory();
   const [isClicked, setIsClicked] = useState({ Employee: false, Student: false });
@@ -91,7 +94,7 @@ function ProfileForm() {
   };
 
   return (
-    <div>
+    <div style={{ fontFamily: fontFamily }}>
       {showForm && (
         <div className="popup">
           <div className="popup-content">
@@ -138,6 +141,7 @@ function ProfileForm() {
                   className={isClicked.Employee ? "audio-button clicked" : "audio-button"}
                   onClick={() => handleButtonClick("Employee")}
                   type="button"
+                  style={{ fontFamily: fontFamily }}
                 >
                   <img src={brandWhite} alt="employee img" style={{ width: "15px" }} />
                   Employee
@@ -147,6 +151,7 @@ function ProfileForm() {
                   className={isClicked.Student ? "audio-button clicked" : "audio-button"}
                   onClick={() => handleButtonClick("Student")}
                   type="button"
+                  style={{ fontFamily: fontFamily }}
                 >
                   <img src={brandDark} alt="student img" style={{ width: "15px" }} />
                   Student
@@ -203,7 +208,9 @@ function ProfileForm() {
               </div>
 
               <div className="btn">
-                <button type="submit">Save Data</button>
+                <button type="submit" style={{ fontFamily: fontFamily }}>
+                  Save Data
+                </button>
               </div>
             </form>
           </div>
