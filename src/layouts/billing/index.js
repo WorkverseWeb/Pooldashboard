@@ -49,6 +49,8 @@ function Billing() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          borderRadius: "10px",
+          overflow: "hidden",
         }}
       >
         {isAuthenticated ? (
