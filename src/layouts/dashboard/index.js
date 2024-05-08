@@ -27,7 +27,7 @@ import Login from "layouts/login";
 import React, { useState, useEffect } from "react";
 
 // images
-import brandDark from "assets/images/login-bg-img.png";
+import brandDark from "assets/images/registration-bg-img.jpg";
 import { BorderAllRounded } from "@mui/icons-material";
 
 function Dashboard() {

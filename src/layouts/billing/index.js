@@ -34,7 +34,7 @@ import Transactions from "layouts/billing/components/Transactions";
 
 import Login from "layouts/login";
 import { useAuth0 } from "@auth0/auth0-react";
-import brandDark from "assets/images/login-bg-img.png";
+import brandDark from "assets/images/registration-bg-img.jpg";
 
 function Billing() {
   const { isAuthenticated } = useAuth0();
