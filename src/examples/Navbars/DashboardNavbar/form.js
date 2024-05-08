@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
+import { useLocation } from "react-router-dom";
+import typography from "assets/theme/base/typography";
+import brandDark from "assets/images/student.svg";
+import brandWhite from "assets/images/employee-man-alt.svg";
 import "./form.css";
 
 function ProfileForm() {
   const [showForm, setShowForm] = useState(false);
-  const { isAuthenticated, user } = useAuth0();
+  const location = useLocation();
+  // const { isAuthenticated, user } = useAuth0();
+  // const history = useHistory();
   const [isClicked, setIsClicked] = useState({ Employee: false, Student: false });
 
   const handleButtonClick = (value) => {
     if (formData.pool !== value) {
-      setFormData({ pool: value });
-      setIsClicked({ [value]: true, [formData.pool]: false });
+      setFormData((prevData) => ({ ...prevData, pool: value }));
+      setIsClicked((prevClicked) => ({ ...prevClicked, [value]: true, [formData.pool]: false }));
     }
   };
 
@@ -25,20 +31,21 @@ function ProfileForm() {
     linkedIn: "",
   });
 
-  useEffect(() => {
-    if (
-      showForm ||
-      (isAuthenticated && user && user["dev-hzug8opma4uobruz.us.auth0.com/dashboard/"])
-    ) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+  // useEffect(() => {
+  //   if (isAuthenticated && user) {
+  //     if (user["https://yourdomain.com/newUser"]) {
+  //       history.push("/dashboard");
+  //     }
+  //   }
+  // }, [isAuthenticated, user, history]);
 
-    if (isAuthenticated && user && user["dev-hzug8opma4uobruz.us.auth0.com/dashboard/"]) {
+  useEffect(() => {
+    if (location.pathname === "/dashboard") {
       setShowForm(true);
+    } else {
+      setShowForm(false);
     }
-  }, [showForm, isAuthenticated, user]);
+  }, [location]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -79,6 +86,8 @@ function ProfileForm() {
   const handleCloseForm = () => {
     setShowForm(false);
     document.body.style.overflow = "";
+
+    sessionStorage.removeItem("isNewUser");
   };
 
   return (
@@ -130,6 +139,7 @@ function ProfileForm() {
                   onClick={() => handleButtonClick("Employee")}
                   type="button"
                 >
+                  <img src={brandWhite} alt="employee img" style={{ width: "15px" }} />
                   Employee
                 </button>
 
@@ -138,6 +148,7 @@ function ProfileForm() {
                   onClick={() => handleButtonClick("Student")}
                   type="button"
                 >
+                  <img src={brandDark} alt="student img" style={{ width: "15px" }} />
                   Student
                 </button>
               </div>
