@@ -5,7 +5,7 @@ const Login = () => {
   return (
     <div style={{ textAlign: "center" }}>
       <img src={brandWhite} alt="Login Icon" style={{ width: "200px", height: "125px" }} />
-      <div>Kindly login</div>
+      <div>Kindly login !!</div>
     </div>
   );
 };

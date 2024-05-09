@@ -4,9 +4,9 @@ import { useLocation } from "react-router-dom";
 import typography from "assets/theme/base/typography";
 import brandDark from "assets/images/student.svg";
 import brandWhite from "assets/images/employee-man-alt.svg";
-import "./form.css";
+import "./Registrationform.css";
 
-function ProfileForm() {
+function RegistrationForm() {
   const [showForm, setShowForm] = useState(false);
   const location = useLocation();
 
@@ -220,4 +220,4 @@ function ProfileForm() {
   );
 }
 
-export default ProfileForm;
+export default RegistrationForm;

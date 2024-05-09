@@ -39,9 +39,7 @@ import {
   setOpenConfigurator,
 } from "context";
 import { dark } from "@mui/material/styles/createPalette";
-import ProfileForm from "./form";
-
-// import ProfileForm from "./form";
+import RegistrationForm from "./Registrationform";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const { user, isAuthenticated, logout, loginWithRedirect, isLoading } = useAuth0();
@@ -114,7 +112,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
   return (
     <>
-      <ProfileForm />
+      <RegistrationForm />
 
       <AppBar
         position={absolute ? "absolute" : navbarType}

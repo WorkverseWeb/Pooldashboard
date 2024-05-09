@@ -57,8 +57,7 @@ function Dashboard() {
       <MDBox
         py={3}
         style={{
-          backgroundImage: `url(${isAuthenticated ? "" : brandDark})`,
-          backgroundSize: "cover",
+          background: " linear-gradient(45deg, rgb(5 74 25 / 9%) 30%, rgb(127 207 207 / 18%) 80%)",
           minHeight: "85vh",
           borderRadius: "10px",
           overflow: "hidden",
