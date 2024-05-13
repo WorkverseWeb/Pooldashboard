@@ -33,7 +33,6 @@ import projectsTableData from "layouts/tables/data/projectsTableData";
 
 import Login from "layouts/login";
 import { useAuth0 } from "@auth0/auth0-react";
-import brandDark from "assets/images/registration-bg-img.jpg";
 
 function Tables() {
   const { isAuthenticated } = useAuth0();
@@ -47,7 +46,9 @@ function Tables() {
         pt={6}
         pb={3}
         style={{
-          background: " linear-gradient(45deg, rgb(5 74 25 / 9%) 30%, rgb(127 207 207 / 18%) 80%)",
+          background: isAuthenticated
+            ? "none"
+            : " linear-gradient(45deg, rgb(5 74 25 / 9%) 30%, rgb(127 207 207 / 18%) 80%)",
           minHeight: "85vh",
           display: "flex",
           alignItems: "center",

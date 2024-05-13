@@ -21,10 +21,10 @@ import PropTypes from "prop-types";
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Icon from "@mui/material/Icon";
+// import AppBar from "@mui/material/AppBar";
+// import Tabs from "@mui/material/Tabs";
+// import Tab from "@mui/material/Tab";
+// import Icon from "@mui/material/Icon";
 
 // React components
 import MDBox from "components/MDBox";
@@ -107,9 +107,9 @@ function Header({ children }) {
             </MDBox>
           </Grid>
           <Grid item xs={12} md={6} lg={4} sx={{ ml: "auto" }}>
-            <AppBar position="static">
+            {/* <AppBar position="static">
               <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue}>
-                {/*   <Tab
+                  <Tab
                   label="App"
                   icon={
                     <Icon fontSize="small" sx={{ mt: -0.25 }}>
@@ -125,7 +125,7 @@ function Header({ children }) {
                     </Icon>
                   }
                 />
-              </Tabs>*/}
+              </Tabs>
                 <Tab
                   label="Settings"
                   icon={
@@ -135,7 +135,7 @@ function Header({ children }) {
                   }
                 />
               </Tabs>
-            </AppBar>
+            </AppBar> */}
           </Grid>
         </Grid>
         {children}

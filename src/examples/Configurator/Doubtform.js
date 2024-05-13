@@ -5,23 +5,54 @@ import "./doubtform.css";
 export default function Doubtform() {
   const { fontFamily } = typography;
 
+  const [issue, setIssue] = useState("");
+  const [doubt, setDoubt] = useState("");
+
+  const handleIssueChange = (e) => {
+    setIssue(e.target.value);
+  };
+
+  const handleDoubtChange = (e) => {
+    setDoubt(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log("Submitted:", { issue, doubt });
+
+    setIssue("");
+    setDoubt("");
+  };
+
   return (
     <div style={{ fontFamily: fontFamily }} className="form-container">
-      <form>
-        <div>
-          <input type="text" name="fullname" placeholder="Full Name" required />
-        </div>
-        <div>
-          <input type="tel" name="number" placeholder="Number" required />
+      <form onSubmit={handleSubmit}>
+        <div style={{ display: "flex", flexDirection: "column", marginBottom: "10px" }}>
+          <label>Whats your issue?</label>
+          <select value={issue} onChange={handleIssueChange}>
+            <option value="Adding user">Issue in adding user</option>
+            <option value="Payment">Issue in payment</option>
+            <option value="Downloading WIP">Issue in downloading wip</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
 
-        <div>
-          <input type="textarea" name="doubt" required placeholder="Doubt" />
+        <div style={{ marginBottom: "10px" }}>
+          <textarea
+            name="doubt"
+            value={doubt}
+            onChange={handleDoubtChange}
+            placeholder="Kindly explain your problem"
+            required
+            rows="10"
+            style={{ fontFamily: fontFamily, resize: "vertical" }}
+          />
         </div>
 
         <div>
           <button type="submit" style={{ fontFamily: fontFamily }}>
-            Save Data
+            Submit
           </button>
         </div>
       </form>

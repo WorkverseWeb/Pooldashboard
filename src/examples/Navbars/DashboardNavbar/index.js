@@ -40,6 +40,7 @@ import {
 } from "context";
 import { dark } from "@mui/material/styles/createPalette";
 import RegistrationForm from "./Registrationform";
+import brandDark from "assets/images/wrench.png";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const { user, isAuthenticated, logout, loginWithRedirect, isLoading } = useAuth0();
@@ -144,7 +145,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
                   sx={navbarIconButton}
                   onClick={handleConfiguratorOpen}
                 >
-                  <Icon sx={iconsStyle}>settings</Icon>
+                  <Icon sx={iconsStyle}>
+                    <img src={brandDark} alt="doubt logo" />
+                  </Icon>
                 </IconButton>
                 <IconButton
                   size="small"

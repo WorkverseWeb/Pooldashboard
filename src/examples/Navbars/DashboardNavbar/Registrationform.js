@@ -135,7 +135,7 @@ function RegistrationForm() {
                   width: "100%",
                 }}
               >
-                <label>Creating a pool for:</label>
+                <label style={{ fontWeight: "300" }}>Creating a pool for:</label>
 
                 <button
                   className={isClicked.Employee ? "audio-button clicked" : "audio-button"}

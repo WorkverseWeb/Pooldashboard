@@ -13,7 +13,6 @@
 }
 
 .popup-content {
-  font-weight: 500;
   color: #fff !important;
   max-width: 410px;
   position: absolute;
@@ -39,6 +38,7 @@
 }
 
 .registration-header h3 {
+  font-weight: 400;
   margin: 0;
   /* background-image: linear-gradient(to top, #00e641, #00e8f8);
   background-clip: text; */
@@ -66,6 +66,15 @@
   outline: none;
 }
 
+.popup-content form input:-webkit-autofill,
+.popup-content form input:-webkit-autofill:hover,
+.popup-content form input:-webkit-autofill:focus,
+.popup-content form input:-webkit-autofill:active {
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.6);
+  background-color: rgb(0 0 0 / 24%) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 .popup-content .btn {
   margin-top: 25px;
   text-align: end;
@@ -73,7 +82,6 @@
 
 .popup-content .btn button {
   color: #fff;
-  font-weight: 500;
   padding: 8px;
   border: 0;
   background: rgba(255, 255, 255, 0.14);

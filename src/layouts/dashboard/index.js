@@ -22,13 +22,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
 
-import Login from "layouts/login";
+// import Login from "login";
 
 import React, { useState, useEffect } from "react";
 
 // images
 import brandDark from "assets/images/registration-bg-img.jpg";
 import { BorderAllRounded } from "@mui/icons-material";
+import Login from "layouts/login";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
@@ -57,7 +58,9 @@ function Dashboard() {
       <MDBox
         py={3}
         style={{
-          background: " linear-gradient(45deg, rgb(5 74 25 / 9%) 30%, rgb(127 207 207 / 18%) 80%)",
+          background: isAuthenticated
+            ? "none"
+            : " linear-gradient(45deg, rgb(5 74 25 / 9%) 30%, rgb(127 207 207 / 18%) 80%)",
           minHeight: "85vh",
           borderRadius: "10px",
           overflow: "hidden",

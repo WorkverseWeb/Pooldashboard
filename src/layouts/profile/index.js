@@ -29,6 +29,7 @@ import profilesListData from "layouts/profile/data/profilesListData";
 import Login from "layouts/login";
 import { useAuth0 } from "@auth0/auth0-react";
 import brandDark from "assets/images/registration-bg-img.jpg";
+import PopupForm from "./popup/feedback";
 
 function Overview() {
   const { isAuthenticated } = useAuth0();
@@ -38,7 +39,9 @@ function Overview() {
       <MDBox
         mb={2}
         style={{
-          background: " linear-gradient(45deg, rgb(5 74 25 / 9%) 30%, rgb(127 207 207 / 18%) 80%)",
+          background: isAuthenticated
+            ? "none"
+            : " linear-gradient(45deg, rgb(5 74 25 / 9%) 30%, rgb(127 207 207 / 18%) 80%)",
           minHeight: "85vh",
           display: "flex",
           alignItems: "center",
@@ -49,6 +52,7 @@ function Overview() {
       >
         {isAuthenticated ? (
           <>
+            <PopupForm />
             <Header>
               <MDBox mt={5} mb={3}>
                 <Grid container spacing={1}>

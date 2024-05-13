@@ -141,7 +141,7 @@ function Configurator() {
       >
         <MDBox>
           <MDTypography variant="h5">Doubt Form</MDTypography>
-          <MDTypography variant="body2" style={{ color: "#ffa9a9" }}>
+          <MDTypography variant="body2" style={{ color: "#fff", fontSize: "15px" }}>
             Feel free to ask if you have any doubts.
           </MDTypography>
         </MDBox>

@@ -42,7 +42,9 @@ function Billing() {
       <DashboardNavbar />
       <MDBox
         style={{
-          background: " linear-gradient(45deg, rgb(5 74 25 / 9%) 30%, rgb(127 207 207 / 18%) 80%)",
+          background: isAuthenticated
+            ? "none"
+            : " linear-gradient(45deg, rgb(5 74 25 / 9%) 30%, rgb(127 207 207 / 18%) 80%)",
           minHeight: "85vh",
           display: "flex",
           alignItems: "center",
