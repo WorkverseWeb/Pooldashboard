@@ -35,6 +35,8 @@ function Overview() {
   const { isAuthenticated } = useAuth0();
   return (
     <DashboardLayout>
+      <PopupForm />
+
       <DashboardNavbar />
       <MDBox
         mb={2}
@@ -52,7 +54,6 @@ function Overview() {
       >
         {isAuthenticated ? (
           <>
-            <PopupForm />
             <Header>
               <MDBox mt={5} mb={3}>
                 <Grid container spacing={1}>
