@@ -141,7 +141,7 @@ function RegistrationForm() {
                   className={isClicked.Employee ? "audio-button clicked" : "audio-button"}
                   onClick={() => handleButtonClick("Employee")}
                   type="button"
-                  style={{ fontFamily: fontFamily }}
+                  style={{ fontFamily: fontFamily, width: "100px" }}
                 >
                   <img src={brandWhite} alt="employee img" style={{ width: "15px" }} />
                   Employee
@@ -151,7 +151,7 @@ function RegistrationForm() {
                   className={isClicked.Student ? "audio-button clicked" : "audio-button"}
                   onClick={() => handleButtonClick("Student")}
                   type="button"
-                  style={{ fontFamily: fontFamily }}
+                  style={{ fontFamily: fontFamily, width: "90px" }}
                 >
                   <img src={brandDark} alt="student img" style={{ width: "15px" }} />
                   Student
@@ -178,7 +178,7 @@ function RegistrationForm() {
                   placeholder="Designation / Role"
                 />
               </div>
-              <div style={{ display: "flex", gap: "5px" }}>
+              <div style={{ display: "flex", gap: "15px" }}>
                 <input
                   type="text"
                   name="state"

@@ -107,6 +107,7 @@
 }
 
 .registration-header span {
+  margin-bottom: 8px;
   width: 20px;
   cursor: pointer;
 }

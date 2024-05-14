@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./feedback.css";
+import "./feedbackstyle.css";
 import typography from "assets/theme/base/typography";
 
-export default function PopupForm() {
+export default function Feedback3() {
   const [showForm, setShowForm] = useState(true);
   const { fontFamily } = typography;
   const [selectedEmoji, setSelectedEmoji] = useState(null);
@@ -32,7 +32,10 @@ export default function PopupForm() {
             </div>
 
             <div className="feedback-content">
-              <p>How was your purchase process?</p>
+              <p>
+                Do you think that the group played the game is doing better in there career compared
+                to other?
+              </p>
               <div className="emoji-buttons">
                 {/* Displaying clickable emoji buttons */}
                 <button

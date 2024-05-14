@@ -33,6 +33,8 @@ import projectsTableData from "layouts/tables/data/projectsTableData";
 
 import Login from "layouts/login";
 import { useAuth0 } from "@auth0/auth0-react";
+import Feedback2 from "./feedbackform/feedback2";
+import Feedback3 from "./feedbackform/feedback3";
 
 function Tables() {
   const { isAuthenticated } = useAuth0();
@@ -41,6 +43,9 @@ function Tables() {
 
   return (
     <DashboardLayout>
+      <Feedback2 />
+      <Feedback3 />
+
       <DashboardNavbar />
       <MDBox
         pt={6}
