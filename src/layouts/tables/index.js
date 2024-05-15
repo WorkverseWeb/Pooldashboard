@@ -21,6 +21,10 @@ import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
+// mui
+import Icon from "@mui/material/Icon";
+import IconButton from "@mui/material/IconButton";
+
 // React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -35,12 +39,23 @@ import Login from "layouts/login";
 import { useAuth0 } from "@auth0/auth0-react";
 import Feedback2 from "./feedbackform/feedback2";
 import Feedback3 from "./feedbackform/feedback3";
-import UserHead from "./userheading/user";
+
+import React, { useState } from "react";
+import AddUser from "./adduser/adduser";
+import typography from "assets/theme/base/typography";
+import UploadUser from "./uploaduser/uploaduser";
 
 function Tables() {
   const { isAuthenticated } = useAuth0();
   const { columns, rows } = authorsTableData();
   const { columns: pColumns, rows: pRows } = projectsTableData();
+
+  const { fontFamily } = typography;
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const toggleForm = () => {
+    setIsFormOpen(!isFormOpen);
+  };
 
   return (
     <DashboardLayout>
@@ -48,8 +63,6 @@ function Tables() {
       <Feedback3 /> */}
 
       <DashboardNavbar />
-
-      <UserHead />
 
       <MDBox
         pt={6}
@@ -71,21 +84,87 @@ function Tables() {
             <Grid container spacing={6}>
               <Grid item xs={12}>
                 <Card>
-                  <MDBox
-                    mx={2}
-                    mt={-3}
-                    py={3}
-                    px={2}
-                    variant="gradient"
-                    bgColor="info"
-                    borderRadius="lg"
-                    coloredShadow="info"
-                    style={{ width: "11%" }}
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      padding: "20px",
+                      fontFamily: fontFamily,
+                    }}
                   >
-                    <MDTypography variant="h6" color="white">
-                      User Table
-                    </MDTypography>
-                  </MDBox>
+                    <p style={{ color: "#fff", fontWeight: "300", fontSize: "15px" }}>
+                      50 Slots Available from 50.
+                    </p>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "15px",
+                        alignItems: "center",
+                      }}
+                    >
+                      <button
+                        style={{
+                          padding: "9px 18px",
+                          backgroundColor: "#0BB08C",
+                          color: "white",
+                          border: "none",
+                          borderRadius: "4px",
+                          cursor: "pointer",
+                          fontWeight: "500",
+                          fontFamily: fontFamily,
+                          textTransform: "uppercase",
+                        }}
+                        onClick={toggleForm}
+                      >
+                        <IconButton
+                          size="small"
+                          disableRipple
+                          color="inherit"
+                          aria-controls="add"
+                          aria-haspopup="true"
+                          variant="contained"
+                          style={{ padding: "0 ", marginRight: "3px" }}
+                        >
+                          <Icon>add_outlined</Icon>
+                        </IconButton>
+                        Add
+                      </button>
+                      {isFormOpen && <AddUser onClose={toggleForm} />}
+
+                      <div>
+                        <button
+                          style={{
+                            padding: "9px 10px",
+                            fontWeight: "500",
+                            backgroundColor: "#0BB08C",
+                            color: "white",
+                            border: "none",
+                            borderRadius: "4px",
+                            cursor: "pointer",
+                            fontFamily: fontFamily,
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          <IconButton
+                            size="small"
+                            disableRipple
+                            color="inherit"
+                            aria-controls="upload"
+                            aria-haspopup="true"
+                            variant="contained"
+                            style={{ padding: "0 2px" }}
+                            // onClick={toggleForm}
+                          >
+                            <Icon>file_upload_outlined</Icon>
+                          </IconButton>
+                          Upload
+                        </button>
+                        {/* {isFormOpen && <UploadUser onClose={toggleForm} />} */}
+                      </div>
+                    </div>
+                  </div>
+
                   <MDBox pt={3}>
                     <DataTable
                       table={{ columns, rows }}

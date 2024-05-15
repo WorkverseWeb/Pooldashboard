@@ -9,7 +9,18 @@ const AddUser = ({ onClose }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    option: "cps",
+  });
+
+  const [isClicked, setIsClicked] = useState({
+    csp: false,
+    em: false,
+    nego: false,
+    st: false,
+    fpt: false,
+    src: false,
+    collab: false,
+    ei: false,
+    pm: false,
   });
 
   const handleInputChange = (e) => {
@@ -17,15 +28,40 @@ const AddUser = ({ onClose }) => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleButtonClick = (value) => {
+    setIsClicked((prevClicked) => ({
+      ...prevClicked,
+      [value]: !prevClicked[value],
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const isSelected = Object.values(isClicked).some((clicked) => clicked);
+    if (!isSelected) {
+      return;
+    }
 
     setFormData({
       name: "",
       email: "",
-      option: "cps",
+    });
+
+    setIsClicked({
+      csp: false,
+      em: false,
+      nego: false,
+      st: false,
+      fpt: false,
+      src: false,
+      collab: false,
+      ei: false,
+      pm: false,
     });
   };
+
+  const isSubmitDisabled = !Object.values(isClicked).some((clicked) => clicked);
 
   return (
     <div className="popup-container" style={{ fontFamily: fontFamily }}>
@@ -45,9 +81,7 @@ const AddUser = ({ onClose }) => {
             value={formData.name}
             onChange={handleInputChange}
             required
-            style={{
-              marginBottom: "15px",
-            }}
+            style={{ marginBottom: "15px" }}
           />
 
           <input
@@ -57,41 +91,90 @@ const AddUser = ({ onClose }) => {
             value={formData.email}
             onChange={handleInputChange}
             required
-            style={{
-              marginBottom: "15px",
-            }}
+            style={{ marginBottom: "10px" }}
           />
 
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "15px",
-            }}
-          >
-            <label>Skills:</label>
-            <select
-              name="option"
-              value={formData.option}
-              onChange={handleInputChange}
-              style={{
-                marginLeft: "20px",
-              }}
+          <div className="select-btn">
+            <div style={{ textAlign: "start", paddingLeft: "10px" }}>
+              <label htmlFor="skills">Choose skills:</label>
+            </div>
+
+            <button
+              type="button"
+              className={isClicked.csp ? "button clicked" : "button"}
+              onClick={() => handleButtonClick("csp")}
             >
-              <option value="cps">Creative Problem solving</option>
-              <option value="em">Entrepreneurial Mindset</option>
-              <option value="negotiation">Negotiation</option>
-              <option value="story">Story-telling</option>
-              <option value="fpt">First Principles Thinking</option>
-              <option value="ei">Emotional Intelligencp</option>
-              <option value="collab">Collaboration</option>
-              <option value="src">Sharp Remote Communication</option>
-              <option value="pm">Productivity Management</option>
-            </select>
+              Creative Problem solving
+            </button>
+            <button
+              type="button"
+              className={isClicked.em ? "button clicked" : "button"}
+              onClick={() => handleButtonClick("em")}
+            >
+              Entrepreneurial Mindset
+            </button>
+            <button
+              type="button"
+              className={isClicked.nego ? "button clicked" : "button"}
+              onClick={() => handleButtonClick("nego")}
+            >
+              Negotiation
+            </button>
+            <button
+              type="button"
+              className={isClicked.st ? "button clicked" : "button"}
+              onClick={() => handleButtonClick("st")}
+            >
+              Story-telling
+            </button>
+            <button
+              type="button"
+              className={isClicked.fpt ? "button clicked" : "button"}
+              onClick={() => handleButtonClick("fpt")}
+            >
+              First Principles Thinking
+            </button>
+
+            <button
+              type="button"
+              className={isClicked.src ? "button clicked" : "button"}
+              onClick={() => handleButtonClick("src")}
+            >
+              Sharp Remote Communication
+            </button>
+            <button
+              type="button"
+              className={isClicked.collab ? "button clicked" : "button"}
+              onClick={() => handleButtonClick("collab")}
+            >
+              Collaboration
+            </button>
+            <button
+              type="button"
+              className={isClicked.ei ? "button clicked" : "button"}
+              onClick={() => handleButtonClick("ei")}
+            >
+              Emotional Intelligence
+            </button>
+
+            <button
+              type="button"
+              className={isClicked.pm ? "button clicked" : "button"}
+              onClick={() => handleButtonClick("pm")}
+            >
+              Productivity Management
+            </button>
           </div>
 
           <div className="btn">
-            <button type="submit" style={{ fontFamily: fontFamily }}>
+            <button
+              type="submit"
+              disabled={isSubmitDisabled}
+              style={{
+                cursor: isSubmitDisabled ? "not-allowed" : "pointer",
+                fontFamily: fontFamily,
+              }}
+            >
               Add
             </button>
           </div>
