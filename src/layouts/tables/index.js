@@ -35,6 +35,7 @@ import Login from "layouts/login";
 import { useAuth0 } from "@auth0/auth0-react";
 import Feedback2 from "./feedbackform/feedback2";
 import Feedback3 from "./feedbackform/feedback3";
+import UserHead from "./userheading/user";
 
 function Tables() {
   const { isAuthenticated } = useAuth0();
@@ -43,10 +44,13 @@ function Tables() {
 
   return (
     <DashboardLayout>
-      <Feedback2 />
-      <Feedback3 />
+      {/* <Feedback2 />
+      <Feedback3 /> */}
 
       <DashboardNavbar />
+
+      <UserHead />
+
       <MDBox
         pt={6}
         pb={3}
@@ -76,6 +80,7 @@ function Tables() {
                     bgColor="info"
                     borderRadius="lg"
                     coloredShadow="info"
+                    style={{ width: "11%" }}
                   >
                     <MDTypography variant="h6" color="white">
                       User Table

@@ -39,8 +39,8 @@ import {
   setOpenConfigurator,
 } from "context";
 import { dark } from "@mui/material/styles/createPalette";
-import RegistrationForm from "./Registrationform";
-import brandDark from "assets/images/wrench.png";
+// import RegistrationForm from "./Registrationform";
+// import brandDark from "assets/images/wrench.png";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const { user, isAuthenticated, logout, loginWithRedirect, isLoading } = useAuth0();
@@ -113,7 +113,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
   return (
     <>
-      <RegistrationForm />
+      {/* <RegistrationForm /> */}
 
       <AppBar
         position={absolute ? "absolute" : navbarType}
@@ -142,18 +142,22 @@ function DashboardNavbar({ absolute, light, isMini }) {
                   size="small"
                   disableRipple
                   color="inherit"
-                  sx={navbarIconButton}
+                  // sx={navbarIconButton}
+                  aria-controls="build"
+                  aria-haspopup="true"
+                  variant="contained"
                   onClick={handleConfiguratorOpen}
                 >
                   <Icon sx={iconsStyle}>
-                    <img src={brandDark} alt="doubt logo" />
+                    build
+                    {/* <img src={brandDark} alt="doubt logo" /> */}
                   </Icon>
                 </IconButton>
                 <IconButton
                   size="small"
                   disableRipple
                   color="inherit"
-                  sx={navbarIconButton}
+                  // sx={navbarIconButton}
                   aria-controls="notification-menu"
                   aria-haspopup="true"
                   variant="contained"

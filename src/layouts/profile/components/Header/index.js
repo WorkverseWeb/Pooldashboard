@@ -38,9 +38,17 @@ import breakpoints from "assets/theme/base/breakpoints";
 import burceMars from "assets/images/bruce-mars.jpg";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 
+import Purchase from "./PurchasePopup/purchase";
+
 function Header({ children }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
+
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const toggleForm = () => {
+    setIsFormOpen(!isFormOpen);
+  };
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -106,8 +114,8 @@ function Header({ children }) {
               </MDTypography>
             </MDBox>
           </Grid>
-          <Grid item xs={12} md={6} lg={4} sx={{ ml: "auto" }}>
-            {/* <AppBar position="static">
+          <Grid item xs={12} md={6} lg={4} sx={{ ml: "auto" }} style={{ maxWidth: "200px" }}>
+            {/*   <AppBar position="static">
               <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue}>
                   <Tab
                   label="App"
@@ -136,6 +144,21 @@ function Header({ children }) {
                 />
               </Tabs>
             </AppBar> */}
+            <button
+              onClick={toggleForm}
+              style={{
+                padding: "10px 20px",
+                border: "0",
+                borderRadius: "8px",
+                color: "#fff",
+                background: "#0BB08C",
+                cursor: "pointer",
+                boxShadow: "0 5px 20px 0 rgb(186 255 247 / 60%)",
+              }}
+            >
+              Add Slots
+            </button>
+            {isFormOpen && <Purchase onClose={toggleForm} />}
           </Grid>
         </Grid>
         {children}

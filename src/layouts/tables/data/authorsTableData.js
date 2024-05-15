@@ -51,7 +51,7 @@ export default function data() {
   return {
     columns: [
       { Header: "author", accessor: "author", width: "45%", align: "left" },
-      { Header: "level", accessor: "function", align: "left" },
+      { Header: "skill", accessor: "function", align: "left" },
       { Header: "status", accessor: "status", align: "center" },
       { Header: "start date", accessor: "employed", align: "center" },
       { Header: "WIP", accessor: "action", align: "center" },
@@ -60,7 +60,7 @@ export default function data() {
     rows: [
       {
         author: <Author image={team2} name="Priyanka Shahasane" email="priyanka@workverse.in" />,
-        function: <Job title="Productivity " description="Management" />,
+        function: <Job title="Creative Problem  " description="solving" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
@@ -79,7 +79,7 @@ export default function data() {
       },
       {
         author: <Author image={team3} name="Tej Mandani" email="tej@workverse.in" />,
-        function: <Job title="Productivity " description="Management" />,
+        function: <Job title="Entrepreneurial  " description="Mindset" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
@@ -98,7 +98,7 @@ export default function data() {
       },
       {
         author: <Author image={team4} name="Rasika Lokhande" email="rasika@workverse.in" />,
-        function: <Job title="Sharp Remote" description="Communication" />,
+        function: <Job title="Negotiation" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
@@ -117,7 +117,7 @@ export default function data() {
       },
       {
         author: <Author image={team3} name="Om Rane" email="om@workverse.in" />,
-        function: <Job title="Sharp Remote" description="Communication" />,
+        function: <Job title="Story-telling" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
@@ -136,7 +136,7 @@ export default function data() {
       },
       {
         author: <Author image={team3} name="Subhajit Adhikari" email="subhajit@workverse.in" />,
-        function: <Job title="Sharp Remote" description="Communication" />,
+        function: <Job title="First Principles " description="Thinking" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
@@ -155,7 +155,64 @@ export default function data() {
       },
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
-        function: <Job title="Sharp Remote" description="Communication" />,
+        function: <Job title="Emotional " description="Intelligencp" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        employed: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            24/04/24
+          </MDTypography>
+        ),
+        action: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            In progress
+          </MDTypography>
+        ),
+      },
+      {
+        author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
+        function: <Job title="Collaboration " />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        employed: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            24/04/24
+          </MDTypography>
+        ),
+        action: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            In progress
+          </MDTypography>
+        ),
+      },
+      {
+        author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
+        function: <Job title="Sharp Remote  " description="Communication" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        employed: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            24/04/24
+          </MDTypography>
+        ),
+        action: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            In progress
+          </MDTypography>
+        ),
+      },
+      {
+        author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
+        function: <Job title="Productivity  " description="Management" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
