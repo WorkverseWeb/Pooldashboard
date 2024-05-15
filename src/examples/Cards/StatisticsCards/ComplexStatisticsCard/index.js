@@ -46,7 +46,11 @@ function ComplexStatisticsCard({ color, title, count, percentage, icon, children
             {icon}
           </Icon>
         </MDBox>
-        <MDBox textAlign="right" lineHeight={1.25}>
+        <MDBox
+          textAlign="right"
+          lineHeight={1.25}
+          style={title === "Add user individually /upload csv file" ? { maxWidth: "150px" } : {}}
+        >
           <MDTypography variant="button" fontWeight="light" color="text">
             {title}
           </MDTypography>
@@ -65,7 +69,7 @@ function ComplexStatisticsCard({ color, title, count, percentage, icon, children
             >
               {percentage.amount}
             </MDTypography>
-            &nbsp;{percentage.label}
+            {percentage.label && <>&nbsp;{percentage.label}</>}
           </MDTypography>
         )}
         {children && (

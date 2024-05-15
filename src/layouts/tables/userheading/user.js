@@ -73,10 +73,10 @@ export default function UserHead() {
               //   count=""
               title="Add user individually /upload csv file"
             >
-              <div style={{ display: "flex", gap: "20px" }}>
+              <div style={{ margin: "auto" }}>
                 <button
                   style={{
-                    // marginRight: "8px",
+                    marginRight: "20px",
                     padding: "8px 16px",
                     backgroundColor: "#0BB08C",
                     color: "white",
