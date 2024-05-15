@@ -64,8 +64,8 @@ const AddUser = ({ onClose }) => {
   const isSubmitDisabled = !Object.values(isClicked).some((clicked) => clicked);
 
   return (
-    <div className="popup-container" style={{ fontFamily: fontFamily }}>
-      <div className="popup-form">
+    <div className="add-container" style={{ fontFamily: fontFamily }}>
+      <div className="add-form">
         <div className="purchase-heading">
           <h4>Add User</h4>
           <span className="material-icons" onClick={onClose}>
@@ -95,8 +95,10 @@ const AddUser = ({ onClose }) => {
           />
 
           <div className="select-btn">
-            <div style={{ textAlign: "start", paddingLeft: "10px" }}>
-              <label htmlFor="skills">Choose skills:</label>
+            <div style={{ textAlign: "start", paddingLeft: "5px" }}>
+              <label htmlFor="skills" style={{ fontSize: "15px" }}>
+                Choose skills:
+              </label>
             </div>
 
             <button

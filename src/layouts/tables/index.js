@@ -52,9 +52,14 @@ function Tables() {
 
   const { fontFamily } = typography;
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [FormOpen, setFormOpen] = useState(false);
 
   const toggleForm = () => {
     setIsFormOpen(!isFormOpen);
+  };
+
+  const uploadForm = () => {
+    setFormOpen(!FormOpen);
   };
 
   return (
@@ -132,36 +137,34 @@ function Tables() {
                       </button>
                       {isFormOpen && <AddUser onClose={toggleForm} />}
 
-                      <div>
-                        <button
-                          style={{
-                            padding: "9px 10px",
-                            fontWeight: "500",
-                            backgroundColor: "#0BB08C",
-                            color: "white",
-                            border: "none",
-                            borderRadius: "4px",
-                            cursor: "pointer",
-                            fontFamily: fontFamily,
-                            textTransform: "uppercase",
-                          }}
+                      <button
+                        style={{
+                          padding: "9px 10px",
+                          fontWeight: "500",
+                          backgroundColor: "#0BB08C",
+                          color: "white",
+                          border: "none",
+                          borderRadius: "4px",
+                          cursor: "pointer",
+                          fontFamily: fontFamily,
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        <IconButton
+                          size="small"
+                          disableRipple
+                          color="inherit"
+                          aria-controls="upload"
+                          aria-haspopup="true"
+                          variant="contained"
+                          style={{ padding: "0 2px" }}
+                          onClick={uploadForm}
                         >
-                          <IconButton
-                            size="small"
-                            disableRipple
-                            color="inherit"
-                            aria-controls="upload"
-                            aria-haspopup="true"
-                            variant="contained"
-                            style={{ padding: "0 2px" }}
-                            // onClick={toggleForm}
-                          >
-                            <Icon>file_upload_outlined</Icon>
-                          </IconButton>
-                          Upload
-                        </button>
-                        {/* {isFormOpen && <UploadUser onClose={toggleForm} />} */}
-                      </div>
+                          <Icon>file_upload_outlined</Icon>
+                        </IconButton>
+                        Upload
+                      </button>
+                      {FormOpen && <UploadUser onClose={uploadForm} />}
                     </div>
                   </div>
 

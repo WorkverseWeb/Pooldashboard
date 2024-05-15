@@ -1,4 +1,4 @@
-.popup-container {
+.add-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,7 +12,7 @@
   z-index: 999;
 }
 
-.popup-form {
+.add-form {
   color: #fff !important;
   max-width: 400px;
   width: 100%;
@@ -54,14 +54,14 @@
 }
 
 /* content */
-.popup-form form {
+.add-form form {
   padding: 15px 0;
   border-style: solid;
   border-image: linear-gradient(to right, rgba(49, 49, 49, 0), #1effe59e, rgba(49, 49, 49, 0)) 1;
   border-width: 2px 0 0 0;
 }
 
-.popup-form form input {
+.add-form form input {
   color: #fff;
   width: 100%;
   padding: 7px;
@@ -70,26 +70,26 @@
   border: 0;
 }
 
-.popup-form form input:focus {
+.add-form form input:focus {
   outline: none;
 }
 
-.popup-form form input:-webkit-autofill,
-.popup-form form input:-webkit-autofill:hover,
-.popup-form form input:-webkit-autofill:focus,
-.popup-form form input:-webkit-autofill:active {
+.add-form form input:-webkit-autofill,
+.add-form form input:-webkit-autofill:hover,
+.add-form form input:-webkit-autofill:focus,
+.add-form form input:-webkit-autofill:active {
   -webkit-text-fill-color: #fff !important;
   background-color: rgb(0 0 0 / 24%) !important;
   transition: background-color 5000s ease-in-out 0s;
 }
 
-.popup-form form .select-btn {
+.add-form form .select-btn {
   overflow: hidden;
-  text-align: center;
+  text-align: start;
   margin-bottom: 15px;
 }
 
-.popup-form form .select-btn .button {
+.add-form form .select-btn .button {
   color: #8d8d8dd2;
   padding: 7px;
   background-color: rgba(255, 255, 255, 0.14);
@@ -99,18 +99,18 @@
   margin: 5px 5px;
 }
 
-.popup-form form .select-btn .button.clicked {
+.add-form form .select-btn .button.clicked {
   color: #fff;
   background-color: #0bb08c;
 }
 
 /* button */
-.popup-form .btn {
+.add-form .btn {
   text-align: end;
   margin-top: 10px;
 }
 
-.popup-form .btn button {
+.add-form .btn button {
   color: #fff;
   font-weight: 500;
   padding: 10px 20px;

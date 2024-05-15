@@ -6,29 +6,52 @@ import PropTypes from "prop-types";
 const UploadUser = ({ onClose }) => {
   const { fontFamily } = typography;
 
-  const [formData, setFormData] = useState({
-    email: "",
-    option: "cps",
+  const [isClicked, setIsClicked] = useState({
+    csp: false,
+    em: false,
+    nego: false,
+    st: false,
+    fpt: false,
+    src: false,
+    collab: false,
+    ei: false,
+    pm: false,
   });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleButtonClick = (value) => {
+    setIsClicked((prevClicked) => ({
+      ...prevClicked,
+      [value]: !prevClicked[value],
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setFormData({
-      email: "",
-      option: "cps",
+    const isSelected = Object.values(isClicked).some((clicked) => clicked);
+    if (!isSelected) {
+      return;
+    }
+
+    setIsClicked({
+      csp: false,
+      em: false,
+      nego: false,
+      st: false,
+      fpt: false,
+      src: false,
+      collab: false,
+      ei: false,
+      pm: false,
     });
   };
 
+  const isSubmitDisabled = !Object.values(isClicked).some((clicked) => clicked);
+
   return (
-    <div className="popup-container" style={{ fontFamily: fontFamily }}>
-      <div className="popup-form">
-        <div className="purchase-heading">
+    <div className="upload-container" style={{ fontFamily: fontFamily }}>
+      <div className="upload-form">
+        <div className="upload-heading">
           <h4>Upload File</h4>
           <span className="material-icons" onClick={onClose}>
             &times;
@@ -36,38 +59,94 @@ const UploadUser = ({ onClose }) => {
         </div>
 
         <form action="" onSubmit={handleSubmit}>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-            style={{
-              marginBottom: "15px",
-            }}
-          />
+          <div className="select-btn">
+            <div style={{ textAlign: "start", paddingLeft: "10px", fontSize: "15px" }}>
+              <label htmlFor="skills">Choose skills:</label>
+            </div>
 
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "15px",
-            }}
-          >
-            <button>Creative Problem solving</button>
-            <button>Entrepreneurial Mindset</button>
-            <button>Negotiation</button>
-            <button>Story-telling</button>
-            <button>First Principles Thinking</button>
-            <button>Emotional Intelligenc</button>
-            <button>Collaboration</button>
-            <button>Sharp Remote Communication</button>
-            <button>Productivity Management</button>
+            <button
+              type="button"
+              className={isClicked.csp ? "button clicked" : "button"}
+              onClick={() => handleButtonClick("csp")}
+            >
+              Creative Problem solving
+            </button>
+            <button
+              type="button"
+              className={isClicked.em ? "button clicked" : "button"}
+              onClick={() => handleButtonClick("em")}
+            >
+              Entrepreneurial Mindset
+            </button>
+            <button
+              type="button"
+              className={isClicked.nego ? "button clicked" : "button"}
+              onClick={() => handleButtonClick("nego")}
+            >
+              Negotiation
+            </button>
+            <button
+              type="button"
+              className={isClicked.st ? "button clicked" : "button"}
+              onClick={() => handleButtonClick("st")}
+            >
+              Story-telling
+            </button>
+            <button
+              type="button"
+              className={isClicked.fpt ? "button clicked" : "button"}
+              onClick={() => handleButtonClick("fpt")}
+            >
+              First Principles Thinking
+            </button>
+
+            <button
+              type="button"
+              className={isClicked.src ? "button clicked" : "button"}
+              onClick={() => handleButtonClick("src")}
+            >
+              Sharp Remote Communication
+            </button>
+            <button
+              type="button"
+              className={isClicked.collab ? "button clicked" : "button"}
+              onClick={() => handleButtonClick("collab")}
+            >
+              Collaboration
+            </button>
+            <button
+              type="button"
+              className={isClicked.ei ? "button clicked" : "button"}
+              onClick={() => handleButtonClick("ei")}
+            >
+              Emotional Intelligence
+            </button>
+
+            <button
+              type="button"
+              className={isClicked.pm ? "button clicked" : "button"}
+              onClick={() => handleButtonClick("pm")}
+            >
+              Productivity Management
+            </button>
           </div>
 
+          <label htmlFor="fileSelect">Upload</label>
+          <input
+            id="fileSelect"
+            type="file"
+            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          />
+
           <div className="btn">
-            <button type="submit" style={{ fontFamily: fontFamily }}>
+            <button
+              type="submit"
+              disabled={isSubmitDisabled}
+              style={{
+                cursor: isSubmitDisabled ? "not-allowed" : "pointer",
+                fontFamily: fontFamily,
+              }}
+            >
               Add
             </button>
           </div>
