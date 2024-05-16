@@ -65,7 +65,15 @@ const UploadUser = ({ onClose }) => {
       pm: false,
     });
 
+    const fileInput = document.getElementById("fileSelect");
+    if (fileInput) {
+      fileInput.value = "";
+    }
+
     setFile(null);
+
+    setExcelData([]);
+    F;
   };
 
   const isSubmitDisabled = !file || !Object.values(isClicked).some((clicked) => clicked);
@@ -172,32 +180,37 @@ const UploadUser = ({ onClose }) => {
               <Icon>delete</Icon>
             </IconButton>
           )} */}
-          {excelData.length > 1 && (
-            <table
-              style={{
-                textAlign: "center",
-                width: "100%",
-                padding: "10px 0",
-                overflowY: "auto",
-                maxHeight: "100px",
-              }}
-            >
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                </tr>
-              </thead>
-              <tbody>
-                {excelData.map((getData, index) => (
-                  <tr key={index}>
-                    <td>{getData.Name}</td>
-                    <td>{getData.Gender}</td>
+          <div
+            style={{
+              overflowY: "auto",
+              maxHeight: "200px",
+              margin: "10px 0",
+              padding: "0 10px",
+              border: "1px solid #0bb08c",
+              borderRadius: "10px",
+              textAlign: "center",
+            }}
+          >
+            {excelData.length > 1 && (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+                </thead>
+                <tbody>
+                  {excelData.map((getData, index) => (
+                    <tr key={index}>
+                      <td>{getData.Name}</td>
+                      <td>{getData.Gender}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+
           <div className="btn">
             <button
               type="submit"

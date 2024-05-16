@@ -149,6 +149,7 @@ function Tables() {
                           fontFamily: fontFamily,
                           textTransform: "uppercase",
                         }}
+                        onClick={uploadForm}
                       >
                         <IconButton
                           size="small"
@@ -158,7 +159,6 @@ function Tables() {
                           aria-haspopup="true"
                           variant="contained"
                           style={{ padding: "0 2px" }}
-                          onClick={uploadForm}
                         >
                           <Icon>file_upload_outlined</Icon>
                         </IconButton>
