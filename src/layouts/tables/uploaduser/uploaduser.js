@@ -2,9 +2,29 @@ import React, { useState } from "react";
 import "./uploaduser.css";
 import typography from "assets/theme/base/typography";
 import PropTypes from "prop-types";
+import * as xlsx from "xlsx";
+// import Icon from "@mui/material/Icon";
+// import IconButton from "@mui/material/IconButton";
 
 const UploadUser = ({ onClose }) => {
   const { fontFamily } = typography;
+  const [file, setFile] = useState(null);
+  const [excelData, setExcelData] = useState([]);
+
+  const handleFileChange = async (e) => {
+    const File = e.target.files[0];
+    const data = await File.arrayBuffer(File);
+    const excelfile = xlsx.read(data);
+    const excelsheet = excelfile.Sheets[excelfile.SheetNames[0]];
+    const exceljson = xlsx.utils.sheet_to_json(excelsheet);
+    setFile(File);
+    setExcelData(exceljson);
+  };
+
+  // const handleFileRemove = () => {
+  // setFile(null);
+  //   document.getElementById("fileSelect").value = "";
+  // };
 
   const [isClicked, setIsClicked] = useState({
     csp: false,
@@ -44,9 +64,11 @@ const UploadUser = ({ onClose }) => {
       ei: false,
       pm: false,
     });
+
+    setFile(null);
   };
 
-  const isSubmitDisabled = !Object.values(isClicked).some((clicked) => clicked);
+  const isSubmitDisabled = !file || !Object.values(isClicked).some((clicked) => clicked);
 
   return (
     <div className="upload-container" style={{ fontFamily: fontFamily }}>
@@ -61,7 +83,7 @@ const UploadUser = ({ onClose }) => {
         <form action="" onSubmit={handleSubmit}>
           <div className="select-btn">
             <div style={{ textAlign: "start", paddingLeft: "10px", fontSize: "15px" }}>
-              <label htmlFor="skills">Choose skills:</label>
+              <label htmlFor="skills">Choose skills :</label>
             </div>
 
             <button
@@ -130,14 +152,52 @@ const UploadUser = ({ onClose }) => {
               Productivity Management
             </button>
           </div>
-
-          <label htmlFor="fileSelect">Upload</label>
+          <label htmlFor="fileSelect" style={{ fontSize: "15px", marginRight: "3px" }}>
+            Upload :
+          </label>
           <input
             id="fileSelect"
             type="file"
             accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+            onChange={handleFileChange}
           />
-
+          {/* 
+          {file && (
+            <IconButton
+              onClick={handleFileRemove}
+              aria-label="delete"
+              size="small"
+              style={{ color: "red" }}
+            >
+              <Icon>delete</Icon>
+            </IconButton>
+          )} */}
+          {excelData.length > 1 && (
+            <table
+              style={{
+                textAlign: "center",
+                width: "100%",
+                padding: "10px 0",
+                overflowY: "auto",
+                maxHeight: "100px",
+              }}
+            >
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                {excelData.map((getData, index) => (
+                  <tr key={index}>
+                    <td>{getData.Name}</td>
+                    <td>{getData.Gender}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
           <div className="btn">
             <button
               type="submit"
@@ -147,7 +207,7 @@ const UploadUser = ({ onClose }) => {
                 fontFamily: fontFamily,
               }}
             >
-              Add
+              Submit
             </button>
           </div>
         </form>

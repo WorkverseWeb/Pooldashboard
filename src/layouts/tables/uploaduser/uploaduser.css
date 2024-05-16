@@ -14,7 +14,7 @@
 
 .upload-form {
   color: #fff !important;
-  max-width: 725px;
+  max-width: 735px;
   width: 100%;
   position: absolute;
   top: 50%;
@@ -26,7 +26,7 @@
   border: 1px solid rgba(255, 255, 255, 0.18);
   background: #2a40303d;
   box-shadow: 0 5px 50px 0 #bafff754;
-  padding: 20px;
+  padding: 15px 20px;
 }
 
 /* heading */
@@ -55,7 +55,7 @@
 
 /* content */
 .upload-form form {
-  padding: 15px 0;
+  padding: 10px 0;
   border-style: solid;
   border-image: linear-gradient(to right, rgba(49, 49, 49, 0), #1effe59e, rgba(49, 49, 49, 0)) 1;
   border-width: 2px 0 0 0;
@@ -80,6 +80,24 @@
 .upload-form form .select-btn .button.clicked {
   color: #fff;
   background-color: #0bb08c;
+}
+/* table */
+/* table {
+  text-align: center;
+  width: 100%;
+  padding: 10px 0;
+  overflow-y: auto;
+  height: 100px;
+} */
+
+table thead {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+table tbody {
+  font-size: 15px;
+  font-weight: 300;
 }
 
 /* button */
