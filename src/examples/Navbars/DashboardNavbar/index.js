@@ -165,6 +165,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 >
                   <Icon sx={iconsStyle}>notifications</Icon>
                 </IconButton>
+                {renderMenu()}
               </MDBox>
               {isAuthenticated ? (
                 <>
@@ -179,6 +180,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                         logoutParams: { returnTo: window.location.origin },
                       })
                     }
+                    style={{ marginLeft: "5px" }}
                   >
                     Sign Out
                   </MDButton>
@@ -192,6 +194,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                     variant="gradient"
                     color={sidenavColor}
                     onClick={() => loginWithRedirect()}
+                    style={{ marginLeft: "5px" }}
                   >
                     Sign In
                   </MDButton>

@@ -17,7 +17,7 @@
   max-width: 735px;
   width: 100%;
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 55%;
   transform: translate(-50%, -50%);
   z-index: 1000;
@@ -82,17 +82,19 @@
   background-color: #0bb08c;
 }
 /* table */
-table {
+.upload-form form table {
   width: 100%;
 }
 
-table thead {
+.upload-form form table thead {
   font-size: 18px;
   font-weight: 400;
+  border-bottom: 1px solid #fff;
+  height: 40px;
 }
 
-table tbody {
-  font-size: 15px;
+.upload-form form table tbody {
+  font-size: 14px;
   font-weight: 300;
 }
 
@@ -108,7 +110,7 @@ table tbody {
   padding: 10px 20px;
   border: 0;
   background: rgba(255, 255, 255, 0.14);
-  border-radius: 5px;
+  border-radius: 7px;
   cursor: pointer;
   background-color: #0bb08c;
 }

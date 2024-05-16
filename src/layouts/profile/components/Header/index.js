@@ -147,9 +147,10 @@ function Header({ children }) {
             <button
               onClick={toggleForm}
               style={{
+                textTransform: "uppercase",
                 padding: "10px 20px",
                 border: "0",
-                borderRadius: "8px",
+                borderRadius: "7px",
                 color: "#fff",
                 background: "#0BB08C",
                 cursor: "pointer",
