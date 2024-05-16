@@ -38,6 +38,7 @@ function Dashboard() {
           <Grid container py={5} spacing={3} alignItems="center">
             <Grid item>
               <MDAvatar src={burceMars} alt="profile-image" size="xl" shadow="sm" />
+              {/* need to fetch different image */}
             </Grid>
             <Grid item>
               <MDBox height="100%" mt={0.5} lineHeight={1}>
