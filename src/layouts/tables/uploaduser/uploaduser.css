@@ -114,3 +114,48 @@
   cursor: pointer;
   background-color: #0bb08c;
 }
+
+/* instruction */
+
+.upload-form form .instruction-box {
+  position: absolute;
+  margin-top: 10px;
+  left: 240px;
+  padding: 5px 15px;
+  border-radius: 8px;
+  background: #0406054a;
+  width: 350px;
+  border: 1px solid rgb(88 88 88 / 19%);
+}
+
+.upload-form form .instruction-heading {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.upload-form form .instruction-icon {
+  cursor: pointer;
+  position: relative;
+}
+
+.upload-form form .instruction-box p {
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.upload-form form .instruction-box a {
+  font-size: 13px;
+  color: #0bb08c;
+  text-decoration: underline !important;
+}
+
+.upload-form form .close-icon {
+  cursor: pointer;
+}
+
+.upload-form form .close-icon:hover {
+  color: #0bb08c9f;
+}

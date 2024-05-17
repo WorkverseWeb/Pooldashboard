@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 import * as xlsx from "xlsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Icon from "@mui/material/Icon";
-import IconButton from "@mui/material/IconButton";
+import { Icon, IconButton } from "@mui/material";
+import brandDark from "assets/images/information.png";
 
 const UploadUser = ({ onClose }) => {
   const { fontFamily } = typography;
@@ -14,34 +14,39 @@ const UploadUser = ({ onClose }) => {
   const [excelData, setExcelData] = useState([]);
 
   const handleFileChange = async (e) => {
-    const File = e.target.files[0];
-    const data = await File.arrayBuffer(File);
-    const excelfile = xlsx.read(data);
-    const excelsheet = excelfile.Sheets[excelfile.SheetNames[0]];
-    const exceljson = xlsx.utils.sheet_to_json(excelsheet);
+    try {
+      const File = e.target.files[0];
+      const data = await File.arrayBuffer(File);
+      const excelfile = xlsx.read(data);
+      const excelsheet = excelfile.Sheets[excelfile.SheetNames[0]];
+      const exceljson = xlsx.utils.sheet_to_json(excelsheet);
 
-    // if (file.name.endsWith(".xlsx") || file.name.endsWith(".xls")) {
-    //   const excelfile = xlsx.read(data);
-    //   const excelsheet = excelfile.Sheets[excelfile.SheetNames[0]];
-    //   const exceljson = xlsx.utils.sheet_to_json(excelsheet);
-    // } else if (file.name.endsWith(".csv")) {
-    //   const csvData = Papa.parse(data, { header: true });
-    //   exceljson = csvData.data;
-    // } else {
-    //   console.error("Unsupported file type");
-    //   return;
-    // }
+      // if (file.name.endsWith(".xlsx") || file.name.endsWith(".xls")) {
+      //   const excelfile = xlsx.read(data);
+      //   const excelsheet = excelfile.Sheets[excelfile.SheetNames[0]];
+      //   const exceljson = xlsx.utils.sheet_to_json(excelsheet);
+      // } else if (file.name.endsWith(".csv")) {
+      //   const csvData = Papa.parse(data, { header: true });
+      //   exceljson = csvData.data;
+      // } else {
+      //   console.error("Unsupported file type");
+      //   return;
+      // }
 
-    toast.success("File Uploaded !");
+      toast.success("File Uploaded !");
 
-    setFile(File);
-    setExcelData(exceljson);
+      setFile(File);
+      setExcelData(exceljson);
+    } catch (error) {
+      console.error("An error occurred:", error);
+      toast.error("Error in uploading file!");
+    }
   };
 
+  // delete
   const handleFileRemove = () => {
     setFile(null);
     document.getElementById("fileSelect").value = "";
-
     setExcelData([]);
   };
 
@@ -67,41 +72,54 @@ const UploadUser = ({ onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const isSelected = Object.values(isClicked).some((clicked) => clicked);
-    if (!isSelected) {
-      return;
+    try {
+      const isSelected = Object.values(isClicked).some((clicked) => clicked);
+      if (!isSelected) {
+        return;
+      }
+
+      setIsClicked({
+        csp: false,
+        em: false,
+        nego: false,
+        st: false,
+        fpt: false,
+        src: false,
+        collab: false,
+        ei: false,
+        pm: false,
+      });
+
+      const fileInput = document.getElementById("fileSelect");
+      if (fileInput) {
+        fileInput.value = "";
+      }
+      setFile(null);
+      setExcelData([]);
+      toast.success("Uers Added Successfully !");
+    } catch (error) {
+      console.error("An error occurred:", error);
+      toast.error("Error in Adding Users!");
     }
-
-    setIsClicked({
-      csp: false,
-      em: false,
-      nego: false,
-      st: false,
-      fpt: false,
-      src: false,
-      collab: false,
-      ei: false,
-      pm: false,
-    });
-
-    const fileInput = document.getElementById("fileSelect");
-    if (fileInput) {
-      fileInput.value = "";
-    }
-
-    setFile(null);
-
-    setExcelData([]);
   };
 
   const isSubmitDisabled = !file || !Object.values(isClicked).some((clicked) => clicked);
+
+  // instruction
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <>
       <ToastContainer
         position="top-right"
-        autoClose={5000}
-        toastStyle={{ minHeight: "50px", width: "250px", fontSize: "15px" }}
+        autoClose={3000}
+        toastStyle={{ minHeight: "50px", width: "270px", fontSize: "15px" }}
       />
       <div className="upload-container" style={{ fontFamily: fontFamily }}>
         <div className="upload-form">
@@ -184,40 +202,77 @@ const UploadUser = ({ onClose }) => {
                 Productivity Management
               </button>
             </div>
-            <label htmlFor="fileSelect" style={{ fontSize: "15px", marginRight: "3px" }}>
-              Upload :
-            </label>
-            <input
-              id="fileSelect"
-              type="file"
-              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-              onChange={handleFileChange}
-              style={{
-                padding: "5px",
-                backgroundColor: " rgba(255, 255, 255, 0.14)",
-                color: "#8d8d8dd2",
-                border: "none",
-                cursor: "pointer",
-                borderRadius: "5px",
-              }}
-            />
 
-            {file && (
-              <IconButton
-                onClick={handleFileRemove}
-                aria-label="delete"
-                size="small"
-                style={{ color: "red" }}
-              >
-                <Icon>delete</Icon>
-              </IconButton>
-            )}
+            <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+              <div style={{ maxWidth: "300px" }}>
+                <label htmlFor="fileSelect" style={{ fontSize: "15px", marginRight: "3px" }}>
+                  Upload :
+                </label>
+                <input
+                  id="fileSelect"
+                  type="file"
+                  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                  onChange={handleFileChange}
+                  style={{
+                    padding: "5px",
+                    backgroundColor: " rgba(255, 255, 255, 0.14)",
+                    border: "none",
+                    cursor: "pointer",
+                    borderRadius: "5px 0 0 5px",
+                    width: "70%",
+                  }}
+                />
 
+                {/* {file && ( */}
+                <IconButton
+                  onClick={handleFileRemove}
+                  aria-label="delete"
+                  size="small"
+                  style={{
+                    color: "red",
+                    borderRadius: "0 5px 5px 0",
+                    backgroundColor: " rgba(255, 255, 255, 0.14)",
+                    height: "31px",
+                    marginTop: "2px",
+                  }}
+                >
+                  <Icon>delete</Icon>
+                </IconButton>
+                {/* )} */}
+              </div>
+              <div>
+                <img
+                  src={brandDark}
+                  alt="instruction"
+                  onClick={handleClickOpen}
+                  className="instruction-icon "
+                />
+
+                {open && (
+                  <div className="instruction-box">
+                    <div className="instruction-heading">
+                      <h5 style={{ fontWeight: " 400" }}>Instructions</h5>
+                      <span className="close-icon" onClick={handleClose}>
+                        &times;
+                      </span>
+                    </div>
+                    <p>
+                      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                      Lorem Ipsum has been the industry standard dummy text ever since the.
+                    </p>
+                    <a href="%PUBLIC_URL%/example.xlsx" download>
+                      download here
+                    </a>
+                    {/* google drive link or public file link  */}
+                  </div>
+                )}
+              </div>
+            </div>
             {excelData.length > 1 && (
               <div
                 style={{
                   overflowY: "auto",
-                  maxHeight: "200px",
+                  maxHeight: "150px",
                   margin: "20px 0",
                   padding: "0 10px",
                   backgroundColor: " rgba(255, 255, 255, 0.14)",

@@ -1,5 +1,11 @@
 import { useState, useEffect, useMemo } from "react";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// import { startToastManager, stopToastManager } from "layouts/toastmanager";
+import { startToastManager, stopToastManager } from "layouts/toastmanager";
+import { useAuth0 } from "@auth0/auth0-react";
+
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
@@ -121,9 +127,31 @@ export default function App() {
   //   </MDBox>
   // );
 
+  const { isAuthenticated } = useAuth0();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      startToastManager();
+    }
+
+    return () => {
+      stopToastManager();
+    };
+  }, [isAuthenticated]);
+
   return (
     <ThemeProvider theme={themeDark}>
       <CssBaseline />
+      {isAuthenticated && (
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          pauseOnHover={false}
+          pauseOnFocusLoss={false}
+          // hideProgressBar={true}
+          toastStyle={{ minHeight: "50px", width: "270px", fontSize: "15px" }}
+        />
+      )}
       {layout === "dashboard" && (
         <>
           <Sidenav
