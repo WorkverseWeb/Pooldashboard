@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 
+// notifications
 let intervalId;
 let popupState = 0;
 
