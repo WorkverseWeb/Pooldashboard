@@ -4,7 +4,7 @@ import typography from "assets/theme/base/typography";
 
 export default function Feedback2() {
   const [showForm, setShowForm] = useState(true);
-  const { fontFamily } = typography;
+
   const [selectedEmoji, setSelectedEmoji] = useState(null);
 
   const handleEmojiSelection = (emoji) => {
@@ -22,7 +22,7 @@ export default function Feedback2() {
   return (
     <>
       {showForm && (
-        <div className="popup-container" style={{ fontFamily: fontFamily }}>
+        <div className="popup-container">
           <div className="popup-form">
             <div className="feedback-heading">
               <h4>Feedback Form</h4>
@@ -68,12 +68,7 @@ export default function Feedback2() {
               </div>
             </div>
             <div className="btn">
-              <button
-                type="submit"
-                onClick={handleSubmit}
-                disabled={!selectedEmoji}
-                style={{ fontFamily: fontFamily }}
-              >
+              <button type="submit" onClick={handleSubmit} disabled={!selectedEmoji}>
                 Submit
               </button>
             </div>

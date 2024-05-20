@@ -154,8 +154,10 @@ function Header({ children }) {
                 color: "#fff",
                 background: "#0BB08C",
                 cursor: "pointer",
+                fontWeight: "600",
                 // boxShadow: "2px 2px 8px 0 rgb(186 255 247 / 60%)",
               }}
+              className="popup-btn"
             >
               Add Slots
             </button>

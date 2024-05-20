@@ -9,7 +9,6 @@ import { Icon, IconButton } from "@mui/material";
 import brandDark from "assets/images/information.png";
 
 const UploadUser = ({ onClose }) => {
-  const { fontFamily } = typography;
   const [file, setFile] = useState(null);
   const [excelData, setExcelData] = useState([]);
 
@@ -115,206 +114,188 @@ const UploadUser = ({ onClose }) => {
   };
 
   return (
-    <>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        toastStyle={{ minHeight: "50px", width: "270px", fontSize: "15px" }}
-      />
-      <div className="upload-container" style={{ fontFamily: fontFamily }}>
-        <div className="upload-form">
-          <div className="upload-heading">
-            <h4>Upload File</h4>
-            <span className="material-icons" onClick={onClose}>
-              &times;
-            </span>
+    <div className="upload-container">
+      <div className="upload-form">
+        <div className="upload-heading">
+          <h4>Upload File</h4>
+          <span className="material-icons" onClick={onClose}>
+            &times;
+          </span>
+        </div>
+
+        <form action="" onSubmit={handleSubmit}>
+          <div className="select-btn">
+            <div style={{ textAlign: "start", fontSize: "15px" }}>
+              <label htmlFor="skills">Choose skills :</label>
+            </div>
+
+            <button
+              type="button"
+              className={isClicked.csp ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleButtonClick("csp")}
+            >
+              Creative Problem solving
+            </button>
+            <button
+              type="button"
+              className={isClicked.em ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleButtonClick("em")}
+            >
+              Entrepreneurial Mindset
+            </button>
+            <button
+              type="button"
+              className={isClicked.nego ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleButtonClick("nego")}
+            >
+              Negotiation
+            </button>
+            <button
+              type="button"
+              className={isClicked.st ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleButtonClick("st")}
+            >
+              Story-telling
+            </button>
+            <button
+              type="button"
+              className={isClicked.fpt ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleButtonClick("fpt")}
+            >
+              First Principles Thinking
+            </button>
+
+            <button
+              type="button"
+              className={isClicked.src ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleButtonClick("src")}
+            >
+              Sharp Remote Communication
+            </button>
+            <button
+              type="button"
+              className={isClicked.collab ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleButtonClick("collab")}
+            >
+              Collaboration
+            </button>
+            <button
+              type="button"
+              className={isClicked.ei ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleButtonClick("ei")}
+            >
+              Emotional Intelligence
+            </button>
+
+            <button
+              type="button"
+              className={isClicked.pm ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleButtonClick("pm")}
+            >
+              Productivity Management
+            </button>
           </div>
 
-          <form action="" onSubmit={handleSubmit}>
-            <div className="select-btn">
-              <div style={{ textAlign: "start", fontSize: "15px" }}>
-                <label htmlFor="skills">Choose skills :</label>
-              </div>
-
-              <button
-                type="button"
-                className={isClicked.csp ? "button clicked" : "button"}
-                onClick={() => handleButtonClick("csp")}
-              >
-                Creative Problem solving
-              </button>
-              <button
-                type="button"
-                className={isClicked.em ? "button clicked" : "button"}
-                onClick={() => handleButtonClick("em")}
-              >
-                Entrepreneurial Mindset
-              </button>
-              <button
-                type="button"
-                className={isClicked.nego ? "button clicked" : "button"}
-                onClick={() => handleButtonClick("nego")}
-              >
-                Negotiation
-              </button>
-              <button
-                type="button"
-                className={isClicked.st ? "button clicked" : "button"}
-                onClick={() => handleButtonClick("st")}
-              >
-                Story-telling
-              </button>
-              <button
-                type="button"
-                className={isClicked.fpt ? "button clicked" : "button"}
-                onClick={() => handleButtonClick("fpt")}
-              >
-                First Principles Thinking
-              </button>
-
-              <button
-                type="button"
-                className={isClicked.src ? "button clicked" : "button"}
-                onClick={() => handleButtonClick("src")}
-              >
-                Sharp Remote Communication
-              </button>
-              <button
-                type="button"
-                className={isClicked.collab ? "button clicked" : "button"}
-                onClick={() => handleButtonClick("collab")}
-              >
-                Collaboration
-              </button>
-              <button
-                type="button"
-                className={isClicked.ei ? "button clicked" : "button"}
-                onClick={() => handleButtonClick("ei")}
-              >
-                Emotional Intelligence
-              </button>
-
-              <button
-                type="button"
-                className={isClicked.pm ? "button clicked" : "button"}
-                onClick={() => handleButtonClick("pm")}
-              >
-                Productivity Management
-              </button>
-            </div>
-
-            <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-              <div style={{ maxWidth: "300px" }}>
-                <label htmlFor="fileSelect" style={{ fontSize: "15px", marginRight: "3px" }}>
-                  Upload :
-                </label>
-                <input
-                  id="fileSelect"
-                  type="file"
-                  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                  onChange={handleFileChange}
-                  style={{
-                    padding: "5px",
-                    backgroundColor: " rgba(255, 255, 255, 0.14)",
-                    border: "none",
-                    cursor: "pointer",
-                    borderRadius: "5px 0 0 5px",
-                    width: "70%",
-                  }}
-                />
-
-                {/* {file && ( */}
-                <IconButton
-                  onClick={handleFileRemove}
-                  aria-label="delete"
-                  size="small"
-                  style={{
-                    color: "red",
-                    borderRadius: "0 5px 5px 0",
-                    backgroundColor: " rgba(255, 255, 255, 0.14)",
-                    height: "31px",
-                    marginTop: "2px",
-                  }}
-                >
-                  <Icon>delete</Icon>
-                </IconButton>
-                {/* )} */}
-              </div>
-              <div>
-                <img
-                  src={brandDark}
-                  alt="instruction"
-                  onClick={handleClickOpen}
-                  className="instruction-icon "
-                />
-
-                {open && (
-                  <div className="instruction-box">
-                    <div className="instruction-heading">
-                      <h5 style={{ fontWeight: " 400" }}>Instructions</h5>
-                      <span className="close-icon" onClick={handleClose}>
-                        &times;
-                      </span>
-                    </div>
-                    <p>
-                      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                      Lorem Ipsum has been the industry standard dummy text ever since the.
-                    </p>
-                    <a href="%PUBLIC_URL%/example.xlsx" download>
-                      download here
-                    </a>
-                    {/* google drive link or public file link  */}
-                  </div>
-                )}
-              </div>
-            </div>
-            {excelData.length > 1 && (
-              <div
+          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+            <div style={{ maxWidth: "300px" }}>
+              <label htmlFor="fileSelect" style={{ fontSize: "15px", marginRight: "3px" }}>
+                Upload :
+              </label>
+              <input
+                id="fileSelect"
+                type="file"
+                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                onChange={handleFileChange}
                 style={{
-                  overflowY: "auto",
-                  maxHeight: "150px",
-                  margin: "20px 0",
-                  padding: "0 10px",
+                  padding: "5px",
                   backgroundColor: " rgba(255, 255, 255, 0.14)",
-                  borderRadius: "10px",
-                  textAlign: "center",
+                  border: "none",
+                  cursor: "pointer",
+                  borderRadius: "5px 0 0 5px",
+                  width: "70%",
                 }}
-              >
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Email</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {excelData.map((getData, index) => (
-                      <tr key={index}>
-                        <td>{getData.Name}</td>
-                        <td>{getData.Email}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+              />
 
-            <div className="btn">
-              <button
-                type="submit"
-                disabled={isSubmitDisabled}
+              {/* {file && ( */}
+              <IconButton
+                onClick={handleFileRemove}
+                aria-label="delete"
+                size="small"
                 style={{
-                  cursor: isSubmitDisabled ? "not-allowed" : "pointer",
-                  fontFamily: fontFamily,
+                  color: "red",
+                  borderRadius: "0 5px 5px 0",
+                  backgroundColor: " rgba(255, 255, 255, 0.14)",
+                  height: "31px",
+                  marginTop: "2px",
                 }}
               >
-                Submit
-              </button>
+                <Icon>delete</Icon>
+              </IconButton>
+              {/* )} */}
             </div>
-          </form>
-        </div>
+            <div>
+              <img
+                src={brandDark}
+                alt="instruction"
+                onClick={handleClickOpen}
+                className="instruction-icon "
+              />
+
+              {open && (
+                <div className="instruction-box">
+                  <div className="instruction-heading">
+                    <h5 style={{ fontWeight: " 400" }}>Instructions</h5>
+                    <span className="close-icon" onClick={handleClose}>
+                      &times;
+                    </span>
+                  </div>
+                  <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                    Ipsum has been the industry standard dummy text ever since the.
+                  </p>
+                  <a href="%PUBLIC_URL%/example.xlsx" download>
+                    download here
+                  </a>
+                  {/* google drive link or public file link  */}
+                </div>
+              )}
+            </div>
+          </div>
+          {excelData.length > 1 && (
+            <div className="table-container" id="table-style">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {excelData.map((getData, index) => (
+                    <tr key={index}>
+                      <td>{getData.Name}</td>
+                      <td>{getData.Email}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          <div className="btn">
+            <button
+              type="submit"
+              disabled={isSubmitDisabled}
+              style={{
+                cursor: isSubmitDisabled ? "not-allowed" : "pointer",
+              }}
+            >
+              Submit
+            </button>
+          </div>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
+import "./App.css";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import { startToastManager, stopToastManager } from "layouts/toastmanager";
 import { startToastManager, stopToastManager } from "layouts/toastmanager";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -140,36 +140,38 @@ export default function App() {
   }, [isAuthenticated]);
 
   return (
-    <ThemeProvider theme={themeDark}>
-      <CssBaseline />
-      {isAuthenticated && (
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          pauseOnHover={false}
-          pauseOnFocusLoss={false}
-          // hideProgressBar={true}
-          toastStyle={{ minHeight: "50px", width: "270px", fontSize: "15px" }}
-        />
-      )}
-      {layout === "dashboard" && (
-        <>
-          <Sidenav
-            color={sidenavColor}
-            brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-            brandName="WORKVERSE"
-            routes={routes}
-            onMouseEnter={handleOnMouseEnter}
-            onMouseLeave={handleOnMouseLeave}
+    <div id="bg-main-img">
+      <ThemeProvider theme={themeDark}>
+        <CssBaseline />
+        {isAuthenticated && (
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            pauseOnHover={false}
+            pauseOnFocusLoss={false}
+            // hideProgressBar={true}
+            toastStyle={{ minHeight: "50px", width: "270px", fontSize: "15px" }}
           />
-          <Configurator />
-        </>
-      )}
-      {layout === "vr" && <Configurator />}
-      <Routes>
-        {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
-      </Routes>
-    </ThemeProvider>
+        )}
+        {layout === "dashboard" && (
+          <>
+            <Sidenav
+              color={sidenavColor}
+              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+              brandName="WORKVERSE"
+              routes={routes}
+              onMouseEnter={handleOnMouseEnter}
+              onMouseLeave={handleOnMouseLeave}
+            />
+            <Configurator />
+          </>
+        )}
+        {layout === "vr" && <Configurator />}
+        <Routes>
+          {getRoutes(routes)}
+          <Route path="*" element={<Navigate to="/dashboard" />} />
+        </Routes>
+      </ThemeProvider>
+    </div>
   );
 }

@@ -37,7 +37,7 @@
   text-align: center;
 }
 
-.registration-header h3 {
+.registration-header h4 {
   font-weight: 400;
   margin: 0;
   /* background-image: linear-gradient(to top, #00e641, #00e8f8);
@@ -87,7 +87,7 @@
   background: rgba(255, 255, 255, 0.14);
   border-radius: 5px;
   cursor: pointer;
-  background-color: #0BB08C;
+  background-color: #0bb08c;
 }
 
 .audio-button {
@@ -103,7 +103,7 @@
 }
 
 .audio-button.clicked {
-  background-color: #0BB08C;
+  background-color: #0bb08c;
 }
 
 .registration-header span {
@@ -113,5 +113,5 @@
 }
 
 .registration-header span:hover {
-  color: #0BB08C;
+  color: #0bb08c;
 }

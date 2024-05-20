@@ -3,8 +3,6 @@ import typography from "assets/theme/base/typography";
 import "./doubtform.css";
 
 export default function Doubtform() {
-  const { fontFamily } = typography;
-
   const [issue, setIssue] = useState("");
   const [doubt, setDoubt] = useState("");
 
@@ -26,7 +24,7 @@ export default function Doubtform() {
   };
 
   return (
-    <div style={{ fontFamily: fontFamily }} className="form-container">
+    <div className="form-container">
       <form onSubmit={handleSubmit}>
         <div style={{ display: "flex", flexDirection: "column", marginBottom: "10px" }}>
           <label>Whats your issue?</label>
@@ -46,14 +44,12 @@ export default function Doubtform() {
             placeholder="Kindly explain your problem"
             required
             rows="10"
-            style={{ fontFamily: fontFamily, resize: "vertical" }}
+            style={{ resize: "vertical" }}
           />
         </div>
 
-        <div>
-          <button type="submit" style={{ fontFamily: fontFamily }}>
-            Submit
-          </button>
+        <div className="btn">
+          <button type="submit">Submit</button>
         </div>
       </form>
     </div>

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 // import { useAuth0 } from "@auth0/auth0-react";
 import { useLocation } from "react-router-dom";
-import typography from "assets/theme/base/typography";
+
 import brandDark from "assets/images/student.svg";
 import brandWhite from "assets/images/employee-man-alt.svg";
 import "./Registrationform.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function RegistrationForm() {
   const [showForm, setShowForm] = useState(false);
   const location = useLocation();
-
-  const { fontFamily } = typography;
 
   // const { isAuthenticated, user } = useAuth0();
   // const history = useHistory();
@@ -63,7 +63,8 @@ function RegistrationForm() {
       console.log("Form data saved:", formData);
 
       // Reset
-      setFormData({
+      setFormData((prevData) => ({
+        ...prevData,
         fullname: "",
         pool: "",
         number: "",
@@ -72,11 +73,13 @@ function RegistrationForm() {
         state: "",
         city: "",
         linkedIn: "",
-      });
+      }));
 
       // Close form
       setShowForm(false);
       document.body.style.overflow = "";
+
+      toast.success("User Registered !");
     } else {
       console.log("Form data is not valid");
     }
@@ -93,13 +96,23 @@ function RegistrationForm() {
     sessionStorage.removeItem("isNewUser");
   };
 
+  const isSubmitDisabled =
+    !formData.fullname ||
+    !formData.number ||
+    !formData.organization ||
+    !formData.designation ||
+    !formData.state ||
+    !formData.city ||
+    !formData.linkedIn ||
+    !Object.values(isClicked).some((clicked) => clicked);
+
   return (
-    <div style={{ fontFamily: fontFamily }}>
+    <div>
       {showForm && (
         <div className="popup">
           <div className="popup-content">
             <div className="registration-header">
-              <h3>Registration Form</h3>
+              <h4>Registration Form</h4>
               <span className="material-icons" onClick={handleCloseForm}>
                 &times;
               </span>
@@ -130,7 +143,7 @@ function RegistrationForm() {
               <div
                 style={{
                   display: "inline-flex",
-                  justifyContent: "space-between",
+                  gap: "15px",
                   alignItems: "center",
                   width: "100%",
                 }}
@@ -141,7 +154,7 @@ function RegistrationForm() {
                   className={isClicked.Employee ? "audio-button clicked" : "audio-button"}
                   onClick={() => handleButtonClick("Employee")}
                   type="button"
-                  style={{ fontFamily: fontFamily, width: "100px" }}
+                  style={{ width: "100px" }}
                 >
                   <img src={brandWhite} alt="employee img" style={{ width: "15px" }} />
                   Employee
@@ -151,7 +164,7 @@ function RegistrationForm() {
                   className={isClicked.Student ? "audio-button clicked" : "audio-button"}
                   onClick={() => handleButtonClick("Student")}
                   type="button"
-                  style={{ fontFamily: fontFamily, width: "90px" }}
+                  style={{ width: "90px" }}
                 >
                   <img src={brandDark} alt="student img" style={{ width: "15px" }} />
                   Student
@@ -208,7 +221,13 @@ function RegistrationForm() {
               </div>
 
               <div className="btn">
-                <button type="submit" style={{ fontFamily: fontFamily }}>
+                <button
+                  type="submit"
+                  disabled={isSubmitDisabled}
+                  style={{
+                    cursor: isSubmitDisabled ? "not-allowed" : "pointer",
+                  }}
+                >
                   Save Data
                 </button>
               </div>

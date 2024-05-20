@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import "./adduser.css";
 import typography from "assets/theme/base/typography";
 import PropTypes from "prop-types";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const AddUser = ({ onClose }) => {
-  const { fontFamily } = typography;
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -69,135 +67,128 @@ const AddUser = ({ onClose }) => {
     }
   };
 
-  const isSubmitDisabled = !Object.values(isClicked).some((clicked) => clicked);
+  const isSubmitDisabled =
+    !formData.name || !formData.email || !Object.values(isClicked).some((clicked) => clicked);
 
   return (
-    <>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        toastStyle={{ minHeight: "50px", width: "270px", fontSize: "15px" }}
-      />
-      <div className="add-container" style={{ fontFamily: fontFamily }}>
-        <div className="add-form">
-          <div className="purchase-heading">
-            <h4>Add User</h4>
-            <span className="material-icons" onClick={onClose}>
-              &times;
-            </span>
+    <div className="add-container">
+      <div className="add-form">
+        <div className="purchase-heading">
+          <h4>Add User</h4>
+          <span className="material-icons" onClick={onClose}>
+            &times;
+          </span>
+        </div>
+
+        <form action="" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={formData.name}
+            onChange={handleInputChange}
+            required
+            style={{ marginBottom: "15px" }}
+          />
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleInputChange}
+            required
+            style={{ marginBottom: "10px" }}
+          />
+
+          <div className="select-btn">
+            <div style={{ textAlign: "start", paddingLeft: "5px" }}>
+              <label htmlFor="skills" style={{ fontSize: "15px" }}>
+                Choose skills:
+              </label>
+            </div>
+
+            <button
+              type="button"
+              className={isClicked.csp ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleButtonClick("csp")}
+            >
+              Creative Problem solving
+            </button>
+            <button
+              type="button"
+              className={isClicked.em ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleButtonClick("em")}
+            >
+              Entrepreneurial Mindset
+            </button>
+            <button
+              type="button"
+              className={isClicked.nego ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleButtonClick("nego")}
+            >
+              Negotiation
+            </button>
+            <button
+              type="button"
+              className={isClicked.st ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleButtonClick("st")}
+            >
+              Story-telling
+            </button>
+            <button
+              type="button"
+              className={isClicked.fpt ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleButtonClick("fpt")}
+            >
+              First Principles Thinking
+            </button>
+
+            <button
+              type="button"
+              className={isClicked.src ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleButtonClick("src")}
+            >
+              Sharp Remote Communication
+            </button>
+            <button
+              type="button"
+              className={isClicked.collab ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleButtonClick("collab")}
+            >
+              Collaboration
+            </button>
+            <button
+              type="button"
+              className={isClicked.ei ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleButtonClick("ei")}
+            >
+              Emotional Intelligence
+            </button>
+
+            <button
+              type="button"
+              className={isClicked.pm ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleButtonClick("pm")}
+            >
+              Productivity Management
+            </button>
           </div>
 
-          <form action="" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              value={formData.name}
-              onChange={handleInputChange}
-              required
-              style={{ marginBottom: "15px" }}
-            />
-
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-              style={{ marginBottom: "10px" }}
-            />
-
-            <div className="select-btn">
-              <div style={{ textAlign: "start", paddingLeft: "5px" }}>
-                <label htmlFor="skills" style={{ fontSize: "15px" }}>
-                  Choose skills:
-                </label>
-              </div>
-
-              <button
-                type="button"
-                className={isClicked.csp ? "button clicked" : "button"}
-                onClick={() => handleButtonClick("csp")}
-              >
-                Creative Problem solving
-              </button>
-              <button
-                type="button"
-                className={isClicked.em ? "button clicked" : "button"}
-                onClick={() => handleButtonClick("em")}
-              >
-                Entrepreneurial Mindset
-              </button>
-              <button
-                type="button"
-                className={isClicked.nego ? "button clicked" : "button"}
-                onClick={() => handleButtonClick("nego")}
-              >
-                Negotiation
-              </button>
-              <button
-                type="button"
-                className={isClicked.st ? "button clicked" : "button"}
-                onClick={() => handleButtonClick("st")}
-              >
-                Story-telling
-              </button>
-              <button
-                type="button"
-                className={isClicked.fpt ? "button clicked" : "button"}
-                onClick={() => handleButtonClick("fpt")}
-              >
-                First Principles Thinking
-              </button>
-
-              <button
-                type="button"
-                className={isClicked.src ? "button clicked" : "button"}
-                onClick={() => handleButtonClick("src")}
-              >
-                Sharp Remote Communication
-              </button>
-              <button
-                type="button"
-                className={isClicked.collab ? "button clicked" : "button"}
-                onClick={() => handleButtonClick("collab")}
-              >
-                Collaboration
-              </button>
-              <button
-                type="button"
-                className={isClicked.ei ? "button clicked" : "button"}
-                onClick={() => handleButtonClick("ei")}
-              >
-                Emotional Intelligence
-              </button>
-
-              <button
-                type="button"
-                className={isClicked.pm ? "button clicked" : "button"}
-                onClick={() => handleButtonClick("pm")}
-              >
-                Productivity Management
-              </button>
-            </div>
-
-            <div className="btn">
-              <button
-                type="submit"
-                disabled={isSubmitDisabled}
-                style={{
-                  cursor: isSubmitDisabled ? "not-allowed" : "pointer",
-                  fontFamily: fontFamily,
-                }}
-              >
-                Add
-              </button>
-            </div>
-          </form>
-        </div>
+          <div className="btn">
+            <button
+              type="submit"
+              disabled={isSubmitDisabled}
+              style={{
+                cursor: isSubmitDisabled ? "not-allowed" : "pointer",
+              }}
+            >
+              Add
+            </button>
+          </div>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
 

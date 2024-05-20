@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // notifications
 let intervalId;
@@ -23,7 +24,6 @@ const showPopup = () => {
 
 const handleVisibilityChange = () => {
   if (document.visibilityState === "visible") {
-    clearInterval(intervalId);
     startToastManager();
   } else {
     stopToastManager();
@@ -31,17 +31,20 @@ const handleVisibilityChange = () => {
 };
 
 const clearNotifications = () => {
-  toast.dismiss(); // Dismiss all notifications
+  toast.dismiss();
 };
 
 export const startToastManager = () => {
-  intervalId = setInterval(() => {
-    showPopup();
-  }, 6000);
+  if (!intervalId) {
+    intervalId = setInterval(() => {
+      showPopup();
+    }, 60000);
+  }
 };
 
 export const stopToastManager = () => {
   clearInterval(intervalId);
+  intervalId = null;
 };
 
 document.addEventListener("visibilitychange", handleVisibilityChange);

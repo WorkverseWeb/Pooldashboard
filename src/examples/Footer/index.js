@@ -104,7 +104,7 @@ Footer.defaultProps = {
     { href: "https://workverse.in/", name: "Workverse" },
     { href: "https://workverse.in/about", name: "About Us" },
     { href: "https://workverse.in/white-papers", name: "White paper" },
-    { href: "https://workverse.in/careers", name: "careers" },
+    { href: "https://workverse.in/careers", name: "Careers" },
   ],
 };
 

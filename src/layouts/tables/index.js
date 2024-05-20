@@ -50,7 +50,6 @@ function Tables() {
   const { columns, rows } = authorsTableData();
   const { columns: pColumns, rows: pRows } = projectsTableData();
 
-  const { fontFamily } = typography;
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [FormOpen, setFormOpen] = useState(false);
 
@@ -95,7 +94,6 @@ function Tables() {
                       justifyContent: "space-between",
                       alignItems: "center",
                       padding: "20px",
-                      fontFamily: fontFamily,
                     }}
                   >
                     <p style={{ color: "#fff", fontWeight: "300", fontSize: "15px" }}>
@@ -116,10 +114,10 @@ function Tables() {
                           border: "none",
                           borderRadius: "7px",
                           cursor: "pointer",
-                          fontWeight: "500",
-                          fontFamily: fontFamily,
+                          fontWeight: "600",
                           textTransform: "uppercase",
                         }}
+                        className="popup-btn"
                         onClick={toggleForm}
                       >
                         <IconButton
@@ -140,15 +138,15 @@ function Tables() {
                       <button
                         style={{
                           padding: "9px 10px",
-                          fontWeight: "500",
+                          fontWeight: "600",
                           backgroundColor: "#0BB08C",
                           color: "white",
                           border: "none",
                           borderRadius: "7px",
                           cursor: "pointer",
-                          fontFamily: fontFamily,
                           textTransform: "uppercase",
                         }}
+                        className="popup-btn"
                         onClick={uploadForm}
                       >
                         <IconButton
