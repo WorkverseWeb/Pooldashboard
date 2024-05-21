@@ -21,11 +21,8 @@ form select,
 }
 
 #bg-main-img {
-  position: relative;
-  /*  linear-gradient(rgb(2 27 33), rgb(2 27 33)), */
-  background: url("./assets/images/main-bg-img.png") no-repeat center center;
-  background-size: cover;
-  /* background-blend-mode: overlay; */
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.582), rgb(2, 27, 33)),
+    url("./assets/images/main-bg-img.png") no-repeat center center / cover;
 }
 /* #bg-main-img::before {
   content: "";

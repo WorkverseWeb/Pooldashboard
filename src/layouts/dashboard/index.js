@@ -57,17 +57,20 @@ function Dashboard() {
       <DashboardNavbar />
       <MDBox
         py={3}
-        style={{
-          background: isAuthenticated
-            ? "none"
-            : " linear-gradient(45deg, rgb(5 74 25 / 9%) 30%, rgb(127 207 207 / 18%) 80%)",
-          minHeight: "85vh",
-          borderRadius: "10px",
-          overflow: "hidden",
-          display: isAuthenticated ? "block" : "flex",
-          justifyContent: isAuthenticated ? "initial" : "center",
-          alignItems: isAuthenticated ? "initial" : "center",
-        }}
+        style={
+          !isAuthenticated
+            ? {
+                background:
+                  "linear-gradient(45deg, rgb(5 74 25 / 9%) 30%, rgb(127 207 207 / 18%) 80%)",
+                minHeight: "85vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "10px",
+                overflow: "hidden",
+              }
+            : {}
+        }
       >
         {isAuthenticated ? (
           <>

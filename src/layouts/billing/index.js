@@ -41,17 +41,20 @@ function Billing() {
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox
-        style={{
-          background: isAuthenticated
-            ? "none"
-            : " linear-gradient(45deg, rgb(5 74 25 / 9%) 30%, rgb(127 207 207 / 18%) 80%)",
-          minHeight: "85vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: "10px",
-          overflow: "hidden",
-        }}
+        style={
+          !isAuthenticated
+            ? {
+                background:
+                  "linear-gradient(45deg, rgb(5 74 25 / 9%) 30%, rgb(127 207 207 / 18%) 80%)",
+                minHeight: "85vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "10px",
+                overflow: "hidden",
+              }
+            : {}
+        }
       >
         {isAuthenticated ? (
           <>
@@ -59,10 +62,10 @@ function Billing() {
               <Grid container spacing={3}>
                 <Grid item xs={12} lg={8}>
                   <Grid container spacing={3}>
-                    <Grid item xs={12} xl={6}>
+                    {/* <Grid item xs={12} xl={6}>
                       <MasterCard number={4562112245947852} holder="Ayan Pathak" expires="11/22" />
-                    </Grid>
-                    <Grid item xs={12} md={6} xl={3}>
+                    </Grid> */}
+                    <Grid item xs={12} xl={6}>
                       <DefaultInfoCard
                         icon="account_balance"
                         title="Total paid"
@@ -70,7 +73,7 @@ function Billing() {
                         value="Rs. 34000/-"
                       />
                     </Grid>
-                    <Grid item xs={12} md={6} xl={3}>
+                    <Grid item xs={12} xl={6}>
                       <DefaultInfoCard
                         icon="paypal"
                         title="paypal"
@@ -78,12 +81,12 @@ function Billing() {
                         value="Sucess"
                       />
                     </Grid>
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                       <PaymentMethod />
-                    </Grid>
+                    </Grid> */}
                   </Grid>
                 </Grid>
-                <Grid item xs={12} lg={4}>
+                <Grid item xs={12} lg={8}>
                   <Invoices />
                 </Grid>
               </Grid>

@@ -38,7 +38,7 @@ export const startToastManager = () => {
   if (!intervalId) {
     intervalId = setInterval(() => {
       showPopup();
-    }, 60000);
+    }, 600000);
   }
 };
 
