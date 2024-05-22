@@ -60,12 +60,12 @@ function Billing() {
           <>
             <MDBox mb={3}>
               <Grid container spacing={3}>
-                <Grid item xs={12} lg={8}>
-                  <Grid container spacing={3}>
+                <Grid item xs={12} lg={12}>
+                  <Grid container spacing={3} style={{ width: "100%", margin: "85px 0" }}>
                     {/* <Grid item xs={12} xl={6}>
                       <MasterCard number={4562112245947852} holder="Ayan Pathak" expires="11/22" />
                     </Grid> */}
-                    <Grid item xs={12} xl={6}>
+                    <Grid item xs={12} xl={3}>
                       <DefaultInfoCard
                         icon="account_balance"
                         title="Total paid"
@@ -73,7 +73,7 @@ function Billing() {
                         value="Rs. 34000/-"
                       />
                     </Grid>
-                    <Grid item xs={12} xl={6}>
+                    <Grid item xs={12} xl={3}>
                       <DefaultInfoCard
                         icon="paypal"
                         title="paypal"
@@ -84,10 +84,10 @@ function Billing() {
                     {/* <Grid item xs={12}>
                       <PaymentMethod />
                     </Grid> */}
+                    <Grid item xs={6}>
+                      <Invoices />
+                    </Grid>
                   </Grid>
-                </Grid>
-                <Grid item xs={12} lg={8}>
-                  <Invoices />
                 </Grid>
               </Grid>
             </MDBox>

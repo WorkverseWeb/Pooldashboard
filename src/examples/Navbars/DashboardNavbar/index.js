@@ -113,7 +113,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
   return (
     <>
-      {/* <RegistrationForm /> */}
+      <RegistrationForm />
 
       <AppBar
         position={absolute ? "absolute" : navbarType}

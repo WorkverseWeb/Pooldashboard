@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./adduser.css";
-import typography from "assets/theme/base/typography";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 const AddUser = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -23,52 +23,105 @@ const AddUser = ({ onClose }) => {
     pm: false,
   });
 
+  const [branchClicked, setBranchClicked] = useState({
+    cs: false,
+    extc: false,
+    aids: false,
+    civil: false,
+    mech: false,
+  });
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleButtonClick = (value) => {
-    setIsClicked((prevClicked) => ({
-      ...prevClicked,
-      [value]: !prevClicked[value],
-    }));
+  const handleButtonClick = (button) => {
+    const newState = { ...isClicked, [button]: !isClicked[button] };
+    setIsClicked(newState);
   };
 
-  const handleSubmit = (e) => {
+  const handleBranchButtonClick = (button) => {
+    const newBranch = {
+      cs: false,
+      extc: false,
+      aids: false,
+      civil: false,
+      mech: false,
+      [button]: true,
+    };
+    setBranchClicked(newBranch);
+  };
+
+  // const sendStateToBackend = async (data) => {
+  //   try {
+  //     const response = await axios.post("http://localhost:8000/api/addusers", data);
+  //     return response;
+  //   } catch (error) {
+  //     console.error("Error during API call:", error);
+  //     throw error;
+  //   }
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const isSelected = Object.values(isClicked).some((clicked) => clicked);
+      const isSelected =
+        Object.values(isClicked).some((clicked) => clicked) ||
+        Object.values(branchClicked).some((clicked) => clicked);
       if (!isSelected) {
+        toast.error("Please select at least One.");
         return;
       }
 
-      setFormData({
-        name: "",
-        email: "",
-      });
+      const response = await sendStateToBackend({ ...formData, ...isClicked, ...branchClicked });
 
-      setIsClicked({
-        csp: false,
-        em: false,
-        nego: false,
-        st: false,
-        fpt: false,
-        src: false,
-        collab: false,
-        ei: false,
-        pm: false,
-      });
+      if (response.data.success) {
+        // RESET
+        setFormData({
+          name: "",
+          email: "",
+        });
 
-      toast.success("User Added Successfully !");
+        setIsClicked({
+          csp: false,
+          em: false,
+          nego: false,
+          st: false,
+          fpt: false,
+          src: false,
+          collab: false,
+          ei: false,
+          pm: false,
+        });
+
+        setIsClicked({
+          cs: false,
+          extc: false,
+          aids: false,
+          civil: false,
+          mech: false,
+        });
+
+        toast.success("User Added Successfully!");
+      }
     } catch (error) {
-      console.error("An error occurred:", error);
-      toast.error("Error in Adding User!");
+      console.error("Error adding user:", error);
+      toast.error("Error adding User! Please try again later.");
+      // if (error.response && error.response.status === 409) {
+      //   toast.error("User already added.");
+      // } else {
+      //   toast.error("Error adding User! Please try again later.");
+      // }
     }
   };
 
   const isSubmitDisabled =
-    !formData.name || !formData.email || !Object.values(isClicked).some((clicked) => clicked);
+    !formData.name ||
+    !formData.email ||
+    !Object.values(isClicked).some((clicked) => clicked) ||
+    !Object.values(branchClicked).some((clicked) => clicked);
 
   return (
     <div className="add-container">
@@ -104,7 +157,50 @@ const AddUser = ({ onClose }) => {
           <div className="select-btn">
             <div style={{ textAlign: "start", paddingLeft: "5px" }}>
               <label htmlFor="skills" style={{ fontSize: "15px" }}>
-                Choose skills:
+                Branch :
+              </label>
+            </div>
+            <button
+              type="button"
+              className={branchClicked.cs ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleBranchButtonClick("cs")}
+            >
+              CS
+            </button>
+            <button
+              type="button"
+              className={branchClicked.extc ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleBranchButtonClick("extc")}
+            >
+              EXTC
+            </button>
+            <button
+              type="button"
+              className={branchClicked.aids ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleBranchButtonClick("aids")}
+            >
+              AI&DS
+            </button>
+            <button
+              type="button"
+              className={branchClicked.civil ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleBranchButtonClick("civil")}
+            >
+              CIVIL
+            </button>
+            <button
+              type="button"
+              className={branchClicked.mech ? "audio-button clicked" : "audio-button"}
+              onClick={() => handleBranchButtonClick("mech")}
+            >
+              MECHANICAL
+            </button>
+          </div>
+
+          <div className="select-btn">
+            <div style={{ textAlign: "start", paddingLeft: "5px" }}>
+              <label htmlFor="skills" style={{ fontSize: "15px" }}>
+                Select :
               </label>
             </div>
 

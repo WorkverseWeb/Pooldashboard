@@ -7,26 +7,17 @@ import brandWhite from "assets/images/employee-man-alt.svg";
 import "./Registrationform.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 function RegistrationForm() {
-  const [showForm, setShowForm] = useState(false);
-  const location = useLocation();
-
   // const { isAuthenticated, user } = useAuth0();
   // const history = useHistory();
+  const [showForm, setShowForm] = useState(false);
+  const location = useLocation();
   const [isClicked, setIsClicked] = useState({ Employee: false, Student: false });
-
-  const handleButtonClick = (value) => {
-    if (formData.pool !== value) {
-      setFormData((prevData) => ({ ...prevData, pool: value }));
-      setIsClicked((prevClicked) => ({ ...prevClicked, [value]: true, [formData.pool]: false }));
-    }
-  };
-
   const [formData, setFormData] = useState({
     fullname: "",
     number: "",
-    pool: "",
     organization: "",
     designation: "",
     state: "",
@@ -41,7 +32,6 @@ function RegistrationForm() {
   //     }
   //   }
   // }, [isAuthenticated, user, history]);
-
   useEffect(() => {
     if (location.pathname === "/dashboard") {
       setShowForm(true);
@@ -50,39 +40,57 @@ function RegistrationForm() {
     }
   }, [location]);
 
+  const handleButtonClick = (button) => {
+    const newState = { Employee: false, Student: false, [button]: true };
+    setIsClicked(newState);
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  // const sendStateToBackend = async (data) => {
+  //   try {
+  //     const response = await axios.post("http://localhost:8000/register", data);
+  //     console.log("User data registered:", response.data);
+  //   } catch (error) {
+  //     console.error("Error registering user:", error);
+  //     toast.error("Error Registering User!");
+  //   }
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const isValid = validateForm(formData);
-    if (isValid) {
-      console.log("Form data saved:", formData);
-
-      // Reset
-      setFormData((prevData) => ({
-        ...prevData,
-        fullname: "",
-        pool: "",
-        number: "",
-        organization: "",
-        designation: "",
-        state: "",
-        city: "",
-        linkedIn: "",
-      }));
-
-      // Close form
-      setShowForm(false);
-      document.body.style.overflow = "";
-
-      toast.success("User Registered !");
-    } else {
+    if (!isValid) {
       console.log("Form data is not valid");
+      return;
     }
+    console.log("Form data saved:", formData);
+
+    // sendStateToBackend({ ...formData, ...isClicked });
+
+    // Reset form data
+    setFormData({
+      fullname: "",
+      number: "",
+      organization: "",
+      designation: "",
+      state: "",
+      city: "",
+      linkedIn: "",
+    });
+
+    setIsClicked({ Employee: false, Student: false });
+
+    // Close form
+    setShowForm(false);
+    document.body.style.overflow = "";
+
+    // notify
+    toast.success("User Registered !");
   };
 
   const validateForm = (formData) => {
@@ -154,6 +162,8 @@ function RegistrationForm() {
                   className={isClicked.Employee ? "audio-button clicked" : "audio-button"}
                   onClick={() => handleButtonClick("Employee")}
                   type="button"
+                  name="employee"
+                  value="employee"
                   style={{ width: "100px" }}
                 >
                   <img src={brandWhite} alt="employee img" style={{ width: "15px" }} />
@@ -164,6 +174,8 @@ function RegistrationForm() {
                   className={isClicked.Student ? "audio-button clicked" : "audio-button"}
                   onClick={() => handleButtonClick("Student")}
                   type="button"
+                  name="student"
+                  value="student"
                   style={{ width: "90px" }}
                 >
                   <img src={brandDark} alt="student img" style={{ width: "15px" }} />

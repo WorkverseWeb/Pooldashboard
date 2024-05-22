@@ -25,6 +25,8 @@ import MDBadge from "components/MDBadge";
 import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
+import { Padding } from "@mui/icons-material";
+import borders from "assets/theme/base/borders";
 
 export default function data() {
   const Author = ({ image, name, email }) => (
@@ -40,18 +42,57 @@ export default function data() {
   );
 
   const Job = ({ title, description }) => (
-    <MDBox lineHeight={1} textAlign="left">
-      <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
+    <MDBox
+      lineHeight={1}
+      textAlign="center"
+      style={{
+        maxWidth: "280px",
+        whiteSpace: "normal",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+      }}
+    >
+      <MDTypography
+        display="block"
+        variant="caption"
+        color="text"
+        fontWeight="medium"
+        style={{ lineHeight: "20px" }}
+      >
         {title}
       </MDTypography>
       <MDTypography variant="caption">{description}</MDTypography>
     </MDBox>
   );
 
+  const Branch = ({ heading }) => (
+    <MDBox lineHeight={1} textAlign="center">
+      <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
+        {heading}
+      </MDTypography>
+    </MDBox>
+  );
+
   return {
     columns: [
-      { Header: "author", accessor: "author", width: "45%", align: "left" },
-      { Header: "skill", accessor: "function", align: "left" },
+      {
+        Header: "player",
+        accessor: "author",
+        width: "20%",
+        align: "left",
+      },
+      { Header: "branch", accessor: "branch", align: "center" },
+      {
+        Header: "skill",
+        accessor: "function",
+        align: "center",
+        style: {
+          maxWidth: "280px",
+          whiteSpace: "normal",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        },
+      },
       { Header: "status", accessor: "status", align: "center" },
       { Header: "start date", accessor: "employed", align: "center" },
       { Header: "WIP", accessor: "action", align: "center" },
@@ -60,7 +101,14 @@ export default function data() {
     rows: [
       {
         author: <Author image={team2} name="Priyanka Shahasane" email="priyanka@workverse.in" />,
-        function: <Job title="Creative Problem  " description="solving" />,
+        branch: <Branch heading="Computer Science" />,
+        function: (
+          <Job
+            title="Creative Problem solving , Negotiation , Collaboration , First Principles
+        Thinking, Productivity Management , Emotional Intelligencp , Story-telling , Collaboration, Entrepreneurial Mindset"
+          />
+        ),
+        // description=""
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
@@ -79,7 +127,13 @@ export default function data() {
       },
       {
         author: <Author image={team3} name="Tej Mandani" email="tej@workverse.in" />,
-        function: <Job title="Entrepreneurial  " description="Mindset" />,
+        branch: <Branch heading="Computer Science" />,
+        function: (
+          <Job
+            title="Entrepreneurial  Mindset, First Principles
+        Thinking, Productivity Management ,"
+          />
+        ),
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
@@ -98,7 +152,10 @@ export default function data() {
       },
       {
         author: <Author image={team4} name="Rasika Lokhande" email="rasika@workverse.in" />,
-        function: <Job title="Negotiation" />,
+        branch: <Branch heading="IT" />,
+        function: (
+          <Job title="Negotiation , Story-telling , Collaboration, Entrepreneurial Mindset" />
+        ),
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
@@ -117,6 +174,7 @@ export default function data() {
       },
       {
         author: <Author image={team3} name="Om Rane" email="om@workverse.in" />,
+        branch: <Branch heading="EXTC" />,
         function: <Job title="Story-telling" />,
         status: (
           <MDBox ml={-1}>
@@ -136,6 +194,7 @@ export default function data() {
       },
       {
         author: <Author image={team3} name="Subhajit Adhikari" email="subhajit@workverse.in" />,
+        branch: <Branch heading="AI" />,
         function: <Job title="First Principles " description="Thinking" />,
         status: (
           <MDBox ml={-1}>
@@ -155,6 +214,7 @@ export default function data() {
       },
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
+        branch: <Branch heading="civil" />,
         function: <Job title="Emotional " description="Intelligencp" />,
         status: (
           <MDBox ml={-1}>
@@ -174,6 +234,7 @@ export default function data() {
       },
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
+        branch: <Branch heading="IT" />,
         function: <Job title="Collaboration " />,
         status: (
           <MDBox ml={-1}>
@@ -193,6 +254,7 @@ export default function data() {
       },
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
+        branch: <Branch heading="EXTC" />,
         function: <Job title="Sharp Remote  " description="Communication" />,
         status: (
           <MDBox ml={-1}>
@@ -212,6 +274,7 @@ export default function data() {
       },
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
+        branch: <Branch heading="Mechanical" />,
         function: <Job title="Productivity  " description="Management" />,
         status: (
           <MDBox ml={-1}>
