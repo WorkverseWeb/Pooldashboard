@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Icon, IconButton } from "@mui/material";
 import brandDark from "assets/images/information.png";
+import brandWhite from "assets/images/instruction_img.PNG";
 
 const UploadUser = ({ onClose }) => {
   const [file, setFile] = useState(null);
@@ -106,11 +107,22 @@ const UploadUser = ({ onClose }) => {
 
   // instruction
   const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleClickToggle = () => {
+    if (!file) {
+      setOpen(!open);
+    }
   };
-  const handleClose = () => {
-    setOpen(false);
+
+  // select all
+  const handleSelectAllClick = () => {
+    const allSelected = Object.values(isClicked).every((value) => value);
+
+    const newIsClicked = {};
+    for (const skill in isClicked) {
+      newIsClicked[skill] = !allSelected;
+    }
+
+    setIsClicked(newIsClicked);
   };
 
   return (
@@ -125,8 +137,28 @@ const UploadUser = ({ onClose }) => {
 
         <form action="" onSubmit={handleSubmit}>
           <div className="select-btn">
-            <div style={{ textAlign: "start", fontSize: "15px" }}>
-              <label htmlFor="skills">Choose skills :</label>
+            <div
+              style={{
+                fontSize: "15px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "5px",
+              }}
+            >
+              <label htmlFor="skills">Select :</label>
+
+              <button
+                type="button"
+                className="audio-button"
+                onClick={handleSelectAllClick}
+                style={{
+                  margin: "0",
+                  color: "#fff",
+                }}
+              >
+                {Object.values(isClicked).every((value) => value) ? "Deselect All" : "Select All"}
+              </button>
             </div>
 
             <button
@@ -226,7 +258,7 @@ const UploadUser = ({ onClose }) => {
                   borderRadius: "0 5px 5px 0",
                   backgroundColor: " rgba(255, 255, 255, 0.14)",
                   height: "31px",
-                  marginTop: "2px",
+                  marginTop: "1px",
                 }}
               >
                 <Icon>delete</Icon>
@@ -237,30 +269,36 @@ const UploadUser = ({ onClose }) => {
               <img
                 src={brandDark}
                 alt="instruction"
-                onClick={handleClickOpen}
+                onClick={handleClickToggle}
                 className="instruction-icon "
               />
-
-              {open && (
-                <div className="instruction-box">
-                  <div className="instruction-heading">
-                    <h5 style={{ fontWeight: " 400" }}>Instructions</h5>
-                    <span className="close-icon" onClick={handleClose}>
-                      &times;
-                    </span>
-                  </div>
-                  <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                    Ipsum has been the industry standard dummy text ever since the.
-                  </p>
-                  <a href="%PUBLIC_URL%/example.xlsx" download>
-                    download here
-                  </a>
-                  {/* google drive link or public file link  */}
-                </div>
-              )}
             </div>
           </div>
+          <p style={{ margin: "0px", fontSize: "12px", padding: "0 60px" }}>
+            Upload File in xlsx format only
+          </p>
+          {open && (
+            <div className="instruction-box">
+              <div className="instruction-heading">
+                <h5 style={{ fontWeight: " 400", marginBottom: "5px" }}>Instructions</h5>
+              </div>
+              <p>
+                Upload File in .xlsx format only. File format should be in same format as shown in
+                below image or in attached below excel file.
+              </p>
+              <img src={brandWhite} alt="instruction-formatF" height={"80px"} />
+              <a
+                href="https://drive.google.com/drive/folders/1ZvhF_BtZ72fpZLEbLwiU_uAe21UPkNRr?usp=drive_link"
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                download here
+              </a>
+              {/* google drive link or public file link  */}
+            </div>
+          )}
+
           {excelData.length > 1 && (
             <div className="table-container" id="table-style">
               <table>
@@ -268,6 +306,7 @@ const UploadUser = ({ onClose }) => {
                   <tr>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Group</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -275,6 +314,7 @@ const UploadUser = ({ onClose }) => {
                     <tr key={index}>
                       <td>{getData.Name}</td>
                       <td>{getData.Email}</td>
+                      <td>{getData.Group}</td>
                     </tr>
                   ))}
                 </tbody>

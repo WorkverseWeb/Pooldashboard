@@ -3,12 +3,16 @@
 * React - v2.2.0
 =========================================================
 
+
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
 * Copyright 2023 Creative Tim (https://www.creative-tim.com)
 
+
 Coded by www.creative-tim.com
 
+
  =========================================================
+
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
@@ -44,6 +48,7 @@ import React, { useState, useEffect } from "react";
 import AddUser from "./adduser/adduser";
 import typography from "assets/theme/base/typography";
 import UploadUser from "./uploaduser/uploaduser";
+import CustomGroups from "./customGroup/customGroup";
 
 function Tables() {
   const { isAuthenticated } = useAuth0();
@@ -68,17 +73,19 @@ function Tables() {
 
       <DashboardNavbar />
 
+      <CustomGroups />
+
       <div
         style={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "end",
           alignItems: "center",
-          padding: "15px 20px",
+          padding: "30px 20px 20px",
         }}
       >
-        <p style={{ color: "#fff", fontWeight: "300", fontSize: "15px" }}>
+        {/* <p style={{ color: "#fff", fontWeight: "300", fontSize: "15px" }}>
           50 Slots Available for Negotiation Skill.
-        </p>
+        </p> */}
         <div
           style={{
             display: "flex",
@@ -175,7 +182,7 @@ function Tables() {
                       table={{ columns, rows }}
                       isSorted={false}
                       entriesPerPage={false}
-                      showTotalEntries={false}
+                      showTotalEntries={true}
                       noEndBorder
                     />
                   </MDBox>

@@ -48,6 +48,9 @@ const AddUser = ({ onClose }) => {
       aids: false,
       civil: false,
       mech: false,
+      media: false,
+      chem: false,
+      it: false,
       [button]: true,
     };
     setBranchClicked(newBranch);
@@ -75,37 +78,40 @@ const AddUser = ({ onClose }) => {
         return;
       }
 
-      const response = await sendStateToBackend({ ...formData, ...isClicked, ...branchClicked });
+      // const response = await sendStateToBackend({ ...formData, ...isClicked, ...branchClicked });
 
-      if (response.data.success) {
-        // RESET
-        setFormData({
-          name: "",
-          email: "",
-        });
+      // if (response.data.success) {
+      // RESET
+      setFormData({
+        name: "",
+        email: "",
+      });
 
-        setIsClicked({
-          csp: false,
-          em: false,
-          nego: false,
-          st: false,
-          fpt: false,
-          src: false,
-          collab: false,
-          ei: false,
-          pm: false,
-        });
+      setIsClicked({
+        csp: false,
+        em: false,
+        nego: false,
+        st: false,
+        fpt: false,
+        src: false,
+        collab: false,
+        ei: false,
+        pm: false,
+      });
 
-        setIsClicked({
-          cs: false,
-          extc: false,
-          aids: false,
-          civil: false,
-          mech: false,
-        });
+      setBranchClicked({
+        cs: false,
+        extc: false,
+        aids: false,
+        civil: false,
+        mech: false,
+        media: false,
+        chem: false,
+        it: false,
+      });
 
-        toast.success("User Added Successfully!");
-      }
+      toast.success("User Added Successfully!");
+      // }
     } catch (error) {
       console.error("Error adding user:", error);
       toast.error("Error adding User! Please try again later.");
@@ -122,6 +128,18 @@ const AddUser = ({ onClose }) => {
     !formData.email ||
     !Object.values(isClicked).some((clicked) => clicked) ||
     !Object.values(branchClicked).some((clicked) => clicked);
+
+  // select all
+  const handleSelectAllClick = () => {
+    const allSelected = Object.values(isClicked).every((value) => value);
+
+    const newIsClicked = {};
+    for (const skill in isClicked) {
+      newIsClicked[skill] = !allSelected;
+    }
+
+    setIsClicked(newIsClicked);
+  };
 
   return (
     <div className="add-container">
@@ -157,51 +175,89 @@ const AddUser = ({ onClose }) => {
           <div className="select-btn">
             <div style={{ textAlign: "start", paddingLeft: "5px" }}>
               <label htmlFor="skills" style={{ fontSize: "15px" }}>
-                Branch :
+                Group :
               </label>
             </div>
             <button
               type="button"
-              className={branchClicked.cs ? "audio-button clicked" : "audio-button"}
+              className={branchClicked.cs ? "branch-button clicked" : "branch-button"}
               onClick={() => handleBranchButtonClick("cs")}
             >
-              CS
+              Cs
             </button>
             <button
               type="button"
-              className={branchClicked.extc ? "audio-button clicked" : "audio-button"}
+              className={branchClicked.extc ? "branch-button clicked" : "branch-button"}
               onClick={() => handleBranchButtonClick("extc")}
             >
-              EXTC
+              Extc
             </button>
             <button
               type="button"
-              className={branchClicked.aids ? "audio-button clicked" : "audio-button"}
+              className={branchClicked.aids ? "branch-button clicked" : "branch-button"}
               onClick={() => handleBranchButtonClick("aids")}
             >
-              AI&DS
+              Ai&ds
             </button>
             <button
               type="button"
-              className={branchClicked.civil ? "audio-button clicked" : "audio-button"}
+              className={branchClicked.civil ? "branch-button clicked" : "branch-button"}
               onClick={() => handleBranchButtonClick("civil")}
             >
-              CIVIL
+              Civil
             </button>
             <button
               type="button"
-              className={branchClicked.mech ? "audio-button clicked" : "audio-button"}
+              className={branchClicked.mech ? "branch-button clicked" : "branch-button"}
               onClick={() => handleBranchButtonClick("mech")}
             >
-              MECHANICAL
+              Mechanical
+            </button>
+            <button
+              type="button"
+              className={branchClicked.media ? "branch-button clicked" : "branch-button"}
+              onClick={() => handleBranchButtonClick("media")}
+            >
+              Media
+            </button>
+            <button
+              type="button"
+              className={branchClicked.chem ? "branch-button clicked" : "branch-button"}
+              onClick={() => handleBranchButtonClick("chem")}
+            >
+              Chemical
+            </button>
+            <button
+              type="button"
+              className={branchClicked.it ? "branch-button clicked" : "branch-button"}
+              onClick={() => handleBranchButtonClick("it")}
+            >
+              It
             </button>
           </div>
 
           <div className="select-btn">
-            <div style={{ textAlign: "start", paddingLeft: "5px" }}>
-              <label htmlFor="skills" style={{ fontSize: "15px" }}>
-                Select :
-              </label>
+            <div
+              style={{
+                fontSize: "15px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "5px",
+              }}
+            >
+              <label htmlFor="skills">Select :</label>
+              <button
+                type="button"
+                className="audio-button"
+                onClick={handleSelectAllClick}
+                style={{
+                  margin: "0",
+                  color: "#fff",
+                }}
+              >
+                {Object.values(isClicked).every((value) => value) ? "Deselect All" : "Select All"}
+              </button>
             </div>
 
             <button

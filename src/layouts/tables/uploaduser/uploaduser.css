@@ -63,7 +63,7 @@
 
 .upload-form form .select-btn {
   overflow: hidden;
-  text-align: center;
+  text-align: start;
   margin-bottom: 15px;
 }
 
@@ -139,46 +139,28 @@
 }
 
 /* instruction */
+.instruction-icon {
+  cursor: pointer;
+}
 
 .upload-form form .instruction-box {
-  position: absolute;
-  margin-top: 10px;
-  left: 240px;
   padding: 5px 15px;
   border-radius: 8px;
-  background: #040605;
-  width: 350px;
+  background: #0406053b;
   border: 1px solid rgb(88 88 88 / 19%);
 }
 
-.upload-form form .instruction-heading {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-align: center;
-}
-
-.upload-form form .instruction-icon {
-  cursor: pointer;
-  position: relative;
-}
-
 .upload-form form .instruction-box p {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 300;
+  margin-bottom: 5px;
 }
 
 .upload-form form .instruction-box a {
+  display: grid;
+  justify-content: end;
+  align-items: center;
   font-size: 13px;
   color: #0bb08c;
   text-decoration: underline !important;
-}
-
-.upload-form form .close-icon {
-  cursor: pointer;
-}
-
-.upload-form form .close-icon:hover {
-  color: #0bb08c9f;
 }
