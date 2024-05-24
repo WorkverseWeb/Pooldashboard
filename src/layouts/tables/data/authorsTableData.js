@@ -292,6 +292,106 @@ export default function data() {
           </MDTypography>
         ),
       },
+      {
+        author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
+        branch: <Branch heading="Mechanical" />,
+        function: <Job title="Productivity  " description="Management" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        employed: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            24/04/24
+          </MDTypography>
+        ),
+        action: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            In progress
+          </MDTypography>
+        ),
+      },
+      {
+        author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
+        branch: <Branch heading="Mechanical" />,
+        function: <Job title="Productivity  " description="Management" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        employed: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            24/04/24
+          </MDTypography>
+        ),
+        action: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            In progress
+          </MDTypography>
+        ),
+      },
+      {
+        author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
+        branch: <Branch heading="Mechanical" />,
+        function: <Job title="Productivity  " description="Management" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        employed: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            24/04/24
+          </MDTypography>
+        ),
+        action: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            In progress
+          </MDTypography>
+        ),
+      },
+      {
+        author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
+        branch: <Branch heading="Mechanical" />,
+        function: <Job title="Productivity  " description="Management" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        employed: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            24/04/24
+          </MDTypography>
+        ),
+        action: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            In progress
+          </MDTypography>
+        ),
+      },
+      {
+        author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
+        branch: <Branch heading="Mechanical" />,
+        function: <Job title="Productivity  " description="Management" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        employed: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            24/04/24
+          </MDTypography>
+        ),
+        action: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            In progress
+          </MDTypography>
+        ),
+      },
     ],
   };
 }

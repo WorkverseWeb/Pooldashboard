@@ -38,17 +38,9 @@ import breakpoints from "assets/theme/base/breakpoints";
 // import burceMars from "assets/images/bruce-mars.jpg";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 
-import Purchase from "./PurchasePopup/purchase";
-
 function Header({ children }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
-
-  const [isFormOpen, setIsFormOpen] = useState(false);
-
-  const toggleForm = () => {
-    setIsFormOpen(!isFormOpen);
-  };
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -110,7 +102,7 @@ function Header({ children }) {
                 NMIMS
               </MDTypography>
               <MDTypography variant="button" color="text" fontWeight="regular">
-                India
+                Priyanka | Tech Architech
               </MDTypography>
             </MDBox>
           </Grid>
@@ -144,24 +136,6 @@ function Header({ children }) {
                 />
               </Tabs>
             </AppBar> */}
-            <button
-              onClick={toggleForm}
-              style={{
-                textTransform: "uppercase",
-                padding: "10px 20px",
-                border: "0",
-                borderRadius: "7px",
-                color: "#fff",
-                background: "#0BB08C",
-                cursor: "pointer",
-                fontWeight: "600",
-                // boxShadow: "2px 2px 8px 0 rgb(186 255 247 / 60%)",
-              }}
-              className="popup-btn"
-            >
-              Add Slots
-            </button>
-            {isFormOpen && <Purchase onClose={toggleForm} />}
           </Grid>
         </Grid>
         {children}

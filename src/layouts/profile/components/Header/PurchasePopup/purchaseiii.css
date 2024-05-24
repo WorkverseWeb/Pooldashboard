@@ -1,4 +1,4 @@
-.popup-container {
+/* .popup-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -29,7 +29,7 @@
   padding: 15px;
 }
 
-/* heading */
+
 .purchase-heading {
   position: relative;
   display: flex;
@@ -53,7 +53,7 @@
   color: #1effe59e;
 }
 
-/* content */
+
 .popup-form form {
   padding: 10px 0;
   border-style: solid;
@@ -88,7 +88,7 @@
   transition: background-color 5000s ease-in-out 0s;
 }
 
-/* button */
+
 .popup-form .btn {
   text-align: end;
   margin-top: 15px;
@@ -103,4 +103,4 @@
   border-radius: 7px;
   cursor: pointer;
   background-color: #1effe59e;
-}
+} */

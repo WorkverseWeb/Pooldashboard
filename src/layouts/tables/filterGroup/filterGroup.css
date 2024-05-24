@@ -1,0 +1,26 @@
+.filter-container select {
+  color: #fff;
+  width: 100%;
+  padding: 7px 18px;
+  border-radius: 5px;
+  background-color: #0bb08c;
+  border: 0;
+}
+
+.filter-container select option {
+  background-color: #0e362e54;
+  text-transform: capitalize;
+}
+
+.filter-container select:focus {
+  outline: none;
+}
+
+.filter-container select:-webkit-autofill,
+.filter-container select:-webkit-autofill:hover,
+.filter-container select:-webkit-autofill:focus,
+.filter-container select:-webkit-autofill:active {
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.6);
+  background-color: rgb(0 0 0 / 24%) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}

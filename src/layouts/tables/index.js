@@ -49,12 +49,14 @@ import AddUser from "./adduser/adduser";
 import typography from "assets/theme/base/typography";
 import UploadUser from "./uploaduser/uploaduser";
 import CustomGroups from "./customGroup/customGroup";
+import FilterGroup from "./filterGroup/filterGroup";
 
 function Tables() {
   const { isAuthenticated } = useAuth0();
   const { columns, rows } = authorsTableData();
   const { columns: pColumns, rows: pRows } = projectsTableData();
 
+  // allocate user
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [FormOpen, setFormOpen] = useState(false);
 
@@ -78,7 +80,7 @@ function Tables() {
       <div
         style={{
           display: "flex",
-          justifyContent: "end",
+          justifyContent: "space-between",
           alignItems: "center",
           padding: "30px 20px 20px",
         }}
@@ -86,6 +88,8 @@ function Tables() {
         {/* <p style={{ color: "#fff", fontWeight: "300", fontSize: "15px" }}>
           50 Slots Available for Negotiation Skill.
         </p> */}
+        <FilterGroup />
+
         <div
           style={{
             display: "flex",

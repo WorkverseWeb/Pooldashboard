@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from "react";
 import "./customGroup.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function CustomGroups() {
+  const [departments, setDepartments] = useState([""]);
+  const [initialDepartments, setInitialDepartments] = useState([]);
+
   useEffect(() => {
     const savedDepartments = localStorage.getItem("departments");
     if (savedDepartments) {
-      setDepartments(JSON.parse(savedDepartments));
+      const parsedDepartments = JSON.parse(savedDepartments);
+      setDepartments(parsedDepartments);
+      setInitialDepartments(parsedDepartments.filter((dept) => dept.trim() !== ""));
+    } else {
+      setDepartments([""]);
+      setInitialDepartments([""]);
     }
   }, []);
-
-  const [departments, setDepartments] = useState([""]);
-  const [departmentData, setDepartmentData] = useState([]);
-  const [error, setError] = useState("");
 
   const handleAddDepartment = () => {
     if (departments.every((department) => department.trim() !== "")) {
       setDepartments([...departments, ""]);
-      setError("");
     } else {
-      setError("Please fill all fields before adding a new one.");
+      toast.error("Please fill all fields before adding a new one.");
     }
   };
 
@@ -26,27 +31,55 @@ export default function CustomGroups() {
     const updatedDepartments = [...departments];
     updatedDepartments[index] = value;
     setDepartments(updatedDepartments);
-    setError("");
   };
 
   const handleRemoveDepartment = (index) => {
-    if (departments.length > 1) {
-      setDepartments(departments.filter((_, i) => i !== index));
+    let newDepartments;
+    if (departments.length === 1) {
+      // If there's only one department, replace it with an empty input field
+      newDepartments = [""];
+    } else {
+      newDepartments = departments.filter((_, i) => i !== index);
     }
+
+    // Update local storage with the updated departments
+    localStorage.setItem("departments", JSON.stringify(newDepartments));
+
+    // Update only the departments state
+    setDepartments(newDepartments);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const uniqueDepartments = new Set(departments.map((dept) => dept.trim().toLowerCase()));
-    if (uniqueDepartments.size !== departments.length) {
-      setError("Duplicate group names are not allowed.");
-    } else {
-      setError("");
-      const nonEmptyDepartments = departments.filter((dept) => dept.trim() !== "");
-      setDepartmentData(nonEmptyDepartments);
-      console.log("Groups submitted:", nonEmptyDepartments);
-      // Save departments to localStorage
+
+    const nonEmptyDepartments = departments.filter((dept) => dept.trim() !== "");
+    if (nonEmptyDepartments.length !== departments.length) {
+      toast.error("Please fill all fields before submitting.");
+      return;
+    }
+
+    const uniqueDepartments = new Set(nonEmptyDepartments.map((dept) => dept.trim().toLowerCase()));
+    if (uniqueDepartments.size !== nonEmptyDepartments.length) {
+      toast.error("Duplicate group names are not allowed.");
+      return;
+    }
+
+    if (
+      initialDepartments.length === nonEmptyDepartments.length &&
+      initialDepartments.every((dept, index) => dept === nonEmptyDepartments[index])
+    ) {
+      toast.error("No new group name added.");
+      return;
+    }
+
+    // Check if there's any change in departments that leads to saving
+    const departmentsChanged =
+      JSON.stringify(nonEmptyDepartments) !==
+      JSON.stringify(initialDepartments.filter((dept) => dept.trim() !== ""));
+    if (departmentsChanged) {
       localStorage.setItem("departments", JSON.stringify(nonEmptyDepartments));
+      setInitialDepartments(nonEmptyDepartments); // Update initial departments after saving
+      toast.success("Groups Saved!");
     }
   };
 
@@ -83,11 +116,9 @@ export default function CustomGroups() {
               </div>
             ))}
           </div>
-          {error && <p className="error">{error}</p>}
+
           <button type="submit" className="group-submit">
-            <span role="img" aria-label="Save">
-              Save
-            </span>
+            Save
           </button>
         </form>
       </div>
