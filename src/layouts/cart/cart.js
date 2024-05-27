@@ -9,7 +9,6 @@ import Footer from "examples/Footer";
 
 export default function Cart() {
   const getdata = useSelector((state) => state.cartreducer.carts);
-  // console.log(getdata);
 
   const dispatch = useDispatch();
 
@@ -80,9 +79,7 @@ export default function Cart() {
                             ></i>
                           </td>
                           <td className="text-center">
-                            {/* <Link to={`/innerdetails/${e.id}`}> */}
                             <img src={e.image} className="img-cart" alt="" />
-                            {/* </Link> */}
                           </td>
                           <td className="text-center fs-5">{e.description}</td>
                           <td className="text-center">₹ {e.price}.00</td>

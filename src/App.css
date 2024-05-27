@@ -32,9 +32,15 @@ form select,
   background: transparent;
   color: #fff;
   font-size: 20px;
-  padding: 3px 12px;
   border-radius: 5px;
   cursor: pointer;
+}
+.purchase-add {
+  padding: 5px 12px;
+  margin: 0 !important;
+}
+.purchase-delete {
+  padding: 5px 15px;
 }
 
 /* cart page css */
