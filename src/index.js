@@ -10,6 +10,12 @@ import { Auth0Provider } from "@auth0/auth0-react";
 const container = document.getElementById("app");
 const root = createRoot(container);
 
+// redux
+import { legacy_createStore as createStore } from "redux";
+import { Provider } from "react-redux";
+import rootred from "./redux/reducers/main";
+const store = createStore(rootred);
+
 root.render(
   <Auth0Provider
     domain="dev-hzug8opma4uobruz.us.auth0.com"
@@ -18,10 +24,12 @@ root.render(
       redirect_uri: window.location.origin + "/dashboard/",
     }}
   >
-    <BrowserRouter>
-      <MaterialUIControllerProvider>
-        <App />
-      </MaterialUIControllerProvider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <MaterialUIControllerProvider>
+          <App />
+        </MaterialUIControllerProvider>
+      </BrowserRouter>
+    </Provider>
   </Auth0Provider>
 );

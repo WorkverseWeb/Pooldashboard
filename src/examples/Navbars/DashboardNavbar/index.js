@@ -39,7 +39,7 @@ import {
   setOpenConfigurator,
 } from "context";
 import { dark } from "@mui/material/styles/createPalette";
-import RegistrationForm from "./RegisterForm/Registrationform";
+// import RegistrationForm from "./RegisterForm/Registrationform";
 // import brandDark from "assets/images/wrench.png";
 
 function DashboardNavbar({ absolute, light, isMini }) {
@@ -113,7 +113,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
   return (
     <>
-      <RegistrationForm />
+      {/* <RegistrationForm /> */}
 
       <AppBar
         position={absolute ? "absolute" : navbarType}
