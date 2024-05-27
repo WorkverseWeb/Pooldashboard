@@ -57,7 +57,7 @@ function Billing() {
         }
       >
         {isAuthenticated ? (
-          <>
+          <div>
             <MDBox mb={3}>
               <Grid container spacing={3}>
                 <Grid item xs={12} lg={12}>
@@ -101,7 +101,7 @@ function Billing() {
                 </Grid>
               </Grid>
             </MDBox>
-          </>
+          </div>
         ) : (
           <Login />
         )}

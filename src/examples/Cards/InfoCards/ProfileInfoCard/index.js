@@ -1,18 +1,3 @@
-/**
-=========================================================
-* React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // react-routers components
 import { Link } from "react-router-dom";
 
@@ -29,15 +14,9 @@ import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
-// React base styles
-import colors from "assets/theme/base/colors";
-import typography from "assets/theme/base/typography";
-
 function ProfileInfoCard({ title, description, info, action, shadow }) {
   const labels = [];
   const values = [];
-  const { socialMediaColors } = colors;
-  const { size } = typography;
 
   // Convert this form `objectKey` of the object key in to this `object key`
   Object.keys(info).forEach((el) => {
@@ -65,24 +44,6 @@ function ProfileInfoCard({ title, description, info, action, shadow }) {
       </MDTypography>
     </MDBox>
   ));
-
-  // Render the card social media icons
-  // const renderSocial = social.map(({ link, icon, color }) => (
-  //   <MDBox
-  //     key={color}
-  //     component="a"
-  //     href={link}
-  //     target="_blank"
-  //     rel="noreferrer"
-  //     fontSize={size.lg}
-  //     color={socialMediaColors[color].main}
-  //     pr={1}
-  //     pl={0.5}
-  //     lineHeight={1}
-  //   >
-  //     {icon}
-  //   </MDBox>
-  // ));
 
   return (
     <Card sx={{ height: "100%", boxShadow: !shadow && "none" }}>
