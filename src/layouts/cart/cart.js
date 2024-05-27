@@ -81,7 +81,7 @@ export default function Cart() {
                           </td>
                           <td className="text-center">
                             {/* <Link to={`/innerdetails/${e.id}`}> */}
-                              <img src={e.image} className="img-cart" alt="" />
+                            <img src={e.image} className="img-cart" alt="" />
                             {/* </Link> */}
                           </td>
                           <td className="text-center fs-5">{e.description}</td>

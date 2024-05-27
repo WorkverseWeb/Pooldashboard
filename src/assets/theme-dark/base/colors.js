@@ -1,8 +1,8 @@
 const colors = {
   background: {
     default: "#000000",
-    sidenav: "#021B21",
-    card: "#021B21",
+    sidenav: "#021b215e",
+    card: "#021b219c",
   },
 
   text: {
@@ -87,7 +87,7 @@ const colors = {
       main: "#0BB08C",
       state: "#0BB08C",
     },
-
+    // hightlight
     info: {
       main: "#0BB08C",
       state: "#0BB08C",
@@ -112,10 +112,10 @@ const colors = {
       main: "#000000",
       state: "#000000",
     },
-
+    //navbar
     dark: {
-      main: "#000000",
-      state: "#000000",
+      main: "#021b215e",
+      state: "#021b215e",
     },
   },
 
