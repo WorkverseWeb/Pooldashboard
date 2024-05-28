@@ -5,12 +5,17 @@ import Footer from "examples/Footer";
 import brandDark from "assets/images/purchase-card-img.avif";
 import brandWhite from "assets/images/employee-man-alt.svg";
 import Divider from "@mui/material/Divider";
-import { Link } from "react-router-dom";
+
+// redux
 import { useDispatch, useSelector } from "react-redux";
 import Cardsdata from "layouts/cart/cardData";
 import { ADD, REMOVE, DLT } from "../../redux/actions/action";
 
+// react
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
+// react mui
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -26,7 +31,6 @@ export default function Purchase() {
   const dispatch = useDispatch();
 
   const send = (e) => {
-    // console.log(e);
     dispatch(ADD(e));
   };
 
@@ -39,6 +43,11 @@ export default function Purchase() {
   const dlt = (id) => {
     dispatch(DLT(id));
   };
+
+  // const getQuantity = (id) => {
+  //   const item = getdata.find((i) => i.id === id);
+  //   return item ? item.qnty : 0;
+  // };
 
   return (
     <DashboardLayout>
@@ -157,7 +166,6 @@ export default function Purchase() {
                       style={{ width: "100%", height: "100%", borderRadius: "10px" }}
                     />
                   </CardMedia>
-
                   <CardContent style={{ paddingBottom: "10px", padding: "20px" }}>
                     <Typography gutterBottom variant="h5" component="div">
                       {e.title}
@@ -193,6 +201,7 @@ export default function Purchase() {
                     </Button>
                   </CardActions>
                   <Divider orientation="horizontal" sx={{ ml: -2 }} style={{ margin: "0" }} />
+
                   <CardActions
                     style={{
                       display: "flex",
@@ -208,7 +217,7 @@ export default function Purchase() {
                     >
                       -
                     </button>
-                    <p style={{ color: "#fff" }}>{e.qnty}</p>
+                    <span style={{ color: "#fff" }}>{e.qnty}</span>
                     <button className="purchase-add" onClick={() => send(e)}>
                       +
                     </button>

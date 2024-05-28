@@ -31,7 +31,6 @@ export default function Cart() {
   // add data
 
   const send = (e) => {
-    // console.log(e);
     dispatch(ADD(e));
   };
 
