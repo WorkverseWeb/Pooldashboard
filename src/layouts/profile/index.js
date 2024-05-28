@@ -25,7 +25,24 @@ function Overview() {
     <DashboardLayout>
       {/* <PopupForm /> */}
       <DashboardNavbar />
-      <MDBox>
+      <MDBox
+        pt={3}
+        pb={3}
+        style={
+          !isAuthenticated
+            ? {
+                background:
+                  "linear-gradient(45deg, rgb(5 74 25 / 9%) 30%, rgb(127 207 207 / 18%) 80%)",
+                minHeight: "85vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "10px",
+                overflow: "hidden",
+              }
+            : {}
+        }
+      >
         {isAuthenticated ? (
           <>
             <Header>
@@ -46,7 +63,7 @@ function Overview() {
                   shadow={false}
                 />
 
-                <Grid item xs={12} md={6} xl={6}>
+                <Grid item xs={12} mt={5} md={6} xl={6}>
                   <PlatformSettings />
                 </Grid>
               </MDBox>

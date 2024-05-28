@@ -81,6 +81,7 @@ function Header({ children }) {
           py: 2,
           px: 2,
         }}
+        style={{ background: "transparent", border: "0", boxShadow: "0" }}
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item style={{ position: "relative" }}>
@@ -103,6 +104,7 @@ function Header({ children }) {
             />
             <MDAvatar src={image} alt="profile-image" size="xl" shadow="sm" />
           </Grid>
+
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>
               <MDTypography variant="h5" fontWeight="medium">
@@ -113,7 +115,27 @@ function Header({ children }) {
               </MDTypography>
             </MDBox>
           </Grid>
+
+          <div
+            style={{
+              marginLeft: "auto",
+              color: "#fff",
+              fontSize: "13px",
+              textAlign: "end",
+              padding: "30px 10px 0",
+            }}
+          >
+            <p>
+              Status : <span> Verification pending...</span>
+            </p>
+
+            <p>
+              Status : <span>Verified.</span>
+            </p>
+            <p> Email at dev@workverse to complete verification quickly.</p>
+          </div>
         </Grid>
+
         {children}
       </Card>
     </MDBox>

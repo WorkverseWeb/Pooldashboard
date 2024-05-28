@@ -3,9 +3,13 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD, REMOVE, DLT } from "../../redux/actions/action";
 
+import { Icon, IconButton } from "@mui/material";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import Login from "layouts/login";
+import { useAuth0 } from "@auth0/auth0-react";
+import MDBox from "components/MDBox";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -16,7 +20,6 @@ export default function Cart() {
   const dispatch = useDispatch();
 
   const [price, setPrice] = useState(0);
-  // console.log(price);
 
   // total
   useEffect(() => {
@@ -47,104 +50,139 @@ export default function Cart() {
     dispatch(DLT(id));
   };
 
+  // auth0
+  const { isAuthenticated } = useAuth0();
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
 
-      <div className="cart-container">
-        {getdata.length ? (
-          <div className="add-to-cart ">
-            <Card style={{ width: "50%" }}>
-              <div className="card-details">
-                <table>
-                  <thead>
-                    <tr>
-                      <th className="text-center"></th>
-                      <th className="text-center fs-5">Product</th>
-                      <th className="text-center fs-5">Price</th>
-                      <th className="text-center fs-5">Quantity</th>
-                      <th className="text-center fs-5">Subtotal</th>
-                    </tr>
-                  </thead>
+      <MDBox
+        style={
+          !isAuthenticated
+            ? {
+                background:
+                  "linear-gradient(45deg, rgb(5 74 25 / 9%) 30%, rgb(127 207 207 / 18%) 80%)",
+                minHeight: "85vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "10px",
+                overflow: "hidden",
+              }
+            : {}
+        }
+      >
+        {isAuthenticated ? (
+          <div className="cart-container">
+            {getdata.length ? (
+              <div className="add-to-cart ">
+                <Card style={{ width: "70%" }}>
+                  <div className="card-details">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>Product</th>
+                          <th>Price</th>
+                          <th>Quantity</th>
+                          <th>Subtotal</th>
+                        </tr>
+                      </thead>
 
-                  <tbody>
-                    {getdata.map((e) => {
-                      console.warn("map", e.qnty);
+                      <tbody>
+                        {getdata.map((e) => {
+                          return (
+                            <>
+                              <tr key={e.id}>
+                                <td>
+                                  <IconButton
+                                    onClick={() => dlt(e.id)}
+                                    aria-label="delete"
+                                    size="small"
+                                    style={{
+                                      color: "red",
+                                    }}
+                                  >
+                                    <Icon>delete</Icon>
+                                  </IconButton>
+                                </td>
 
-                      return (
-                        <>
-                          <tr key={e.id}>
-                            <td className="text-center">
-                              <i
-                                className="fa-solid fa-trash delete-btn"
-                                onClick={() => dlt(e.id)}
-                              ></i>
-                            </td>
+                                <td>{e.title}</td>
+                                <td>₹ {e.price}.00</td>
 
-                            <td className="text-center fs-5">{e.title}</td>
-                            <td className="text-center">₹ {e.price}.00</td>
+                                <td>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "space-between",
+                                      alignItems: "center",
+                                      width: "100px",
+                                      margin: "auto",
+                                    }}
+                                  >
+                                    <button
+                                      className="purchase-delete"
+                                      onClick={e.qnty <= 1 ? () => dlt(e.id) : () => remove(e)}
+                                    >
+                                      -
+                                    </button>
+                                    <span>{e.qnty}</span>
+                                    <button className="purchase-add" onClick={() => send(e)}>
+                                      +
+                                    </button>
+                                  </div>
+                                </td>
 
-                            <td className="text-center">
-                              <div className="d-flex justify-content-between align-items-center qnty-btn">
-                                <span
-                                  style={{ fontSize: 24 }}
-                                  onClick={e.qnty <= 1 ? () => dlt(e.id) : () => remove(e)}
-                                >
-                                  -
-                                </span>
-                                <span style={{ fontSize: 22 }}>{e.qnty}</span>
-                                <span style={{ fontSize: 24 }} onClick={() => send(e)}>
-                                  +
-                                </span>
-                              </div>
-                            </td>
+                                <td>₹ {e.price * e.qnty}.00</td>
+                              </tr>
+                            </>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </Card>
+                {/* cart totals */}
+                <Card style={{ width: "30%", textAlign: "left" }}>
+                  <div className="card-total">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Cart totals</th>
+                        </tr>
+                      </thead>
 
-                            <td className="text-center">₹ {e.price * e.qnty}.00</td>
-                          </tr>
-                        </>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                      <tbody>
+                        <tr>
+                          <td>Subtotal :</td>
+                          <td>₹ {price}.00</td>
+                        </tr>
+                        <tr>
+                          <td>Total :</td>
+                          <td>₹ {price}.00</td>
+                        </tr>
+
+                        <div className="cart-purchase">
+                          <button>Purchase</button>
+                        </div>
+                      </tbody>
+                    </table>
+                  </div>
+                </Card>
               </div>
-            </Card>
-            {/* cart totals */}
-            <Card style={{ width: "30%" }}>
-              <div className="card-total">
-                <table>
-                  <thead>
-                    <tr>
-                      <th className="fs-3 px-4 py-3">Cart totals</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr className="d-flex justify-content-between p-lg-3 p-2 fw-bold">
-                      <td>Subtotal :</td>
-                      <td>₹ {price}.00</td>
-                    </tr>
-                    <tr className="d-flex justify-content-between p-lg-3 p-2 fw-bold">
-                      <td>Total :</td>
-                      <td>₹ {price}.00</td>
-                    </tr>
-                    <tr>
-                      <td className="p-4">
-                        <button>Buy</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </Card>
+            ) : (
+              <>
+                <div className="cart-empty">
+                  <h4>Your cart is currently empty !!</h4>
+                </div>
+              </>
+            )}
           </div>
         ) : (
-          <>
-            <div className="cart-empty">
-              <h4 className="m-0">Your cart is currently empty !!</h4>
-            </div>
-          </>
+          <Login />
         )}
-      </div>
+      </MDBox>
 
       <Footer />
     </DashboardLayout>

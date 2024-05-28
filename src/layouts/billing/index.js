@@ -61,7 +61,7 @@ function Billing() {
             <MDBox mb={3}>
               <Grid container spacing={3}>
                 <Grid item xs={12} lg={12}>
-                  <Grid container spacing={3} style={{ width: "100%", margin: "85px 0" }}>
+                  <Grid container spacing={3} style={{ width: "100%", margin: "40px 0" }}>
                     {/* <Grid item xs={12} xl={6}>
                       <MasterCard number={4562112245947852} holder="Ayan Pathak" expires="11/22" />
                     </Grid> */}

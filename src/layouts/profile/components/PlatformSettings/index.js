@@ -32,7 +32,7 @@ function PlatformSettings() {
   const [newsletter, setNewsletter] = useState(false);
 
   return (
-    <Card sx={{ boxShadow: "none" }} style={{ background: "transparent" }}>
+    <Card sx={{ boxShadow: "none" }}>
       <MDBox p={2}>
         <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
           platform settings

@@ -75,89 +75,6 @@ function Tables() {
 
       <DashboardNavbar />
 
-      <CustomGroups />
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "30px 20px 20px",
-        }}
-      >
-        {/* <p style={{ color: "#fff", fontWeight: "300", fontSize: "15px" }}>
-          50 Slots Available for Negotiation Skill.
-        </p> */}
-        <FilterGroup />
-
-        <div
-          style={{
-            display: "flex",
-            gap: "15px",
-            alignItems: "center",
-          }}
-        >
-          <button
-            style={{
-              padding: "9px 18px",
-              backgroundColor: "#0BB08C",
-              color: "white",
-              border: "none",
-              borderRadius: "7px",
-              cursor: "pointer",
-              fontWeight: "600",
-              textTransform: "uppercase",
-            }}
-            className="popup-btn"
-            onClick={toggleForm}
-          >
-            <IconButton
-              size="small"
-              disableRipple
-              color="inherit"
-              aria-controls="add"
-              aria-haspopup="true"
-              variant="contained"
-              style={{ padding: "0 ", marginRight: "7px" }}
-            >
-              <Icon>add_outlined</Icon>
-            </IconButton>
-            assign user
-          </button>
-          {isFormOpen && <AddUser onClose={toggleForm} />}
-
-          <button
-            style={{
-              padding: "9px 10px",
-              fontWeight: "600",
-              backgroundColor: "#0BB08C",
-              color: "white",
-              border: "none",
-              borderRadius: "7px",
-              cursor: "pointer",
-              textTransform: "uppercase",
-            }}
-            className="popup-btn"
-            onClick={uploadForm}
-          >
-            <IconButton
-              size="small"
-              disableRipple
-              color="inherit"
-              aria-controls="upload"
-              aria-haspopup="true"
-              variant="contained"
-              style={{ padding: "0 2px" }}
-            >
-              <Icon>file_upload_outlined</Icon>
-            </IconButton>
-            Upload to assign
-            {/* <span style={{ textTransform: "lowercase" }}> to assign</span> */}
-          </button>
-          {FormOpen && <UploadUser onClose={uploadForm} />}
-        </div>
-      </div>
-
       <MDBox
         pt={3}
         pb={3}
@@ -178,6 +95,86 @@ function Tables() {
       >
         {isAuthenticated ? (
           <>
+            <CustomGroups />
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "30px 20px 20px",
+              }}
+            >
+              <FilterGroup />
+
+              <div
+                style={{
+                  display: "flex",
+                  gap: "15px",
+                  alignItems: "center",
+                }}
+              >
+                <button
+                  style={{
+                    padding: "9px 18px",
+                    backgroundColor: "#0BB08C",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "7px",
+                    cursor: "pointer",
+                    fontWeight: "600",
+                    textTransform: "uppercase",
+                  }}
+                  className="popup-btn"
+                  onClick={toggleForm}
+                >
+                  <IconButton
+                    size="small"
+                    disableRipple
+                    color="inherit"
+                    aria-controls="add"
+                    aria-haspopup="true"
+                    variant="contained"
+                    style={{ padding: "0 ", marginRight: "7px" }}
+                  >
+                    <Icon>add_outlined</Icon>
+                  </IconButton>
+                  assign user
+                </button>
+                {isFormOpen && <AddUser onClose={toggleForm} />}
+
+                <button
+                  style={{
+                    padding: "9px 10px",
+                    fontWeight: "600",
+                    backgroundColor: "#0BB08C",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "7px",
+                    cursor: "pointer",
+                    textTransform: "uppercase",
+                  }}
+                  className="popup-btn"
+                  onClick={uploadForm}
+                >
+                  <IconButton
+                    size="small"
+                    disableRipple
+                    color="inherit"
+                    aria-controls="upload"
+                    aria-haspopup="true"
+                    variant="contained"
+                    style={{ padding: "0 2px" }}
+                  >
+                    <Icon>file_upload_outlined</Icon>
+                  </IconButton>
+                  Upload to assign
+                  {/* <span style={{ textTransform: "lowercase" }}> to assign</span> */}
+                </button>
+                {FormOpen && <UploadUser onClose={uploadForm} />}
+              </div>
+            </div>
+
             <Grid container spacing={6}>
               <Grid item xs={12}>
                 <Card>

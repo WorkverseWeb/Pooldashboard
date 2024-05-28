@@ -33,10 +33,17 @@ export default function data() {
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" />
       <MDBox ml={2} lineHeight={1}>
-        <MDTypography display="block" variant="button" fontWeight="medium">
+        <MDTypography
+          display="block"
+          variant="button"
+          fontWeight="medium"
+          style={{ color: "#fff" }}
+        >
           {name}
         </MDTypography>
-        <MDTypography variant="caption">{email}</MDTypography>
+        <MDTypography variant="caption" style={{ color: "#fff" }}>
+          {email}
+        </MDTypography>
       </MDBox>
     </MDBox>
   );
@@ -195,7 +202,7 @@ export default function data() {
       {
         author: <Author image={team3} name="Subhajit Adhikari" email="subhajit@workverse.in" />,
         branch: <Branch heading="AI" />,
-        function: <Job title="First Principles " description="Thinking" />,
+        function: <Job title="First Principles Thinking" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
@@ -215,7 +222,7 @@ export default function data() {
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
         branch: <Branch heading="civil" />,
-        function: <Job title="Emotional " description="Intelligencp" />,
+        function: <Job title="Emotional Intelligence" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
@@ -255,7 +262,7 @@ export default function data() {
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
         branch: <Branch heading="EXTC" />,
-        function: <Job title="Sharp Remote  " description="Communication" />,
+        function: <Job title="Sharp Remote  Communication" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
@@ -275,7 +282,7 @@ export default function data() {
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
         branch: <Branch heading="Mechanical" />,
-        function: <Job title="Productivity  " description="Management" />,
+        function: <Job title="Productivity  Management" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
@@ -295,7 +302,7 @@ export default function data() {
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
         branch: <Branch heading="Mechanical" />,
-        function: <Job title="Productivity  " description="Management" />,
+        function: <Job title="Productivity  Management" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
@@ -315,7 +322,7 @@ export default function data() {
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
         branch: <Branch heading="Mechanical" />,
-        function: <Job title="Productivity  " description="Management" />,
+        function: <Job title="Productivity  Management" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
@@ -335,7 +342,7 @@ export default function data() {
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
         branch: <Branch heading="Mechanical" />,
-        function: <Job title="Productivity  " description="Management" />,
+        function: <Job title="Productivity  " />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
@@ -355,7 +362,7 @@ export default function data() {
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
         branch: <Branch heading="Mechanical" />,
-        function: <Job title="Productivity  " description="Management" />,
+        function: <Job title="Productivity  Management" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
@@ -372,10 +379,11 @@ export default function data() {
           </MDTypography>
         ),
       },
+
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
         branch: <Branch heading="Mechanical" />,
-        function: <Job title="Productivity  " description="Management" />,
+        function: <Job title="Productivity  Management" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />

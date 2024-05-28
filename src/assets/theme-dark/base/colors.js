@@ -89,8 +89,8 @@ const colors = {
     },
     // hightlight
     info: {
-      main: "#0BB08C",
-      state: "#0BB08C",
+      main: "#021b215e",
+      state: "#021b215e",
     },
 
     success: {
