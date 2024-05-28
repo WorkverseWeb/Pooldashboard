@@ -2,7 +2,7 @@ const colors = {
   background: {
     default: "#000000",
     sidenav: "#021b215e",
-    card: "#021b219c",
+    card: "#021b215e",
   },
 
   text: {

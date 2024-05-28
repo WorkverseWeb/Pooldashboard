@@ -30,27 +30,24 @@ function Overview() {
           <>
             <Header>
               <MDBox mt={5} mb={3}>
-                <Grid container spacing={1}>
-                  <Grid item xs={12} md={6} xl={6} sx={{ display: "flex" }}>
-                    <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
-                    <ProfileInfoCard
-                      title="profile information"
-                      description=""
-                      info={{
-                        fullName: "Priyanka",
-                        mobile: "(+91) 9975008124",
-                        email: "priyanka@workverse.in",
-                        state: "Maharashtra",
-                        city: "Mumbai",
-                        location: "India",
-                      }}
-                      action={{ route: "", tooltip: "Edit Profile" }}
-                      shadow={false}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={6} xl={6}>
-                    <PlatformSettings />
-                  </Grid>
+                <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
+                <ProfileInfoCard
+                  title="profile information"
+                  description=""
+                  info={{
+                    fullName: "Priyanka",
+                    mobile: "(+91) 9975008124",
+                    email: "priyanka@workverse.in",
+                    state: "Maharashtra",
+                    city: "Mumbai",
+                    location: "India",
+                  }}
+                  action={{ route: "", tooltip: "Edit Profile" }}
+                  shadow={false}
+                />
+
+                <Grid item xs={12} md={6} xl={6}>
+                  <PlatformSettings />
                 </Grid>
               </MDBox>
             </Header>

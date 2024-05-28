@@ -21,13 +21,12 @@ form select,
 }
 
 #bg-main-img {
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.582), rgba(2, 27, 33, 0.582)), 
-              url("./assets/images/main-bg-img.png") no-repeat;
-  background-attachment: fixed; 
-  background-size: cover; 
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.582), rgba(2, 27, 33, 0.582)),
+    url("./assets/images/main-bg-img.png") no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
   min-height: 100vh;
 }
-
 
 /* purchase page css */
 .purchase-add,
@@ -51,9 +50,33 @@ form select,
 
 .cart-container {
   min-height: 600px;
-  padding: 10px;
+  padding: 20px;
+  text-align: center;
 }
 
 .cart-container .cart-empty {
   text-align: center;
+}
+
+.add-to-cart {
+  display: flex;
+  gap: 150px;
+}
+
+.card-details {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  color: #fff !important;
+}
+
+.card-details table {
+  width: 100%;
+}
+
+.card-total {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  color: #fff !important;
 }

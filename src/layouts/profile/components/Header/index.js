@@ -6,10 +6,11 @@ import PropTypes from "prop-types";
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
+
 // import AppBar from "@mui/material/AppBar";
 // import Tabs from "@mui/material/Tabs";
 // import Tab from "@mui/material/Tab";
-// import Icon from "@mui/material/Icon";
+import { Icon, IconButton } from "@mui/material";
 
 // React components
 import MDBox from "components/MDBox";
@@ -47,6 +48,22 @@ function Header({ children }) {
 
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
 
+  // profile image
+  const [image, setImage] = useState(null);
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <MDBox position="relative" mb={5}>
       <MDBox
@@ -66,8 +83,25 @@ function Header({ children }) {
         }}
       >
         <Grid container spacing={3} alignItems="center">
-          <Grid item>
-            <MDAvatar src={""} alt="profile-image" size="xl" shadow="sm" />
+          <Grid item style={{ position: "relative" }}>
+            <label htmlFor="upload-image">
+              <IconButton
+                color="primary"
+                aria-label="edit profile"
+                component="span"
+                style={{ position: "absolute", top: 10, left: 85, fontSize: "14px" }}
+              >
+                <Icon>edit</Icon>
+              </IconButton>
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              style={{ display: "none" }}
+              id="upload-image"
+            />
+            <MDAvatar src={image} alt="profile-image" size="xl" shadow="sm" />
           </Grid>
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>

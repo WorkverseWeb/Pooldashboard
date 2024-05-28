@@ -7,6 +7,9 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 
+// @mui material components
+import Card from "@mui/material/Card";
+
 export default function Cart() {
   const getdata = useSelector((state) => state.cartreducer.carts);
 
@@ -50,67 +53,64 @@ export default function Cart() {
 
       <div className="cart-container">
         {getdata.length ? (
-          <div className="add-to-cart my-lg-4">
-            <div className="mb-5 d-lg-block d-none">
-              <table>
-                <thead>
-                  <tr>
-                    <th className="text-center"></th>
-                    <th className="text-center"></th>
-                    <th className="text-center fs-5">Product</th>
-                    <th className="text-center fs-5">Price</th>
-                    <th className="text-center fs-5">Quantity</th>
-                    <th className="text-center fs-5">Subtotal</th>
-                  </tr>
-                </thead>
+          <div className="add-to-cart ">
+            <Card style={{ width: "50%" }}>
+              <div className="card-details">
+                <table>
+                  <thead>
+                    <tr>
+                      <th className="text-center"></th>
+                      <th className="text-center fs-5">Product</th>
+                      <th className="text-center fs-5">Price</th>
+                      <th className="text-center fs-5">Quantity</th>
+                      <th className="text-center fs-5">Subtotal</th>
+                    </tr>
+                  </thead>
 
-                <tbody>
-                  {getdata.map((e) => {
-                    console.warn("map", e.qnty);
+                  <tbody>
+                    {getdata.map((e) => {
+                      console.warn("map", e.qnty);
 
-                    return (
-                      <>
-                        <tr key={e.id}>
-                          <td className="text-center">
-                            <i
-                              className="fa-solid fa-trash delete-btn"
-                              onClick={() => dlt(e.id)}
-                            ></i>
-                          </td>
-                          <td className="text-center">
-                            <img src={e.image} className="img-cart" alt="" />
-                          </td>
-                          <td className="text-center fs-5">{e.description}</td>
-                          <td className="text-center">₹ {e.price}.00</td>
+                      return (
+                        <>
+                          <tr key={e.id}>
+                            <td className="text-center">
+                              <i
+                                className="fa-solid fa-trash delete-btn"
+                                onClick={() => dlt(e.id)}
+                              ></i>
+                            </td>
 
-                          <td className="text-center">
-                            <div className="d-flex justify-content-between align-items-center qnty-btn">
-                              <span
-                                style={{ fontSize: 24 }}
-                                onClick={e.qnty <= 1 ? () => dlt(e.id) : () => remove(e)}
-                              >
-                                -
-                              </span>
-                              <span style={{ fontSize: 22 }}>{e.qnty}</span>
-                              <span style={{ fontSize: 24 }} onClick={() => send(e)}>
-                                +
-                              </span>
-                            </div>
-                          </td>
+                            <td className="text-center fs-5">{e.title}</td>
+                            <td className="text-center">₹ {e.price}.00</td>
 
-                          <td className="text-center">₹ {e.price * e.qnty}.00</td>
-                        </tr>
-                      </>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+                            <td className="text-center">
+                              <div className="d-flex justify-content-between align-items-center qnty-btn">
+                                <span
+                                  style={{ fontSize: 24 }}
+                                  onClick={e.qnty <= 1 ? () => dlt(e.id) : () => remove(e)}
+                                >
+                                  -
+                                </span>
+                                <span style={{ fontSize: 22 }}>{e.qnty}</span>
+                                <span style={{ fontSize: 24 }} onClick={() => send(e)}>
+                                  +
+                                </span>
+                              </div>
+                            </td>
 
+                            <td className="text-center">₹ {e.price * e.qnty}.00</td>
+                          </tr>
+                        </>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </Card>
             {/* cart totals */}
-            <div className="row">
-              <div className="col-lg-7"></div>
-              <div className="col-lg-5">
+            <Card style={{ width: "30%" }}>
+              <div className="card-total">
                 <table>
                   <thead>
                     <tr>
@@ -135,7 +135,7 @@ export default function Cart() {
                   </tbody>
                 </table>
               </div>
-            </div>
+            </Card>
           </div>
         ) : (
           <>

@@ -77,88 +77,85 @@ export default function Purchase() {
         </Link>
       </div>
 
-      <div style={{ padding: "0 0 40px 0", display: "flex", gap: "40px" }}>
-        <div>
-          <h4 style={{ marginBottom: "10px" }}>Whole Game :</h4>
-          <Card sx={{ maxWidth: 345 }} style={{ position: "sticky", top: "0" }}>
-            <CardMedia sx={{ height: 240 }} mb={3}>
-              <img
-                src={brandDark}
-                alt="img"
-                style={{ width: "100%", height: "100%", borderRadius: "10px" }}
-              />
-            </CardMedia>
+      {data.map((e) => (
+        <div style={{ padding: "0 0 40px 0", display: "flex", gap: "40px" }} key={e.id}>
+          <div>
+            <h4 style={{ marginBottom: "10px" }}>Whole Game :</h4>
+            <Card sx={{ maxWidth: 345 }} style={{ position: "sticky", top: "0" }}>
+              <CardMedia sx={{ height: 240 }} mb={3}>
+                <img
+                  src={brandDark}
+                  alt="img"
+                  style={{ width: "100%", height: "100%", borderRadius: "10px" }}
+                />
+              </CardMedia>
 
-            <CardContent style={{ color: "#fff", padding: "20px" }}>
-              <Typography gutterBottom variant="h5" component="div">
-                Lizard
-              </Typography>
+              <CardContent style={{ color: "#fff", padding: "20px" }}>
+                <Typography gutterBottom variant="h5" component="div">
+                  {e.title}
+                </Typography>
 
-              <Typography variant="body2" style={{ lineHeight: "normal" }}>
-                Lizards are a widespread group of squamate reptiles, with over 6,000 species,
-                ranging across all continents except Antarctica Lizards are a widespread group of
-                squamate reptiles, with over 6,000 species, ranging across all continents except
-                Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000.
-              </Typography>
-            </CardContent>
-            <CardActions
-              style={{
-                justifyContent: "space-between",
-                padding: "0 8px",
-              }}
-            >
-              <Button
-                size="small"
+                <Typography variant="body2" style={{ lineHeight: "normal" }}>
+                  {e.content}
+                </Typography>
+              </CardContent>
+              <CardActions
                 style={{
-                  fontWeight: "300",
-                  textTransform: "capitalize",
-                  fontSize: "14px",
+                  justifyContent: "space-between",
+                  padding: "0 8px",
                 }}
               >
-                Share
-              </Button>
-              <Button
-                size="small"
+                <Button
+                  size="small"
+                  style={{
+                    fontWeight: "300",
+                    textTransform: "capitalize",
+                    fontSize: "14px",
+                  }}
+                >
+                  Share
+                </Button>
+                <Button
+                  size="small"
+                  style={{
+                    fontWeight: "300",
+                    textTransform: "capitalize",
+                    fontSize: "14px",
+                  }}
+                >
+                  Learn
+                </Button>
+              </CardActions>
+
+              <Divider orientation="horizontal" sx={{ ml: -2 }} style={{ margin: "0" }} />
+              <CardActions
                 style={{
-                  fontWeight: "300",
-                  textTransform: "capitalize",
-                  fontSize: "14px",
+                  display: "flex",
+                  justifyContent: "center",
+                  padding: "15px 25px ",
+                  gap: "40px",
                 }}
               >
-                Learn
-              </Button>
-            </CardActions>
+                <button className="purchase-delete">-</button>
+                <p style={{ color: "#fff" }}>0</p>
+                <button className="purchase-add">+</button>
+              </CardActions>
+            </Card>
+          </div>
 
-            <Divider orientation="horizontal" sx={{ ml: -2 }} style={{ margin: "0" }} />
-            <CardActions
+          <div>
+            <h4 style={{ marginBottom: "10px" }}>Skills :</h4>
+            <div
               style={{
-                display: "flex",
+                display: "grid",
+                gap: "20px",
+                gridTemplateColumns: "repeat(3, 1fr)",
                 justifyContent: "center",
-                padding: "15px 25px ",
-                gap: "40px",
+                alignItems: "center",
               }}
             >
-              <button className="purchase-delete">-</button>
-              <p style={{ color: "#fff" }}>0</p>
-              <button className="purchase-add">+</button>
-            </CardActions>
-          </Card>
-        </div>
-
-        <div>
-          <h4 style={{ marginBottom: "10px" }}>Skills :</h4>
-          <div
-            style={{
-              display: "grid",
-              gap: "20px",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {data.map((e) => (
-              <div style={{ display: "flex", gap: "20px" }} key={e.id}>
-                <Card sx={{ maxWidth: 200 }}>
+              {data.slice(1).map((item) => (
+                <Card sx={{ maxWidth: 200 }} key={item.id}>
                   <CardMedia sx={{ height: 100 }} mb={3}>
                     <img
                       src={brandDark}
@@ -168,14 +165,14 @@ export default function Purchase() {
                   </CardMedia>
                   <CardContent style={{ paddingBottom: "10px", padding: "20px" }}>
                     <Typography gutterBottom variant="h5" component="div">
-                      {e.title}
+                      {item.title}
                     </Typography>
 
                     <Typography
                       variant="body2"
                       style={{ color: "#fff", fontSize: "13px", lineHeight: "normal" }}
                     >
-                      {e.content2}
+                      {item.content2}
                     </Typography>
                   </CardContent>
                   <CardActions style={{ justifyContent: "space-between", padding: "0 8px" }}>
@@ -213,21 +210,21 @@ export default function Purchase() {
                   >
                     <button
                       className="purchase-delete"
-                      onClick={e.qnty <= 1 ? () => dlt(e.id) : () => remove(e)}
+                      onClick={item.qnty <= 1 ? () => dlt(item.id) : () => remove(item)}
                     >
                       -
                     </button>
-                    <span style={{ color: "#fff" }}>{e.qnty}</span>
-                    <button className="purchase-add" onClick={() => send(e)}>
+                    <span style={{ color: "#fff" }}>{item.qnty}</span>
+                    <button className="purchase-add" onClick={() => send(item)}>
                       +
                     </button>
                   </CardActions>
                 </Card>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      ))}
 
       <Footer />
     </DashboardLayout>

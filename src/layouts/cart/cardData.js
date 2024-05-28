@@ -4,7 +4,7 @@ const Cardsdata = [
     title: "9 Skills",
     content:
       " Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000.",
-    price: 1000,
+    price: 7999,
     qnty: 0,
   },
 
@@ -16,7 +16,7 @@ const Cardsdata = [
       "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000 species",
     content2:
       "ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000.",
-    price: 350,
+    price: 999,
     qnty: 0,
   },
   {
@@ -27,7 +27,7 @@ const Cardsdata = [
       "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000 species",
     content2:
       "ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000.",
-    price: 25,
+    price: 999,
     qnty: 0,
   },
   {
@@ -38,7 +38,7 @@ const Cardsdata = [
       "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000 species",
     content2:
       "ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000.",
-    price: 70,
+    price: 999,
 
     qnty: 0,
   },
@@ -50,7 +50,7 @@ const Cardsdata = [
       "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000 species",
     content2:
       " ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000.",
-    price: 70,
+    price: 999,
 
     qnty: 0,
   },
@@ -62,7 +62,7 @@ const Cardsdata = [
       "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000 species",
     content2:
       "ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000.",
-    price: 210,
+    price: 999,
     qnty: 0,
   },
   {
@@ -73,7 +73,7 @@ const Cardsdata = [
       "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000 species",
     content2:
       " ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000.",
-    price: 100,
+    price: 999,
     qnty: 0,
   },
   {
@@ -84,7 +84,7 @@ const Cardsdata = [
       "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000 species",
     content2:
       "ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000.",
-    price: 300,
+    price: 999,
     qnty: 0,
   },
   {
@@ -95,7 +95,7 @@ const Cardsdata = [
       "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000 species",
     content2:
       " ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000.",
-    price: 100,
+    price: 999,
     qnty: 0,
   },
   {
@@ -106,7 +106,7 @@ const Cardsdata = [
       "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000 species",
     content2:
       " ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000.",
-    price: 100,
+    price: 999,
     qnty: 0,
   },
 ];
