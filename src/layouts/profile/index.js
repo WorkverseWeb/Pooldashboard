@@ -47,7 +47,7 @@ function Overview() {
           <>
             <Header>
               <MDBox mt={5} mb={3}>
-                <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
+                {/* <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} /> */}
                 <ProfileInfoCard
                   title="profile information"
                   description=""

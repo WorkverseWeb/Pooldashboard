@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./customGroup.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import typography from "assets/theme/base/typography";
 
 export default function CustomGroups() {
   const [departments, setDepartments] = useState([""]);
@@ -117,7 +118,11 @@ export default function CustomGroups() {
             ))}
           </div>
 
-          <button type="submit" className="group-submit">
+          <button
+            type="submit"
+            className="group-submit"
+            style={{ fontFamily: typography.fontFamily }}
+          >
             Save
           </button>
         </form>

@@ -175,7 +175,7 @@ function Tables() {
               </div>
             </div>
 
-            <Grid container spacing={6}>
+            <Grid container pt={6} spacing={6}>
               <Grid item xs={12}>
                 <Card>
                   <MDBox pt={3}>

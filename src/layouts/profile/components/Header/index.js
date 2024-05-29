@@ -81,7 +81,7 @@ function Header({ children }) {
           py: 2,
           px: 2,
         }}
-        style={{ background: "transparent", border: "0", boxShadow: "0" }}
+        style={{ background: "transparent", border: "0", boxShadow: "none" }}
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item style={{ position: "relative" }}>
@@ -120,18 +120,31 @@ function Header({ children }) {
             style={{
               marginLeft: "auto",
               color: "#fff",
-              fontSize: "13px",
+              fontSize: "14px",
               textAlign: "end",
               padding: "30px 10px 0",
             }}
           >
-            <p>
-              Status : <span> Verification pending...</span>
-            </p>
+            <MDTypography
+              variant="h6"
+              fontWeight="small"
+              style={{
+                fontSize: "14px",
+              }}
+            >
+              Status :
+              <span style={{ color: "#fff", fontWeight: "400", marginLeft: "5px" }}>
+                Verification Pending...
+              </span>
+            </MDTypography>
 
-            <p>
-              Status : <span>Verified.</span>
-            </p>
+            {/* <MDTypography variant="h6" fontWeight="small"   style={{
+                fontSize: "14px",
+              }}>
+              Status :
+              <span style={{ color: "#fff", fontWeight: "400",marginLeft: "5px" }}> Verified.</span>
+            </MDTypography> */}
+
             <p> Email at dev@workverse to complete verification quickly.</p>
           </div>
         </Grid>

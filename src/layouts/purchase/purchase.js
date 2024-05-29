@@ -141,7 +141,7 @@ export default function Purchase() {
                                 fontSize: "14px",
                               }}
                             >
-                              Share
+                              Learn
                             </Button>
                             <Button
                               size="small"
@@ -151,7 +151,7 @@ export default function Purchase() {
                                 fontSize: "14px",
                               }}
                             >
-                              Learn
+                              ₹ {e.price} /-
                             </Button>
                           </CardActions>
 
@@ -168,9 +168,16 @@ export default function Purchase() {
                               gap: "40px",
                             }}
                           >
-                            <button className="purchase-delete">-</button>
-                            <p style={{ color: "#fff" }}>0</p>
-                            <button className="purchase-add">+</button>
+                            <button
+                              className="purchase-delete"
+                              onClick={e.qnty <= 1 ? () => dlt(e.id) : () => remove(e)}
+                            >
+                              -
+                            </button>
+                            <p style={{ color: "#fff" }}>{e.qnty}</p>
+                            <button className="purchase-add" onClick={() => send(e)}>
+                              +
+                            </button>
                           </CardActions>
                         </Card>
                       </div>
@@ -217,7 +224,7 @@ export default function Purchase() {
                                     fontSize: "14px",
                                   }}
                                 >
-                                  Share
+                                  Learn
                                 </Button>
                                 <Button
                                   size="small"
@@ -227,7 +234,7 @@ export default function Purchase() {
                                     fontSize: "14px",
                                   }}
                                 >
-                                  Learn
+                                  ₹ {item.price} /-
                                 </Button>
                               </CardActions>
                               <Divider

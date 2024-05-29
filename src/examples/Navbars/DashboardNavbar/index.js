@@ -12,8 +12,23 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import Icon from "@mui/material/Icon";
+
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+
 import MDButton from "components/MDButton";
 import { useAuth0 } from "@auth0/auth0-react";
+
+// toast
+import InfoIcon from "@mui/icons-material/Info";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ErrorIcon from "@mui/icons-material/Error";
+
+const notificationIcons = {
+  info: <InfoIcon />,
+  success: <CheckCircleIcon />,
+  error: <ErrorIcon />,
+};
 // React components
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
@@ -42,6 +57,9 @@ import { dark } from "@mui/material/styles/createPalette";
 // import RegistrationForm from "./RegisterForm/Registrationform";
 // import brandDark from "assets/images/wrench.png";
 
+import "react-toastify/dist/ReactToastify.css";
+import { getNotifications } from "../../../layouts/toastmanager/index";
+
 function DashboardNavbar({ absolute, light, isMini }) {
   const { user, isAuthenticated, logout, loginWithRedirect, isLoading } = useAuth0();
   const [navbarType, setNavbarType] = useState();
@@ -49,6 +67,13 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
+
+  // toast
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    setNotifications(getNotifications());
+  }, []);
 
   useEffect(() => {
     // Setting the navbar type
@@ -90,9 +115,26 @@ function DashboardNavbar({ absolute, light, isMini }) {
       onClose={handleCloseMenu}
       sx={{ mt: 2 }}
     >
-      <NotificationItem icon={<Icon>email</Icon>} title="Check new messages" />
+      {/* <NotificationItem icon={<Icon>email</Icon>} title="Check new messages" />
       <NotificationItem icon={<Icon>podcasts</Icon>} title="Manage Podcast sessions" />
-      <NotificationItem icon={<Icon>shopping_cart</Icon>} title="Payment successfully completed" />
+      <NotificationItem icon={<Icon>shopping_cart</Icon>} title="Payment successfully completed" /> */}
+      <ul
+        style={{
+          width: "150px",
+        }}
+      >
+        {notifications.map((notification, index) => (
+          <li
+            key={index}
+            style={{
+              borderBottom: "1px solid #bafff7",
+              padding: "5px",
+            }}
+          >
+            {notification.message}
+          </li>
+        ))}
+      </ul>
     </Menu>
   );
   // Styles for the navbar icons

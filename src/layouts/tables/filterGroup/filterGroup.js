@@ -6,8 +6,10 @@ export default function FilterGroup() {
   const [departments, setDepartments] = useState([""]);
 
   return (
-    <div className="filter-container" style={{ fontFamily: typography.fontFamily }}>
-      <select>
+    <div className="filter-container">
+      <select
+        style={{ fontFamily: typography.fontFamily, fontWeight: "600", textTransform: "uppercase" }}
+      >
         <option value="">Select Group</option>
         {departments.map((department, index) => (
           <option key={index} value={department}>

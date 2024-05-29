@@ -5,6 +5,7 @@
   border-radius: 5px;
   background-color: #0bb08c;
   border: 0;
+  cursor: pointer;
 }
 
 .filter-container select option {
