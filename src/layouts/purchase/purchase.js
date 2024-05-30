@@ -26,8 +26,11 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import typography from "assets/theme/base/typography";
 import Icon from "@mui/material/Icon";
 import { Functions } from "@mui/icons-material";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Purchase() {
   const getdata = useSelector((state) => state.cartreducer.carts);
@@ -37,6 +40,7 @@ export default function Purchase() {
 
   const send = (e) => {
     dispatch(ADD(e));
+    toast.success("Item added!");
   };
 
   // remove one
@@ -81,7 +85,7 @@ export default function Purchase() {
           <>
             <div style={{ textAlign: "end", padding: "20px 20px 0 20px" }}>
               <Link to="/cart" type="button" className="cart" style={{ position: "relative" }}>
-                <Icon fontSize="large" style={{ color: "#0bb08c" }}>
+                <Icon fontSize="large" style={{ color: "#00E8F8" }}>
                   shopping_cart
                 </Icon>
                 <span
@@ -114,7 +118,11 @@ export default function Purchase() {
                             <img
                               src={brandDark}
                               alt="img"
-                              style={{ width: "100%", height: "100%", borderRadius: "10px" }}
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                borderRadius: "10px",
+                              }}
                             />
                           </CardMedia>
 
@@ -168,7 +176,7 @@ export default function Purchase() {
                               gap: "40px",
                             }}
                           >
-                            <button
+                            {/* <button
                               className="purchase-delete"
                               onClick={e.qnty <= 1 ? () => dlt(e.id) : () => remove(e)}
                             >
@@ -177,6 +185,24 @@ export default function Purchase() {
                             <p style={{ color: "#fff" }}>{e.qnty}</p>
                             <button className="purchase-add" onClick={() => send(e)}>
                               +
+                            </button> */}
+                            <button
+                              style={{
+                                fontFamily: typography.fontFamily,
+                                textTransform: "uppercase",
+                                border: "0",
+                                background: "#021b215e",
+                                color: "#fff",
+                                padding: "10px",
+                                cursor: "pointer",
+                                borderRadius: "8px",
+                                border: "0 solid rgba(186, 255, 247, 0.125)",
+                                boxShadow:
+                                  " 0rem 0.125rem 0.125rem 0rem rgba(186, 255, 247, 0.14),0rem 0.1875rem 0.0625rem -0.125rem rgba(186, 255, 247, 0.2),0rem 0.0625rem 0.3125rem 0rem rgba(186, 255, 247, 0.12)",
+                              }}
+                              onClick={() => send(e)}
+                            >
+                              Add to Cart
                             </button>
                           </CardActions>
                         </Card>
@@ -252,7 +278,7 @@ export default function Purchase() {
                                   gap: "30px",
                                 }}
                               >
-                                <button
+                                {/* <button
                                   className="purchase-delete"
                                   onClick={item.qnty <= 1 ? () => dlt(item.id) : () => remove(item)}
                                 >
@@ -261,6 +287,24 @@ export default function Purchase() {
                                 <span style={{ color: "#fff" }}>{item.qnty}</span>
                                 <button className="purchase-add" onClick={() => send(item)}>
                                   +
+                                </button> */}
+                                <button
+                                  style={{
+                                    fontFamily: typography.fontFamily,
+                                    textTransform: "uppercase",
+                                    border: "0",
+                                    background: "#021b215e",
+                                    color: "#fff",
+                                    padding: "10px",
+                                    cursor: "pointer",
+                                    borderRadius: "8px",
+                                    border: "0 solid rgba(186, 255, 247, 0.125)",
+                                    boxShadow:
+                                      " 0rem 0.125rem 0.125rem 0rem rgba(186, 255, 247, 0.14),0rem 0.1875rem 0.0625rem -0.125rem rgba(186, 255, 247, 0.2),0rem 0.0625rem 0.3125rem 0rem rgba(186, 255, 247, 0.12)",
+                                  }}
+                                  onClick={() => send(item)}
+                                >
+                                  Add to Cart
                                 </button>
                               </CardActions>
                             </Card>

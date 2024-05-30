@@ -117,13 +117,15 @@ function Tables() {
                 <button
                   style={{
                     padding: "9px 18px",
-                    backgroundColor: "#0BB08C",
+                    backgroundColor: "#021b215e",
                     color: "white",
                     border: "none",
                     borderRadius: "7px",
                     cursor: "pointer",
                     fontWeight: "600",
                     textTransform: "uppercase",
+                    boxShadow:
+                      "0rem 0.875rem 1.625rem -0.75rem rgba(186, 255, 247, 0.4), 0rem 0.25rem 1.4375rem 0rem rgba(186, 255, 247, 0.15), 0rem 0.5rem 0.625rem -0.3125rem rgba(186, 255, 247, 0.2)",
                   }}
                   className="popup-btn"
                   onClick={toggleForm}
@@ -147,12 +149,14 @@ function Tables() {
                   style={{
                     padding: "9px 10px",
                     fontWeight: "600",
-                    backgroundColor: "#0BB08C",
+                    backgroundColor: "#021b215e",
                     color: "white",
                     border: "none",
                     borderRadius: "7px",
                     cursor: "pointer",
                     textTransform: "uppercase",
+                    boxShadow:
+                      "0rem 0.875rem 1.625rem -0.75rem rgba(186, 255, 247, 0.4), 0rem 0.25rem 1.4375rem 0rem rgba(186, 255, 247, 0.15), 0rem 0.5rem 0.625rem -0.3125rem rgba(186, 255, 247, 0.2)",
                   }}
                   className="popup-btn"
                   onClick={uploadForm}

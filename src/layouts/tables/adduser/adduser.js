@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { addNotification } from "../../toastmanager/index";
+import typography from "assets/theme/base/typography";
 
 const AddUser = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -75,7 +75,6 @@ const AddUser = ({ onClose }) => {
         Object.values(isClicked).some((clicked) => clicked) ||
         Object.values(branchClicked).some((clicked) => clicked);
       if (!isSelected) {
-        addNotification("Please select at least One.", "error");
         toast.error("Please select at least One.");
         return;
       }
@@ -112,12 +111,11 @@ const AddUser = ({ onClose }) => {
         it: false,
       });
 
-      addNotification("User Added Successfully!", "success");
       toast.success("User Added Successfully!");
       // Save success notification
     } catch (error) {
       console.error("Error adding user:", error);
-      addNotification("Error in uploading file!", "error");
+
       toast.error("Error adding User! Please try again later.");
       // if (error.response && error.response.status === 409) {
       //   toast.error("User already added.");
@@ -176,7 +174,7 @@ const AddUser = ({ onClose }) => {
             style={{ marginBottom: "10px" }}
           />
 
-          <div className="select-btn">
+          <div className="select-btn" style={{ fontFamily: typography.fontFamily }}>
             <div style={{ textAlign: "start", paddingLeft: "5px" }}>
               <label htmlFor="skills" style={{ fontSize: "15px" }}>
                 Group :

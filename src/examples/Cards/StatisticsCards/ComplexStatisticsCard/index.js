@@ -31,7 +31,6 @@ function ComplexStatisticsCard({ color, title, count, percentage, icon, children
       <MDBox display="flex" justifyContent="space-between" pt={1} px={2}>
         <MDBox
           variant="gradient"
-          bgColor={color}
           color={color === "light" ? "dark" : "white"}
           coloredShadow={color}
           borderRadius="xl"
@@ -41,6 +40,11 @@ function ComplexStatisticsCard({ color, title, count, percentage, icon, children
           width="4rem"
           height="4rem"
           mt={-3}
+          style={{
+            background: "#021b215e",
+            boxShadow:
+              " 0rem 0.875rem 1.625rem -0.75rem rgba(186, 255, 247, 0.4),0rem 0.25rem 1.4375rem 0rem rgba(186, 255, 247, 0.15),0rem 0.5rem 0.625rem -0.3125rem rgba(186, 255, 247, 0.2)",
+          }}
         >
           <Icon fontSize="medium" color="inherit">
             {icon}

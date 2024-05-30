@@ -58,7 +58,8 @@ import { dark } from "@mui/material/styles/createPalette";
 // import brandDark from "assets/images/wrench.png";
 
 import "react-toastify/dist/ReactToastify.css";
-import { getNotifications } from "../../../layouts/toastmanager/index";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const { user, isAuthenticated, logout, loginWithRedirect, isLoading } = useAuth0();
@@ -72,8 +73,32 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    setNotifications(getNotifications());
+    fetchNotifications();
   }, []);
+
+  const fetchNotifications = async () => {
+    try {
+      const response = await axios.get("/notifications");
+      setNotifications(response.data);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  };
+
+  const handleNotification = (notification) => {
+    if (notification.source === "automatic") {
+      // If notification is automatic, show a toast
+      toast.info(notification.message);
+    } else {
+      // If notification is from form submission, add it to the notification list
+      setNotifications([notification, ...notifications]);
+    }
+
+    // Limit the list to 5 notifications
+    if (notifications.length > 5) {
+      setNotifications(notifications.slice(0, 5));
+    }
+  };
 
   useEffect(() => {
     // Setting the navbar type
@@ -121,19 +146,33 @@ function DashboardNavbar({ absolute, light, isMini }) {
       <ul
         style={{
           width: "150px",
+          listStyleType: "none",
+          margin: 0,
+          padding: 0,
         }}
       >
-        {notifications.map((notification, index) => (
+        {notifications.length > 0 ? (
+          notifications.map((notification, index) => (
+            <li
+              key={index}
+              style={{
+                borderBottom: "1px solid #bafff7",
+                padding: "5px",
+              }}
+            >
+              {notification.message}
+            </li>
+          ))
+        ) : (
           <li
-            key={index}
             style={{
-              borderBottom: "1px solid #bafff7",
               padding: "5px",
+              textAlign: "center",
             }}
           >
-            {notification.message}
+            No new notifications
           </li>
-        ))}
+        )}
       </ul>
     </Menu>
   );

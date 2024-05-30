@@ -10,6 +10,7 @@ import Footer from "examples/Footer";
 import Login from "layouts/login";
 import { useAuth0 } from "@auth0/auth0-react";
 import MDBox from "components/MDBox";
+import typography from "assets/theme/base/typography";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -164,7 +165,14 @@ export default function Cart() {
                         </tr>
 
                         <div className="cart-purchase">
-                          <button>Purchase</button>
+                          <button
+                            style={{
+                              fontFamily: typography.fontFamily,
+                              textTransform: "uppercase",
+                            }}
+                          >
+                            Purchase
+                          </button>
                         </div>
                       </tbody>
                     </table>

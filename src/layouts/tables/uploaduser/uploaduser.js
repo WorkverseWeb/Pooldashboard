@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./uploaduser.css";
-import typography from "assets/theme/base/typography";
 import PropTypes from "prop-types";
 import * as xlsx from "xlsx";
 import { toast } from "react-toastify";
@@ -8,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { Icon, IconButton } from "@mui/material";
 import brandDark from "assets/images/information.png";
 import brandWhite from "assets/images/instruction_img.PNG";
-import { addNotification } from "../../toastmanager/index";
 
 const UploadUser = ({ onClose }) => {
   const [file, setFile] = useState(null);
@@ -34,14 +32,13 @@ const UploadUser = ({ onClose }) => {
       //   return;
       // }
 
-      addNotification("File Uploaded !", "success");
       toast.success("File Uploaded !");
 
       setFile(File);
       setExcelData(exceljson);
     } catch (error) {
       console.error("An error occurred:", error);
-      addNotification("Error in uploading file!", "success");
+
       toast.error("Error in uploading file!");
     }
   };
@@ -99,11 +96,11 @@ const UploadUser = ({ onClose }) => {
       }
       setFile(null);
       setExcelData([]);
-      addNotification("Users Added Successfully!", "success");
+
       toast.success("Users Added Successfully !");
     } catch (error) {
       console.error("An error occurred:", error);
-      addNotification("Error in Adding Users!", "success");
+
       toast.error("Error in Adding Users!");
     }
   };
