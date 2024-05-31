@@ -98,12 +98,13 @@
   cursor: pointer;
   border-radius: 5px;
   margin: 5px 5px;
+  /* font-family: ; */
 }
 
 .add-form form .select-btn .audio-button.clicked,
 .add-form form .select-btn .branch-button.clicked {
   color: #fff;
-  background-color: #0bb08c;
+  background-color: #021b215e;
 }
 
 /* button */

@@ -40,6 +40,7 @@ const colors = {
     focus: "#BAFFF7",
   },
 
+  // dashboard number  color
   success: {
     main: "#BAFFF7",
     focus: "#BAFFF7",
@@ -60,9 +61,10 @@ const colors = {
     focus: "#BAFFF7",
   },
 
+  // Text highlight color
   dark: {
-    main: "#BAFFF7",
-    focus: "#BAFFF7",
+    main: "#fff",
+    focus: "#fff",
   },
 
   grey: {
@@ -93,6 +95,7 @@ const colors = {
       state: "#021b215e",
     },
 
+    // analytics
     success: {
       main: "97%, 0%, 17%, 7%",
       state: "97%, 0%, 17%, 17%",
@@ -114,8 +117,8 @@ const colors = {
     },
     //navbar
     dark: {
-      main: "#021b215e",
-      state: "#021b215e",
+      main: "transparent",
+      state: "transparent",
     },
   },
 

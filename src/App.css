@@ -22,7 +22,7 @@ form select,
 
 #bg-main-img {
   background: linear-gradient(to left, rgba(0, 0, 0, 0.582), rgba(2, 27, 33, 0.582)),
-    url("./assets/images/main-bg-img.png") no-repeat;
+    url("./assets/images/main-bg.png") no-repeat;
   background-attachment: fixed;
   background-size: cover;
   min-height: 100vh;

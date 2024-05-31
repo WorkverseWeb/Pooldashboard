@@ -174,8 +174,10 @@ const AddUser = ({ onClose }) => {
             style={{ marginBottom: "10px" }}
           />
 
-          <div className="select-btn" style={{ fontFamily: typography.fontFamily }}>
-            <div style={{ textAlign: "start", paddingLeft: "5px" }}>
+          <div className="select-btn" style={{}}>
+            <div
+              style={{ textAlign: "start", paddingLeft: "5px", fontFamily: typography.fontFamily }}
+            >
               <label htmlFor="skills" style={{ fontSize: "15px" }}>
                 Group :
               </label>

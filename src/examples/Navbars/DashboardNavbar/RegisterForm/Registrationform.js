@@ -50,15 +50,15 @@ function RegistrationForm() {
     setFormData({ ...formData, [name]: value });
   };
 
-  // const sendStateToBackend = async (data) => {
-  //   try {
-  //     const response = await axios.post("http://localhost:8000/register", data);
-  //     console.log("User data registered:", response.data);
-  //   } catch (error) {
-  //     console.error("Error registering user:", error);
-  //     toast.error("Error Registering User!");
-  //   }
-  // };
+  const sendStateToBackend = async (data) => {
+    try {
+      const response = await axios.post("http://localhost:8000/register", data);
+      console.log("User data registered:", response.data);
+    } catch (error) {
+      console.error("Error registering user:", error);
+      toast.error("Error Registering User!");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -31,8 +31,8 @@ import routes from "routes";
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
 // Images
-import brandWhite from "assets/images/logo-ct.png";
-import brandDark from "assets/images/logo-ct-dark.png";
+import brandWhite from "assets/images/workverse-logo.png";
+import brandDark from "assets/images/workverse-logo.png";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -112,10 +112,10 @@ export default function App() {
         {isAuthenticated && (
           <ToastContainer
             position="top-right"
-            autoClose={5000}
+            autoClose={3000}
             pauseOnHover={false}
             pauseOnFocusLoss={false}
-            // hideProgressBar={true}
+            hideProgressBar={true}
             toastStyle={{ minHeight: "50px", width: "270px", fontSize: "15px" }}
           />
         )}
@@ -124,11 +124,10 @@ export default function App() {
             <Sidenav
               color={sidenavColor}
               brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-              brandName="WORKVERSE"
               routes={routes}
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}
-            />
+            ></Sidenav>
             <Configurator />
           </>
         )}

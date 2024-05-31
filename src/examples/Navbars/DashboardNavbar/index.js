@@ -54,7 +54,7 @@ import {
   setOpenConfigurator,
 } from "context";
 import { dark } from "@mui/material/styles/createPalette";
-// import RegistrationForm from "./RegisterForm/Registrationform";
+import RegistrationForm from "./RegisterForm/Registrationform";
 // import brandDark from "assets/images/wrench.png";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -87,14 +87,11 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
   const handleNotification = (notification) => {
     if (notification.source === "automatic") {
-      // If notification is automatic, show a toast
       toast.info(notification.message);
     } else {
-      // If notification is from form submission, add it to the notification list
       setNotifications([notification, ...notifications]);
     }
 
-    // Limit the list to 5 notifications
     if (notifications.length > 5) {
       setNotifications(notifications.slice(0, 5));
     }
@@ -194,7 +191,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
   return (
     <>
-      {/* <RegistrationForm /> */}
+      <RegistrationForm />
 
       <AppBar
         position={absolute ? "absolute" : navbarType}

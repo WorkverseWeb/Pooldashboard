@@ -88,7 +88,7 @@ export default function data() {
         width: "20%",
         align: "left",
       },
-      { Header: "branch", accessor: "branch", align: "center" },
+      { Header: "Group", accessor: "group", align: "center" },
       {
         Header: "skill",
         accessor: "function",
@@ -108,7 +108,7 @@ export default function data() {
     rows: [
       {
         author: <Author image={team2} name="Priyanka Shahasane" email="priyanka@workverse.in" />,
-        branch: <Branch heading="Computer Science" />,
+        group: <Branch heading="Computer Science" />,
         function: (
           <Job
             title="Creative Problem solving , Negotiation , Collaboration , First Principles
@@ -134,7 +134,7 @@ export default function data() {
       },
       {
         author: <Author image={team3} name="Tej Mandani" email="tej@workverse.in" />,
-        branch: <Branch heading="Computer Science" />,
+        group: <Branch heading="Computer Science" />,
         function: (
           <Job
             title="Entrepreneurial  Mindset, First Principles
@@ -159,7 +159,7 @@ export default function data() {
       },
       {
         author: <Author image={team4} name="Rasika Lokhande" email="rasika@workverse.in" />,
-        branch: <Branch heading="IT" />,
+        group: <Branch heading="IT" />,
         function: (
           <Job title="Negotiation , Story-telling , Collaboration, Entrepreneurial Mindset" />
         ),
@@ -181,7 +181,7 @@ export default function data() {
       },
       {
         author: <Author image={team3} name="Om Rane" email="om@workverse.in" />,
-        branch: <Branch heading="EXTC" />,
+        group: <Branch heading="EXTC" />,
         function: <Job title="Story-telling" />,
         status: (
           <MDBox ml={-1}>
@@ -201,7 +201,7 @@ export default function data() {
       },
       {
         author: <Author image={team3} name="Subhajit Adhikari" email="subhajit@workverse.in" />,
-        branch: <Branch heading="AI" />,
+        group: <Branch heading="AI" />,
         function: <Job title="First Principles Thinking" />,
         status: (
           <MDBox ml={-1}>
@@ -221,7 +221,7 @@ export default function data() {
       },
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
-        branch: <Branch heading="civil" />,
+        group: <Branch heading="civil" />,
         function: <Job title="Emotional Intelligence" />,
         status: (
           <MDBox ml={-1}>
@@ -241,7 +241,7 @@ export default function data() {
       },
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
-        branch: <Branch heading="IT" />,
+        group: <Branch heading="IT" />,
         function: <Job title="Collaboration " />,
         status: (
           <MDBox ml={-1}>
@@ -261,7 +261,7 @@ export default function data() {
       },
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
-        branch: <Branch heading="EXTC" />,
+        group: <Branch heading="EXTC" />,
         function: <Job title="Sharp Remote  Communication" />,
         status: (
           <MDBox ml={-1}>
@@ -281,7 +281,7 @@ export default function data() {
       },
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
-        branch: <Branch heading="Mechanical" />,
+        group: <Branch heading="Mechanical" />,
         function: <Job title="Productivity  Management" />,
         status: (
           <MDBox ml={-1}>
@@ -301,7 +301,7 @@ export default function data() {
       },
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
-        branch: <Branch heading="Mechanical" />,
+        group: <Branch heading="Mechanical" />,
         function: <Job title="Productivity  Management" />,
         status: (
           <MDBox ml={-1}>
@@ -321,7 +321,7 @@ export default function data() {
       },
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
-        branch: <Branch heading="Mechanical" />,
+        group: <Branch heading="Mechanical" />,
         function: <Job title="Productivity  Management" />,
         status: (
           <MDBox ml={-1}>
@@ -341,7 +341,7 @@ export default function data() {
       },
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
-        branch: <Branch heading="Mechanical" />,
+        group: <Branch heading="Mechanical" />,
         function: <Job title="Productivity  " />,
         status: (
           <MDBox ml={-1}>
@@ -361,7 +361,7 @@ export default function data() {
       },
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
-        branch: <Branch heading="Mechanical" />,
+        group: <Branch heading="Mechanical" />,
         function: <Job title="Productivity  Management" />,
         status: (
           <MDBox ml={-1}>
@@ -382,7 +382,7 @@ export default function data() {
 
       {
         author: <Author image={team4} name="Wynona Cybil Alwyn" email="wynona@workverse.in" />,
-        branch: <Branch heading="Mechanical" />,
+        group: <Branch heading="Mechanical" />,
         function: <Job title="Productivity  Management" />,
         status: (
           <MDBox ml={-1}>
