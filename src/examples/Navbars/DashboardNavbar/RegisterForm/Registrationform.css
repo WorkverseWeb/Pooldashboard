@@ -89,7 +89,7 @@
   background: rgba(255, 255, 255, 0.14);
   border-radius: 5px;
   cursor: pointer;
-  background-color: #0bb08c;
+  background-color: #021b215e;
 }
 
 .audio-button {
@@ -105,7 +105,7 @@
 }
 
 .audio-button.clicked {
-  background-color: #0bb08c;
+  background-color: #021b215e;
 }
 
 .registration-header span {

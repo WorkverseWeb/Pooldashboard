@@ -70,7 +70,7 @@ function RegistrationForm() {
     }
     console.log("Form data saved:", formData);
 
-    // sendStateToBackend({ ...formData, ...isClicked });
+    sendStateToBackend({ ...formData, ...isClicked });
 
     // Reset form data
     setFormData({

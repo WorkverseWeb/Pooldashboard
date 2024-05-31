@@ -29,7 +29,6 @@ const AddUser = ({ onClose }) => {
     extc: false,
     aids: false,
     civil: false,
-    mech: false,
   });
 
   const handleInputChange = (e) => {
@@ -48,24 +47,20 @@ const AddUser = ({ onClose }) => {
       extc: false,
       aids: false,
       civil: false,
-      mech: false,
-      media: false,
-      chem: false,
-      it: false,
       [button]: true,
     };
     setBranchClicked(newBranch);
   };
 
-  // const sendStateToBackend = async (data) => {
-  //   try {
-  //     const response = await axios.post("http://localhost:8000/api/addusers", data);
-  //     return response;
-  //   } catch (error) {
-  //     console.error("Error during API call:", error);
-  //     throw error;
-  //   }
-  // };
+  const sendStateToBackend = async (data) => {
+    try {
+      const response = await axios.post("http://localhost:8000/addusers", data);
+      return response;
+    } catch (error) {
+      console.error("Error during API call:", error);
+      throw error;
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -79,49 +74,45 @@ const AddUser = ({ onClose }) => {
         return;
       }
 
-      // const response = await sendStateToBackend({ ...formData, ...isClicked, ...branchClicked });
+      const response = await sendStateToBackend({ ...formData, ...isClicked, ...branchClicked });
 
-      // if (response.data.success) {
-      // RESET
-      setFormData({
-        name: "",
-        email: "",
-      });
+      if (response.data.success) {
+        // RESET
+        setFormData({
+          name: "",
+          email: "",
+        });
 
-      setIsClicked({
-        csp: false,
-        em: false,
-        nego: false,
-        st: false,
-        fpt: false,
-        src: false,
-        collab: false,
-        ei: false,
-        pm: false,
-      });
+        setIsClicked({
+          csp: false,
+          em: false,
+          nego: false,
+          st: false,
+          fpt: false,
+          src: false,
+          collab: false,
+          ei: false,
+          pm: false,
+        });
 
-      setBranchClicked({
-        cs: false,
-        extc: false,
-        aids: false,
-        civil: false,
-        mech: false,
-        media: false,
-        chem: false,
-        it: false,
-      });
+        setBranchClicked({
+          cs: false,
+          extc: false,
+          aids: false,
+          civil: false,
+        });
 
-      toast.success("User Added Successfully!");
-      // Save success notification
+        toast.success("User Added Successfully!");
+      } else {
+        // toast.error("Error adding User! Please try again later.");
+        if (error.response && error.response.status === 409) {
+          toast.error("User already added.");
+        } else {
+          toast.error("Error adding User! Please try again later.");
+        }
+      }
     } catch (error) {
       console.error("Error adding user:", error);
-
-      toast.error("Error adding User! Please try again later.");
-      // if (error.response && error.response.status === 409) {
-      //   toast.error("User already added.");
-      // } else {
-      //   toast.error("Error adding User! Please try again later.");
-      // }
     }
   };
 
@@ -209,34 +200,6 @@ const AddUser = ({ onClose }) => {
               onClick={() => handleBranchButtonClick("civil")}
             >
               Civil
-            </button>
-            <button
-              type="button"
-              className={branchClicked.mech ? "branch-button clicked" : "branch-button"}
-              onClick={() => handleBranchButtonClick("mech")}
-            >
-              Mechanical
-            </button>
-            <button
-              type="button"
-              className={branchClicked.media ? "branch-button clicked" : "branch-button"}
-              onClick={() => handleBranchButtonClick("media")}
-            >
-              Media
-            </button>
-            <button
-              type="button"
-              className={branchClicked.chem ? "branch-button clicked" : "branch-button"}
-              onClick={() => handleBranchButtonClick("chem")}
-            >
-              Chemical
-            </button>
-            <button
-              type="button"
-              className={branchClicked.it ? "branch-button clicked" : "branch-button"}
-              onClick={() => handleBranchButtonClick("it")}
-            >
-              It
             </button>
           </div>
 
