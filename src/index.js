@@ -14,7 +14,18 @@ const root = createRoot(container);
 import { legacy_createStore as createStore } from "redux";
 import { Provider } from "react-redux";
 import rootred from "./redux/reducers/main";
-const store = createStore(rootred);
+// redux persist
+import { persistStore, persistReducer } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import storage from "redux-persist/lib/storage";
+
+const persistConfig = {
+  key: "root",
+  storage,
+};
+const persistedReducer = persistReducer(persistConfig, rootred);
+const store = createStore(persistedReducer);
+const persistor = persistStore(store);
 
 root.render(
   <Auth0Provider
@@ -25,11 +36,13 @@ root.render(
     }}
   >
     <Provider store={store}>
-      <BrowserRouter>
-        <MaterialUIControllerProvider>
-          <App />
-        </MaterialUIControllerProvider>
-      </BrowserRouter>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <MaterialUIControllerProvider>
+            <App />
+          </MaterialUIControllerProvider>
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   </Auth0Provider>
 );

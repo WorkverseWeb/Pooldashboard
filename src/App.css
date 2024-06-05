@@ -71,7 +71,7 @@ form select,
   font-size: small;
 }
 
-.add-to-cart tr {
+.add-to-cart tr:not(:last-child) {
   border-bottom: 1px solid #bafff7;
 }
 

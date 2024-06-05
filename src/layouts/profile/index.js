@@ -23,30 +23,27 @@ import { toast } from "react-toastify";
 // import PopupForm from "./popup/feedback";
 
 function Overview() {
-  const { isAuthenticated } = useAuth0();
-
-  // fetching registerform data
-  const [registerName, setRegisterName] = useState([]);
+  const { isAuthenticated, user } = useAuth0();
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    const fetchRegisterName = async () => {
+    const fetchUserData = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/register");
-        console.log("API Response:", response.data);
-        setRegisterName(response.data);
+        if (user && user.email) {
+          const response = await axios.get(`http://localhost:8000/users?email=${user.email}`);
+          console.log("API Response:", response.data);
+          setUserData(response.data);
+        }
       } catch (error) {
-        console.error("Error fetching data:", error);
-        toast.error("Error fetching Registration data");
+        console.error("Error fetching user data:", error);
+        toast.error("Error fetching user data");
       }
     };
 
-    fetchRegisterName();
-  }, []);
-
-  if (!Array.isArray(registerName)) {
-    console.error("API response is not an array:", registerName);
-    return <div>Error: Unexpected data format</div>;
-  }
+    if (isAuthenticated) {
+      fetchUserData();
+    }
+  }, [isAuthenticated, user]);
 
   return (
     <DashboardLayout>
@@ -75,39 +72,28 @@ function Overview() {
             <Header>
               <MDBox mt={5} mb={3}>
                 {/* <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} /> */}
-                {registerName.length === 0 ? (
-                  <div>No data available</div> // Handle empty data scenario
+                {userData ? (
+                  <ProfileInfoCard
+                    title="profile information"
+                    description=""
+                    info={{
+                      fullName: userData.fullName,
+                      mobile: "+91 " + userData.number,
+                      email: userData.email,
+                      // creatingFor: userData.poolForCreator,
+                      organization: userData.organization,
+                      designation: userData.designation,
+                      state: userData.state,
+                      city: userData.city,
+                      location: "India",
+                      // linkedIn: userData.linkedInURL,
+                    }}
+                    action={{ route: "", tooltip: "Edit Profile" }}
+                    shadow={false}
+                  />
                 ) : (
-                  registerName.map((e) => (
-                    <ProfileInfoCard
-                      key={e._id}
-                      title="profile information"
-                      description=""
-                      info={{
-                        fullName: e.fullname,
-                        mobile: "+91 " + e.number,
-                        email: "priyanka@workverse",
-                        organization: e.organization,
-                        designation: e.designation,
-                        state: e.state,
-                        city: e.city,
-                        location: "India",
-                        linkedIn: e.linkedIn,
-                      }}
-                      action={{ route: "", tooltip: "Edit Profile" }}
-                      shadow={false}
-                    />
-                  ))
+                  <div>Loading...</div>
                 )}
-
-                {/* fullname: "",
-      number: "",
-      organization: "",
-      designation: "",
-      state: "",
-      city: "",
-      linkedIn: "", */}
-
                 <Grid item xs={12} mt={5} md={6} xl={6}>
                   <PlatformSettings />
                 </Grid>

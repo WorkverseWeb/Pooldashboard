@@ -16,13 +16,15 @@ function RegistrationForm() {
   const location = useLocation();
   const [isClicked, setIsClicked] = useState({ Employee: false, Student: false });
   const [formData, setFormData] = useState({
-    fullname: "",
+    fullName: "",
+    email: "",
     number: "",
+    poolForCreator: "",
     organization: "",
     designation: "",
     state: "",
     city: "",
-    linkedIn: "",
+    linkdeInURL: "",
   });
 
   // useEffect(() => {
@@ -43,6 +45,11 @@ function RegistrationForm() {
   const handleButtonClick = (button) => {
     const newState = { Employee: false, Student: false, [button]: true };
     setIsClicked(newState);
+
+    setFormData({
+      ...formData,
+      poolForCreator: button,
+    });
   };
 
   const handleInputChange = (e) => {
@@ -52,7 +59,8 @@ function RegistrationForm() {
 
   const sendStateToBackend = async (data) => {
     try {
-      const response = await axios.post("http://localhost:8000/register", data);
+      const { email } = data;
+      const response = await axios.patch(`http://localhost:8000/users/${email}`, data);
       console.log("User data registered:", response.data);
     } catch (error) {
       console.error("Error registering user:", error);
@@ -70,17 +78,25 @@ function RegistrationForm() {
     }
     console.log("Form data saved:", formData);
 
-    sendStateToBackend({ ...formData, ...isClicked });
+    const dataToSend = {
+      ...formData,
+      ...isClicked,
+      status: ["NotVerified"],
+    };
+
+    sendStateToBackend(dataToSend);
 
     // Reset form data
     setFormData({
-      fullname: "",
+      fullName: "",
+      email: "",
       number: "",
+      poolForCreator: "",
       organization: "",
       designation: "",
       state: "",
       city: "",
-      linkedIn: "",
+      linkdeInURL: "",
     });
 
     setIsClicked({ Employee: false, Student: false });
@@ -105,13 +121,15 @@ function RegistrationForm() {
   };
 
   const isSubmitDisabled =
-    !formData.fullname ||
+    !formData.fullName ||
+    !formData.email ||
     !formData.number ||
     !formData.organization ||
     !formData.designation ||
     !formData.state ||
     !formData.city ||
-    !formData.linkedIn ||
+    !formData.linkdeInURL ||
+    !formData.poolForCreator ||
     !Object.values(isClicked).some((clicked) => clicked);
 
   return (
@@ -130,10 +148,20 @@ function RegistrationForm() {
               <div>
                 <input
                   type="text"
-                  name="fullname"
-                  value={formData.fullname}
+                  name="fullName"
+                  value={formData.fullName}
                   onChange={handleInputChange}
                   placeholder="Full Name"
+                  required
+                />
+              </div>
+              <div>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="Email"
                   required
                 />
               </div>
@@ -225,10 +253,10 @@ function RegistrationForm() {
               <div>
                 <input
                   type="text"
-                  name="linkedIn"
-                  value={formData.linkedIn}
+                  name="linkdeInURL"
+                  value={formData.linkdeInURL}
                   onChange={handleInputChange}
-                  placeholder="LinkedIn"
+                  placeholder="linkdeIn URL"
                 />
               </div>
 

@@ -83,14 +83,15 @@
   transition: background-color 5000s ease-in-out 0s;
 }
 
-.add-form form .select-btn {
+.add-form form .select-btn,
+.add-form form .select-group {
   overflow: hidden;
   text-align: start;
   /* margin-bottom: 15px; */
 }
 
 .add-form form .select-btn .audio-button,
-.add-form form .select-btn .branch-button {
+.add-form form .select-group .branch-button {
   color: #8d8d8dd2;
   padding: 7px;
   background-color: rgba(255, 255, 255, 0.14);
@@ -98,11 +99,11 @@
   cursor: pointer;
   border-radius: 5px;
   margin: 5px 5px;
-  /* font-family: ; */
+  font-family: var(--custom-font-family);
 }
 
 .add-form form .select-btn .audio-button.clicked,
-.add-form form .select-btn .branch-button.clicked {
+.add-form form .select-group .branch-button.clicked {
   color: #fff;
   background-color: #021b215e;
 }

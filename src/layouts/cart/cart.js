@@ -11,16 +11,18 @@ import Login from "layouts/login";
 import { useAuth0 } from "@auth0/auth0-react";
 import MDBox from "components/MDBox";
 import typography from "assets/theme/base/typography";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // @mui material components
 import Card from "@mui/material/Card";
 
 export default function Cart() {
   const getdata = useSelector((state) => state.cartreducer.carts);
-
   const dispatch = useDispatch();
-
   const [price, setPrice] = useState(0);
+  const { isAuthenticated, user } = useAuth0();
 
   // total
   useEffect(() => {
@@ -51,8 +53,26 @@ export default function Cart() {
     dispatch(DLT(id));
   };
 
-  // auth0
-  const { isAuthenticated } = useAuth0();
+  const handlePurchase = async () => {
+    try {
+      if (user && user.email) {
+        const response = await axios.patch(`http://localhost:8000/carts/${user.email}`, {
+          cartData: getdata,
+        });
+
+        if (response.status === 200) {
+          toast.success("Purchase successful!");
+          setTimeout(() => {
+            // dispatch(resetCart());
+            toast.info("Cart reset!");
+          }, 3000);
+        }
+      }
+    } catch (error) {
+      console.error("Error purchasing:", error);
+      toast.error("Failed to purchase. Please try again later.");
+    }
+  };
 
   return (
     <DashboardLayout>
@@ -149,7 +169,7 @@ export default function Cart() {
                   <div className="card-total">
                     <table>
                       <thead>
-                        <tr>
+                        <tr style={{ borderBottom: "1px solid #bafff7" }}>
                           <th>Cart totals</th>
                         </tr>
                       </thead>
@@ -166,6 +186,7 @@ export default function Cart() {
 
                         <div className="cart-purchase">
                           <button
+                            onClick={handlePurchase}
                             style={{
                               fontFamily: typography.fontFamily,
                               textTransform: "uppercase",

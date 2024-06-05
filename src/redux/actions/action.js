@@ -21,3 +21,9 @@ export const REMOVE = (iteam) => {
     payload: iteam,
   };
 };
+
+// export const RESET = () => {
+//   return {
+//     type: "RESET_CART",
+//   };
+// };

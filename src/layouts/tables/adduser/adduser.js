@@ -24,6 +24,7 @@ const AddUser = ({ onClose }) => {
     pm: false,
   });
 
+  // group
   const [branchClicked, setBranchClicked] = useState({
     cs: false,
     extc: false,
@@ -52,6 +53,7 @@ const AddUser = ({ onClose }) => {
     setBranchClicked(newBranch);
   };
 
+  // send data to backend
   const sendStateToBackend = async (data) => {
     try {
       const response = await axios.post("http://localhost:8000/addusers", data);
@@ -104,15 +106,14 @@ const AddUser = ({ onClose }) => {
 
         toast.success("User Added Successfully!");
       } else {
-        // toast.error("Error adding User! Please try again later.");
-        if (error.response && error.response.status === 409) {
-          toast.error("User already added.");
-        } else {
-          toast.error("Error adding User! Please try again later.");
-        }
+        toast.error("Error adding user! Please try again later.");
       }
     } catch (error) {
-      console.error("Error adding user:", error);
+      if (error.response && error.response.status === 409) {
+        toast.error("User already added.");
+      } else {
+        toast.error("Error adding User! Please try again later.");
+      }
     }
   };
 
@@ -144,7 +145,7 @@ const AddUser = ({ onClose }) => {
           </span>
         </div>
 
-        <form action="" onSubmit={handleSubmit}>
+        <form action="POST" onSubmit={handleSubmit}>
           <input
             type="text"
             name="name"
@@ -165,10 +166,8 @@ const AddUser = ({ onClose }) => {
             style={{ marginBottom: "10px" }}
           />
 
-          <div className="select-btn" style={{}}>
-            <div
-              style={{ textAlign: "start", paddingLeft: "5px", fontFamily: typography.fontFamily }}
-            >
+          <div className="select-group">
+            <div style={{ textAlign: "start", paddingLeft: "5px" }}>
               <label htmlFor="skills" style={{ fontSize: "15px" }}>
                 Group :
               </label>

@@ -3,39 +3,41 @@ import "./uploaduser.css";
 import PropTypes from "prop-types";
 import * as xlsx from "xlsx";
 import { toast } from "react-toastify";
+import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import { Icon, IconButton } from "@mui/material";
 import brandDark from "assets/images/information.png";
 import brandWhite from "assets/images/instruction_img.PNG";
 
 const UploadUser = ({ onClose }) => {
+  // if (file.name.endsWith(".xlsx") || file.name.endsWith(".xls")) {
+  //   const excelfile = xlsx.read(data);
+  //   const excelsheet = excelfile.Sheets[excelfile.SheetNames[0]];
+  //   const exceljson = xlsx.utils.sheet_to_json(excelsheet);
+  // } else if (file.name.endsWith(".csv")) {
+  //   const csvData = Papa.parse(data, { header: true });
+  //   exceljson = csvData.data;
+  // } else {
+  //   console.error("Unsupported file type");
+  //   return;
+  // }
   const [file, setFile] = useState(null);
   const [excelData, setExcelData] = useState([]);
 
   const handleFileChange = async (e) => {
     try {
-      const File = e.target.files[0];
-      const data = await File.arrayBuffer(File);
-      const excelfile = xlsx.read(data);
-      const excelsheet = excelfile.Sheets[excelfile.SheetNames[0]];
-      const exceljson = xlsx.utils.sheet_to_json(excelsheet);
-
-      // if (file.name.endsWith(".xlsx") || file.name.endsWith(".xls")) {
-      //   const excelfile = xlsx.read(data);
-      //   const excelsheet = excelfile.Sheets[excelfile.SheetNames[0]];
-      //   const exceljson = xlsx.utils.sheet_to_json(excelsheet);
-      // } else if (file.name.endsWith(".csv")) {
-      //   const csvData = Papa.parse(data, { header: true });
-      //   exceljson = csvData.data;
-      // } else {
-      //   console.error("Unsupported file type");
-      //   return;
-      // }
-
+      const selectedFile = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(selectedFile);
+      reader.onload = () => {
+        const data = reader.result;
+        const excelfile = xlsx.read(data, { type: "array" });
+        const excelsheet = excelfile.Sheets[excelfile.SheetNames[0]];
+        const exceljson = xlsx.utils.sheet_to_json(excelsheet);
+        setExcelData(exceljson);
+      };
       toast.success("File Uploaded !");
-
-      setFile(File);
-      setExcelData(exceljson);
+      setFile(selectedFile);
     } catch (error) {
       console.error("An error occurred:", error);
 
@@ -69,7 +71,22 @@ const UploadUser = ({ onClose }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  // send data to backend
+  const sendDataToBackend = async (formData) => {
+    try {
+      const response = await axios.post("http://localhost:8000/uploadusers", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response;
+    } catch (error) {
+      console.error("Error during API call:", error);
+      throw error;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
@@ -78,30 +95,50 @@ const UploadUser = ({ onClose }) => {
         return;
       }
 
-      setIsClicked({
-        csp: false,
-        em: false,
-        nego: false,
-        st: false,
-        fpt: false,
-        src: false,
-        collab: false,
-        ei: false,
-        pm: false,
-      });
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("isClicked", JSON.stringify(isClicked));
 
-      const fileInput = document.getElementById("fileSelect");
-      if (fileInput) {
-        fileInput.value = "";
+      const response = await sendDataToBackend(formData, isClicked);
+      console.log("Backend Response:", response);
+
+      if (response.data.success) {
+        setIsClicked({
+          csp: false,
+          em: false,
+          nego: false,
+          st: false,
+          fpt: false,
+          src: false,
+          collab: false,
+          ei: false,
+          pm: false,
+        });
+
+        const fileInput = document.getElementById("fileSelect");
+        if (fileInput) {
+          fileInput.value = "";
+        }
+        setFile(null);
+        setExcelData([]);
+
+        toast.success("Data uploaded successfully with no duplicates!");
+      } else if (response.data.duplicates && response.data.duplicates.length > 0) {
+        toast.error("Duplicate users found. Please check and try again.");
+      } else {
+        toast.error(response.data.message || "Error uploading data. Please try again later.");
       }
-      setFile(null);
-      setExcelData([]);
-
-      toast.success("Users Added Successfully !");
     } catch (error) {
-      console.error("An error occurred:", error);
-
-      toast.error("Error in Adding Users!");
+      console.error("Error during API call:", error);
+      if (error.response && error.response.status === 400) {
+        if (error.response.data.duplicates && error.response.data.duplicates.length > 0) {
+          toast.error("Duplicate users found. Please check and try again.");
+        } else {
+          toast.error("Error uploading data. Please try again later.");
+        }
+      } else {
+        toast.error("Error uploading data. Please try again later.");
+      }
     }
   };
 
@@ -118,12 +155,10 @@ const UploadUser = ({ onClose }) => {
   // select all
   const handleSelectAllClick = () => {
     const allSelected = Object.values(isClicked).every((value) => value);
-
     const newIsClicked = {};
     for (const skill in isClicked) {
       newIsClicked[skill] = !allSelected;
     }
-
     setIsClicked(newIsClicked);
   };
 
