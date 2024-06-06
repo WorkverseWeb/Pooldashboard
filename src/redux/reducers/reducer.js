@@ -51,8 +51,11 @@ export const cartreducer = (state = INIT_STATE, action) => {
       }
       break;
 
-    // case "RESET_CART":
-    //   return initialState;
+    case "RESET_CART":
+      return {
+        ...state,
+        carts: [],
+      };
 
     default:
       return state;

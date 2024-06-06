@@ -22,8 +22,8 @@ export const REMOVE = (iteam) => {
   };
 };
 
-// export const RESET = () => {
-//   return {
-//     type: "RESET_CART",
-//   };
-// };
+export const RESET = () => {
+  return {
+    type: "RESET_CART",
+  };
+};

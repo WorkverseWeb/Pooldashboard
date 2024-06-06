@@ -70,32 +70,32 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const route = useLocation().pathname.split("/").slice(1);
 
   // toast
-  const [notifications, setNotifications] = useState([]);
+  // const [notifications, setNotifications] = useState([]);
 
-  useEffect(() => {
-    fetchNotifications();
-  }, []);
+  // useEffect(() => {
+  //   fetchNotifications();
+  // }, []);
 
-  const fetchNotifications = async () => {
-    try {
-      const response = await axios.get("/notifications");
-      setNotifications(response.data);
-    } catch (error) {
-      console.error("Error fetching notifications:", error);
-    }
-  };
+  // const fetchNotifications = async () => {
+  //   try {
+  //     const response = await axios.get("/notifications");
+  //     setNotifications(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching notifications:", error);
+  //   }
+  // };
 
-  const handleNotification = (notification) => {
-    if (notification.source === "automatic") {
-      toast.info(notification.message);
-    } else {
-      setNotifications([notification, ...notifications]);
-    }
+  // const handleNotification = (notification) => {
+  //   if (notification.source === "automatic") {
+  //     toast.info(notification.message);
+  //   } else {
+  //     setNotifications([notification, ...notifications]);
+  //   }
 
-    if (notifications.length > 5) {
-      setNotifications(notifications.slice(0, 5));
-    }
-  };
+  //   if (notifications.length > 5) {
+  //     setNotifications(notifications.slice(0, 5));
+  //   }
+  // };
 
   useEffect(() => {
     // Setting the navbar type
@@ -148,7 +148,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
           padding: 0,
         }}
       >
-        {notifications.length > 0 ? (
+        {/* {notifications.length > 0 ? (
           notifications.map((notification, index) => (
             <li
               key={index}
@@ -160,16 +160,16 @@ function DashboardNavbar({ absolute, light, isMini }) {
               {notification.message}
             </li>
           ))
-        ) : (
-          <li
-            style={{
-              padding: "5px",
-              textAlign: "center",
-            }}
-          >
-            No new notifications
-          </li>
-        )}
+        ) : ( */}
+        <li
+          style={{
+            padding: "5px",
+            textAlign: "center",
+          }}
+        >
+          No new notifications
+        </li>
+        {/* )} */}
       </ul>
     </Menu>
   );

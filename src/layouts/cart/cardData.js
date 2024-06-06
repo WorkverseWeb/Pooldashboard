@@ -1,7 +1,7 @@
 const Cardsdata = [
   {
     id: 1,
-    title: "9 Skills",
+    title: "All Levels",
     content:
       " Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica Lizards are a widespread group of squamate reptiles, with over 6,000.",
     price: 7999,

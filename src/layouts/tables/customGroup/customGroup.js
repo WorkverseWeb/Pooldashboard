@@ -37,16 +37,13 @@ export default function CustomGroups() {
   const handleRemoveDepartment = (index) => {
     let newDepartments;
     if (departments.length === 1) {
-      // If there's only one department, replace it with an empty input field
       newDepartments = [""];
     } else {
       newDepartments = departments.filter((_, i) => i !== index);
     }
 
-    // Update local storage with the updated departments
     localStorage.setItem("departments", JSON.stringify(newDepartments));
 
-    // Update only the departments state
     setDepartments(newDepartments);
   };
 
@@ -73,13 +70,12 @@ export default function CustomGroups() {
       return;
     }
 
-    // Check if there's any change in departments that leads to saving
     const departmentsChanged =
       JSON.stringify(nonEmptyDepartments) !==
       JSON.stringify(initialDepartments.filter((dept) => dept.trim() !== ""));
     if (departmentsChanged) {
       localStorage.setItem("departments", JSON.stringify(nonEmptyDepartments));
-      setInitialDepartments(nonEmptyDepartments); // Update initial departments after saving
+      setInitialDepartments(nonEmptyDepartments);
       toast.success("Groups Saved!");
     }
   };
