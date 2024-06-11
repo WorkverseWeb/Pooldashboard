@@ -5,6 +5,8 @@ import Grid from "@mui/material/Grid";
 // React components
 import MDBox from "components/MDBox";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -25,6 +27,7 @@ import Projects from "layouts/dashboard/components/Projects";
 // import Login from "login";
 
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 // images
 import { BorderAllRounded } from "@mui/icons-material";
@@ -32,24 +35,97 @@ import Login from "layouts/login";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
-  const { user, isAuthenticated, isLoading } = useAuth0();
-
+  const { user, isAuthenticated } = useAuth0();
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [slotDetails, setSlotDetails] = useState(null);
+  const [slotsAvailable, setSlotsAvailable] = useState(0);
+  const [totalPlayers, setTotalPlayers] = useState(0);
   // checking active users
-  const [activePlayers, setActivePlayers] = useState(0);
+  // const [activePlayers, setActivePlayers] = useState(0);
+
+  // useEffect(() => {
+  //   const fetchActivePlayers = async () => {
+  //     return 0;
+  //   };
+
+  //   fetchActivePlayers().then((players) => {
+  //     setActivePlayers(players);
+  //   });
+  // }, []);
+
+  // if (isLoading) {
+  //   return <div>Loading ...</div>;
+  // }
+
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    const fetchActivePlayers = async () => {
-      return 0;
+    const fetchData = async () => {
+      if (isAuthenticated && user) {
+        try {
+          const response = await axios.get("http://localhost:8000/assignUsers", {
+            params: {
+              authenticatedUserEmail: user.email,
+            },
+          });
+
+          if (response.data.success) {
+            setData(response.data.users);
+          } else {
+            toast.error(response.data.message);
+          }
+        } catch (error) {
+          console.error("Error fetching assigned users:", error);
+          toast.error("Error fetching assigned users. Please try again later.");
+        }
+      }
     };
 
-    fetchActivePlayers().then((players) => {
-      setActivePlayers(players);
-    });
-  }, []);
+    if (isAuthenticated && user) {
+      fetchData();
+    }
+  }, [isAuthenticated, user]);
 
-  if (isLoading) {
-    return <div>Loading ...</div>;
-  }
+  const totalCount = data.length;
+  // console.log(totalCount);
+
+  useEffect(() => {
+    const fetchSlotDetails = async (email, totalCount) => {
+      try {
+        const response = await axios.get(`http://localhost:8000/slots/${user.email}`);
+        // console.log("Response:", response);
+        if (response.status === 200) {
+          const data = response.data;
+
+          // Calculate total quantity by summing up all quantities
+          const quantities = Object.entries(data.AllProducts)
+            .filter(([key, value]) => key !== "paymentStatus")
+            .map(([key, value]) => value);
+          const totalQty = quantities.reduce((acc, qty) => acc + qty, 0);
+
+          setTotalQuantity(totalQty);
+
+          const slotsAvailable = totalQty - totalCount;
+          setSlotsAvailable(slotsAvailable);
+
+          const totalPlayers = totalCount;
+          setTotalPlayers(totalPlayers);
+
+          setTotalAmount(data.TotalAmount);
+          setSlotDetails(data);
+        }
+      } catch (err) {
+        console.error("Error fetching slot details:", err);
+        setTotalQuantity(0);
+        setTotalAmount(0);
+        setSlotDetails(null);
+      }
+    };
+    if (isAuthenticated && user) {
+      fetchSlotDetails(user.email, totalCount);
+    }
+  }, [isAuthenticated, user, totalCount]);
 
   return (
     <DashboardLayout>
@@ -97,10 +173,10 @@ function Dashboard() {
                     color="primary"
                     icon="weekend"
                     title="User"
-                    count={281}
+                    count={totalPlayers}
                     percentage={{
                       color: "success",
-                      amount: "81",
+                      amount: "0",
                       label: "Active players",
                     }}
                   />
@@ -112,10 +188,10 @@ function Dashboard() {
                     color="primary"
                     icon="person_add"
                     title="Total Purchased Users"
-                    count="300"
+                    count={totalQuantity}
                     percentage={{
                       color: "success",
-                      amount: "19",
+                      amount: slotsAvailable,
                       label: "Slots avalable",
                     }}
                   />
@@ -127,7 +203,7 @@ function Dashboard() {
                     color="primary"
                     icon="store"
                     title="Total amount paid"
-                    count="34k"
+                    count={totalAmount}
                     percentage={{
                       color: "success",
                       amount: "Paid",
@@ -142,10 +218,10 @@ function Dashboard() {
                     color="primary"
                     icon="leaderboard"
                     title="WIP generated"
-                    count="91"
+                    count="0"
                     percentage={{
                       color: "success",
-                      amount: "103",
+                      amount: "0",
                       label: "Finished the game this month",
                     }}
                   />

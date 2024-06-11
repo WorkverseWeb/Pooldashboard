@@ -15,6 +15,8 @@ Coded by www.creative-tim.com
 
 // @mui material components
 import Grid from "@mui/material/Grid";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 // React components
 import MDBox from "components/MDBox";
@@ -36,7 +38,39 @@ import Login from "layouts/login";
 import { useAuth0 } from "@auth0/auth0-react";
 
 function Billing() {
-  const { isAuthenticated } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
+  const [paymentStatus, setPaymentStatus] = useState();
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [slotDetails, setSlotDetails] = useState(null);
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      fetchSlotDetails(user.email);
+    }
+  }, [isAuthenticated, user]);
+
+  const fetchSlotDetails = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/slots/${user.email}`);
+      if (response.status === 200) {
+        const data = response.data;
+
+        const paymentStatus = data.AllProducts.paymentStatus;
+        const totalAmt = data.TotalAmount;
+
+        setTotalAmount(totalAmt); // Set totalAmount
+        setPaymentStatus(paymentStatus); // Set paymentStatus
+        setSlotDetails(data);
+      }
+    } catch (err) {
+      console.error("Error fetching slot details:", err);
+
+      setTotalAmount(0);
+      setPaymentStatus(null);
+      setSlotDetails(null);
+    }
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -70,7 +104,7 @@ function Billing() {
                         icon="account_balance"
                         title="Total paid"
                         description="One time payment"
-                        value="Rs. 34000/-"
+                        value={totalAmount}
                       />
                     </Grid>
                     <Grid item xs={12} xl={3}>
@@ -78,7 +112,7 @@ function Billing() {
                         icon="paypal"
                         title="paypal"
                         description="Payment method"
-                        value="Sucess"
+                        value={paymentStatus}
                       />
                     </Grid>
                     {/* <Grid item xs={12}>

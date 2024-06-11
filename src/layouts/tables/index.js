@@ -36,7 +36,7 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
+import data from "layouts/tables/data/authorsTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
 
 import Login from "layouts/login";
@@ -52,9 +52,14 @@ import CustomGroups from "./customGroup/customGroup";
 import FilterGroup from "./filterGroup/filterGroup";
 
 function Tables() {
+  const [selectedGroup, setSelectedGroup] = useState("");
   const { isAuthenticated } = useAuth0();
-  const { columns, rows } = authorsTableData();
+  const { columns, rows } = data({ selectedGroup });
   const { columns: pColumns, rows: pRows } = projectsTableData();
+
+  const handleSelectedGroupChange = (group) => {
+    setSelectedGroup(group);
+  };
 
   // allocate user
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -105,7 +110,10 @@ function Tables() {
                 padding: "30px 20px 20px",
               }}
             >
-              <FilterGroup />
+              <FilterGroup
+                setSelectedGroup={setSelectedGroup}
+                onGroupChange={handleSelectedGroupChange}
+              />
 
               <div
                 style={{
@@ -190,35 +198,9 @@ function Tables() {
                       showTotalEntries={true}
                       noEndBorder
                     />
+                    {/* <Data selectedGroup={selectedGroup} /> */}
                   </MDBox>
                 </Card>
-              </Grid>
-              <Grid item xs={12}>
-                {/* <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Projects Table
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns: pColumns, rows: pRows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card> */}
               </Grid>
             </Grid>
           </>

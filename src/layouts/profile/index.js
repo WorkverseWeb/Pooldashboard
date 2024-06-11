@@ -31,7 +31,7 @@ function Overview() {
       try {
         if (user && user.email) {
           const response = await axios.get(`http://localhost:8000/users?email=${user.email}`);
-          console.log("API Response:", response.data);
+          // console.log("API Response:", response.data);
           setUserData(response.data);
         }
       } catch (error) {

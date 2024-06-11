@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD, REMOVE, DLT, RESET } from "../../redux/actions/action";
-
 import { Icon, IconButton } from "@mui/material";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -14,8 +13,7 @@ import typography from "assets/theme/base/typography";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-// @mui material components
+// @mui material components'
 import Card from "@mui/material/Card";
 
 export default function Cart() {
@@ -109,7 +107,6 @@ export default function Cart() {
             if (patchResponse.status === 200) {
               console.log(updatedCartData);
               toast.success("Purchase successful!");
-              await removeSavedCartData();
               setTimeout(() => {
                 dispatch(RESET());
                 toast.info("Cart reset!");
@@ -136,92 +133,6 @@ export default function Cart() {
     } catch (error) {
       console.error("Error purchasing:", error);
       toast.error("Failed to purchase. Please try again later.");
-    }
-  };
-
-  useEffect(() => {
-    const fetchCartData = async () => {
-      if (user && user.email) {
-        try {
-          const response = await axios.get(`http://localhost:8000/carts/${user.email}`);
-          if (response.status === 200) {
-            const { cartAddedProducts } = response.data;
-            const cartItems = Object.keys(cartAddedProducts)
-              .filter((key) => cartAddedProducts[key] > 0)
-              .map((key) => ({
-                id: key,
-                title: key.replace(/([A-Z])/g, " $1").trim(),
-                qnty: cartAddedProducts[key],
-                price: 0,
-              }));
-            cartItems.forEach((item) => dispatch(ADD(item)));
-            setPrice(response.data.cartTotalAmount);
-          }
-        } catch (error) {
-          console.error("Error fetching cart data:", error);
-        }
-      }
-    };
-
-    if (isAuthenticated) {
-      fetchCartData();
-    }
-  }, [isAuthenticated, user, dispatch]);
-
-  const handleSaveCart = async () => {
-    try {
-      if (!user || !user.email) {
-        throw new Error("User email not found.");
-      }
-
-      const cartAddedProducts = {};
-      getdata.forEach((item) => {
-        if (item.title === "All Levels") {
-          cartAddedProducts.allLevels = (cartAddedProducts.allLevels || 0) + item.qnty;
-        } else {
-          const levelKey = item.title.toLowerCase().replace(/\s/g, "");
-          cartAddedProducts[levelKey] = (cartAddedProducts[levelKey] || 0) + item.qnty;
-        }
-      });
-
-      const totalAmount = getdata.reduce((acc, item) => acc + item.price * item.qnty, 0);
-
-      const cartData = {
-        email: user.email,
-        cartAddedProducts,
-        cartTotalAmount: totalAmount,
-      };
-
-      try {
-        const existingCart = await axios.get(`http://localhost:8000/carts/${user.email}`);
-        if (existingCart.status === 200) {
-          const response = await axios.patch(`http://localhost:8000/carts/${user.email}`, cartData);
-          if (response.status === 200) {
-            console.log("Cart details updated:", cartData);
-            toast.success("Cart details updated successfully!");
-          }
-        }
-      } catch (error) {
-        const response = await axios.post("http://localhost:8000/carts", cartData);
-        if (response.status === 201) {
-          console.log("Cart details saved:", cartData);
-          toast.success("Cart details saved successfully!");
-        }
-      }
-    } catch (error) {
-      console.error("Error saving cart details:", error);
-      toast.error("Failed to save cart details. Please try again later.");
-    }
-  };
-
-  const removeSavedCartData = async () => {
-    try {
-      const deleteResponse = await axios.delete(`http://localhost:8000/carts/${user.email}`);
-      if (deleteResponse.status === 200) {
-        console.log("Saved cart data removed successfully.");
-      }
-    } catch (error) {
-      console.error("Error removing saved cart data:", error);
     }
   };
 
@@ -314,22 +225,6 @@ export default function Cart() {
                       </tbody>
                     </table>
                   </div>
-                  <button
-                    style={{
-                      color: "#fff",
-                      padding: "8px",
-                      border: " 0",
-                      background: "rgba(255, 255, 255, 0.14)",
-                      borderRadius: "5px",
-                      cursor: "pointer",
-                      backgroundColor: " #021b215e",
-                      margin: "20px 50px",
-                      fontFamily: typography.fontFamily,
-                    }}
-                    onClick={handleSaveCart}
-                  >
-                    Save Cart
-                  </button>
                 </Card>
                 {/* cart totals */}
                 <Card style={{ width: "30%", textAlign: "left" }}>

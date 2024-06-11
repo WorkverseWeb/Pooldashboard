@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./uploaduser.css";
 import PropTypes from "prop-types";
 import * as xlsx from "xlsx";
@@ -8,40 +8,116 @@ import "react-toastify/dist/ReactToastify.css";
 import { Icon, IconButton } from "@mui/material";
 import brandDark from "assets/images/information.png";
 import brandWhite from "assets/images/instruction_img.PNG";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const UploadUser = ({ onClose }) => {
-  // if (file.name.endsWith(".xlsx") || file.name.endsWith(".xls")) {
-  //   const excelfile = xlsx.read(data);
-  //   const excelsheet = excelfile.Sheets[excelfile.SheetNames[0]];
-  //   const exceljson = xlsx.utils.sheet_to_json(excelsheet);
-  // } else if (file.name.endsWith(".csv")) {
-  //   const csvData = Papa.parse(data, { header: true });
-  //   exceljson = csvData.data;
-  // } else {
-  //   console.error("Unsupported file type");
-  //   return;
-  // }
   const [file, setFile] = useState(null);
+  const { user, isAuthenticated } = useAuth0();
   const [excelData, setExcelData] = useState([]);
+  const [groups, setGroups] = useState([]);
+  const [dbDepartments, setDbDepartments] = useState([]);
+  const [departments, setDepartments] = useState([""]);
+  const [slotDetails, setSlotDetails] = useState(null);
+
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        if (user && user.email) {
+          const response = await axios.get(`http://localhost:8000/group/${user.email}`);
+          // console.log("resposne", response.data.groupname);
+          // if (response.status === 200 && response.data.groupname) {
+          //   const dbDepartments = response.data.groupname.filter((dept) => dept.trim() !== "");
+          //   setDepartments(dbDepartments);
+          //   console.log(dbDepartments);
+          // } else {
+          //   setDepartments([]);
+          // }
+          if (response.status === 200 && response.data.groupname) {
+            const fetchedDepartments = response.data.groupname.filter((dept) => dept.trim() !== "");
+            setDbDepartments(fetchedDepartments);
+          } else {
+            setDbDepartments([]);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchDepartments();
+  }, [user]);
 
   const handleFileChange = async (e) => {
     try {
       const selectedFile = e.target.files[0];
+      setFile(selectedFile);
+
+      const groups = await readExcelFile(selectedFile);
+      setGroups(groups);
+      toast.success("File Uploaded !");
+    } catch (error) {
+      console.error("An error occurred:", error);
+
+      toast.error("Error in uploading file!");
+    }
+  };
+
+  const readExcelFile = (file) => {
+    return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.readAsArrayBuffer(selectedFile);
+      reader.readAsArrayBuffer(file);
       reader.onload = () => {
         const data = reader.result;
         const excelfile = xlsx.read(data, { type: "array" });
         const excelsheet = excelfile.Sheets[excelfile.SheetNames[0]];
         const exceljson = xlsx.utils.sheet_to_json(excelsheet);
+        const groups = exceljson.map((entry) => entry.Group);
+        // console.log("Groups:", groups);
         setExcelData(exceljson);
+        resolve(groups);
       };
-      toast.success("File Uploaded !");
-      setFile(selectedFile);
-    } catch (error) {
-      console.error("An error occurred:", error);
+      reader.onerror = (error) => reject(error);
+    });
+  };
 
-      toast.error("Error in uploading file!");
+  const findUniqueWords = (array) => {
+    let uniqueWords = [];
+
+    array.forEach((word) => {
+      if (!uniqueWords.includes(word)) {
+        uniqueWords.push(word);
+      }
+    });
+
+    return uniqueWords;
+  };
+
+  // merging groups from file and custom group
+  useEffect(() => {
+    const mergeAndFindUniqueWords = async () => {
+      const mergedData = [...dbDepartments, ...groups];
+      const uniqueWords = findUniqueWords(mergedData);
+      setDepartments(uniqueWords);
+      // console.log("Merged Unique Words:", uniqueWords);
+
+      await updateDepartments(uniqueWords);
+    };
+
+    mergeAndFindUniqueWords();
+  }, [dbDepartments, groups]);
+
+  const updateDepartments = async (uniqueWords) => {
+    try {
+      const response = await axios.patch(`http://localhost:8000/group/${user.email}`, {
+        groupname: uniqueWords,
+      });
+      if (response.status === 200) {
+        console.log("Departments updated successfully");
+      } else {
+        console.error("Failed to update departments");
+      }
+    } catch (error) {
+      console.error("Error updating departments:", error);
     }
   };
 
@@ -52,33 +128,38 @@ const UploadUser = ({ onClose }) => {
     setExcelData([]);
   };
 
+  const [selectedSkills, setSelectedSkills] = useState([]);
+
   const [isClicked, setIsClicked] = useState({
-    csp: false,
-    em: false,
-    nego: false,
-    st: false,
-    fpt: false,
-    src: false,
-    collab: false,
-    ei: false,
-    pm: false,
+    "Creative Problem solving": false,
+    "Entrepreneurial Mindset": false,
+    Negotiation: false,
+    "Story-telling": false,
+    "First Principles Thinking": false,
+    "Sharp Remote Communication": false,
+    Collaboration: false,
+    "Emotional Intelligence": false,
+    "Productivity Management": false,
   });
 
-  const handleButtonClick = (value) => {
-    setIsClicked((prevClicked) => ({
-      ...prevClicked,
-      [value]: !prevClicked[value],
-    }));
+  const handleButtonClick = (button) => {
+    const newIsClicked = { ...isClicked, [button]: !isClicked[button] };
+    setIsClicked(newIsClicked);
+
+    let updatedSkills;
+    if (newIsClicked[button]) {
+      updatedSkills = [...selectedSkills, button];
+    } else {
+      updatedSkills = selectedSkills.filter((skill) => skill !== button);
+    }
+
+    setSelectedSkills(updatedSkills);
   };
 
   // send data to backend
   const sendDataToBackend = async (formData) => {
     try {
-      const response = await axios.post("http://localhost:8000/uploadusers", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post("http://localhost:8000/assignUsers", formData);
       return response;
     } catch (error) {
       console.error("Error during API call:", error);
@@ -99,20 +180,35 @@ const UploadUser = ({ onClose }) => {
       formData.append("file", file);
       formData.append("isClicked", JSON.stringify(isClicked));
 
+      if (isAuthenticated && user) {
+        formData.append("authenticatedUserEmail", user.email); // Add authenticated user's email
+      } else {
+        toast.error("User is not authenticated");
+        return;
+      }
+
       const response = await sendDataToBackend(formData, isClicked);
-      console.log("Backend Response:", response);
+      // console.log("Backend Response:", response);
+
+      const updatedSlotDetails = { ...slotDetails };
+      Object.entries(isClicked).forEach(([skill, clicked]) => {
+        if (clicked) {
+          updatedSlotDetails[skill] = Math.max(0, updatedSlotDetails[skill] - 1);
+        }
+      });
+      setSlotDetails(updatedSlotDetails);
 
       if (response.data.success) {
         setIsClicked({
-          csp: false,
-          em: false,
-          nego: false,
-          st: false,
-          fpt: false,
-          src: false,
-          collab: false,
-          ei: false,
-          pm: false,
+          "Creative Problem solving": false,
+          "Entrepreneurial Mindset": false,
+          Negotiation: false,
+          "Story-telling": false,
+          "First Principles Thinking": false,
+          "Sharp Remote Communication": false,
+          Collaboration: false,
+          "Emotional Intelligence": false,
+          "Productivity Management": false,
         });
 
         const fileInput = document.getElementById("fileSelect");
@@ -122,17 +218,35 @@ const UploadUser = ({ onClose }) => {
         setFile(null);
         setExcelData([]);
 
-        toast.success("Data uploaded successfully with no duplicates!");
+        toast.success("Data uploaded successfully!");
       } else if (response.data.duplicates && response.data.duplicates.length > 0) {
         toast.error("Duplicate users found. Please check and try again.");
+      } else if (
+        response.data.message &&
+        response.data.message.includes(
+          "Please add all unique group names to the Group collection first"
+        )
+      ) {
+        toast.error(
+          "Error: Some unique group names found. Please add them to the Group collection first."
+        );
       } else {
         toast.error(response.data.message || "Error uploading data. Please try again later.");
       }
     } catch (error) {
       console.error("Error during API call:", error);
-      if (error.response && error.response.status === 400) {
+      if (error.response && error.response.status === 409) {
         if (error.response.data.duplicates && error.response.data.duplicates.length > 0) {
           toast.error("Duplicate users found. Please check and try again.");
+        } else if (
+          error.response.data.message &&
+          error.response.data.message.includes(
+            "Please add all unique group names to the Group collection first"
+          )
+        ) {
+          toast.error(
+            "Error: Some unique group names found. Please add them to the Group collection first."
+          );
         } else {
           toast.error("Error uploading data. Please try again later.");
         }
@@ -143,6 +257,45 @@ const UploadUser = ({ onClose }) => {
   };
 
   const isSubmitDisabled = !file || !Object.values(isClicked).some((clicked) => clicked);
+
+  useEffect(() => {
+    const fetchSlotDetails = async (email) => {
+      try {
+        const response = await axios.get(`http://localhost:8000/slots/${email}`);
+        console.log("Slot details fetched:", response.data.AllProducts);
+        if (response.status === 200) {
+          const data = response.data.AllProducts;
+
+          const skillOrder = [
+            "Creative Problem solving",
+            "Entrepreneurial Mindset",
+            "Negotiation",
+            "Story-telling",
+            "First Principles Thinking",
+            "Sharp Remote Communication",
+            "Collaboration",
+            "Emotional Intelligence",
+            "Productivity Management",
+          ];
+
+          const mappedSlotDetails = {};
+          skillOrder.forEach((skill) => {
+            mappedSlotDetails[skill] = data[`level${skillOrder.indexOf(skill) + 1}`] || 0;
+          });
+
+          console.log("mappedSlot", mappedSlotDetails);
+          setSlotDetails(mappedSlotDetails);
+        }
+      } catch (err) {
+        console.error("Error fetching slot details:", err);
+        setSlotDetails(null);
+      }
+    };
+
+    if (isAuthenticated && user) {
+      fetchSlotDetails(user.email);
+    }
+  }, [isAuthenticated, user]);
 
   // instruction
   const [open, setOpen] = useState(false);
@@ -198,71 +351,28 @@ const UploadUser = ({ onClose }) => {
               </button>
             </div>
 
-            <button
-              type="button"
-              className={isClicked.csp ? "audio-button clicked" : "audio-button"}
-              onClick={() => handleButtonClick("csp")}
-            >
-              Creative Problem solving
-            </button>
-            <button
-              type="button"
-              className={isClicked.em ? "audio-button clicked" : "audio-button"}
-              onClick={() => handleButtonClick("em")}
-            >
-              Entrepreneurial Mindset
-            </button>
-            <button
-              type="button"
-              className={isClicked.nego ? "audio-button clicked" : "audio-button"}
-              onClick={() => handleButtonClick("nego")}
-            >
-              Negotiation
-            </button>
-            <button
-              type="button"
-              className={isClicked.st ? "audio-button clicked" : "audio-button"}
-              onClick={() => handleButtonClick("st")}
-            >
-              Story-telling
-            </button>
-            <button
-              type="button"
-              className={isClicked.fpt ? "audio-button clicked" : "audio-button"}
-              onClick={() => handleButtonClick("fpt")}
-            >
-              First Principles Thinking
-            </button>
-
-            <button
-              type="button"
-              className={isClicked.src ? "audio-button clicked" : "audio-button"}
-              onClick={() => handleButtonClick("src")}
-            >
-              Sharp Remote Communication
-            </button>
-            <button
-              type="button"
-              className={isClicked.collab ? "audio-button clicked" : "audio-button"}
-              onClick={() => handleButtonClick("collab")}
-            >
-              Collaboration
-            </button>
-            <button
-              type="button"
-              className={isClicked.ei ? "audio-button clicked" : "audio-button"}
-              onClick={() => handleButtonClick("ei")}
-            >
-              Emotional Intelligence
-            </button>
-
-            <button
-              type="button"
-              className={isClicked.pm ? "audio-button clicked" : "audio-button"}
-              onClick={() => handleButtonClick("pm")}
-            >
-              Productivity Management
-            </button>
+            {Object.keys(isClicked).map((skill) => {
+              const quantity =
+                slotDetails && slotDetails[skill] !== undefined ? slotDetails[skill] : 0;
+              return (
+                <button
+                  key={skill}
+                  type="button"
+                  className={
+                    quantity > 0
+                      ? isClicked[skill]
+                        ? "audio-button clicked"
+                        : "audio-button"
+                      : "audio-button disabled"
+                  }
+                  disabled={quantity === 0}
+                  onClick={() => handleButtonClick(skill)}
+                >
+                  {skill}
+                  <span className="badge">{quantity}</span>
+                </button>
+              );
+            })}
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>

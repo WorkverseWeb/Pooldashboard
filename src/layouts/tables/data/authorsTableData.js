@@ -24,11 +24,14 @@ import MDBadge from "components/MDBadge";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { format } from "date-fns";
+import { useAuth0 } from "@auth0/auth0-react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export default function data() {
-  const Author = ({ image, name, email }) => (
+export default function data({ selectedGroup }) {
+  const Author = ({ image, auName, auEmail }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={image} name={name} size="sm" />
+      <MDAvatar src={image} name={auName} size="sm" />
       <MDBox ml={2} lineHeight={1}>
         <MDTypography
           display="block"
@@ -36,29 +39,17 @@ export default function data() {
           fontWeight="medium"
           style={{ color: "#fff" }}
         >
-          {name}
+          {auName}
         </MDTypography>
         <MDTypography variant="caption" style={{ color: "#fff" }}>
-          {email}
+          {auEmail}
         </MDTypography>
       </MDBox>
     </MDBox>
   );
 
-  const Job = ({ csp, em, nego, st, fpt, src, collab, ei, pm }) => {
-    const skills = [];
-
-    if (csp) skills.push("Creative Problem solving");
-    if (em) skills.push("Negotiation");
-    if (nego) skills.push("Collaboration");
-    if (st) skills.push("First Principles Thinking");
-    if (fpt) skills.push("Productivity Management");
-    if (src) skills.push("Sharp Remote Communication");
-    if (collab) skills.push("Collaboration");
-    if (ei) skills.push("Emotional Intelligence");
-    if (pm) skills.push("Productivity Management");
-
-    const skillsString = skills.join(", ");
+  const Job = ({ auSkills }) => {
+    const skillsString = auSkills.join(", ");
 
     return (
       <MDBox
@@ -85,38 +76,47 @@ export default function data() {
     );
   };
 
-  const Branch = ({ cs, extc, aids, civil }) => {
-    const branches = [];
-    if (cs) branches.push("CS");
-    if (extc) branches.push("EXTC");
-    if (aids) branches.push("AIDS");
-    if (civil) branches.push("CIVIL");
-
+  const Branch = ({ auGroup }) => {
     return (
       <MDBox lineHeight={1} textAlign="center">
         <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
-          {branches}
+          {auGroup}
         </MDTypography>
       </MDBox>
     );
   };
 
   const [data, setData] = useState([]);
+  const { user, isAuthenticated } = useAuth0();
 
   useEffect(() => {
-    const fetchData = () => {
-      axios
-        .get("http://localhost:8000/addusers")
-        .then((response) => {
-          setData(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching users:", error);
-        });
+    const fetchData = async () => {
+      if (isAuthenticated && user) {
+        try {
+          const response = await axios.get("http://localhost:8000/assignUsers", {
+            params: {
+              authenticatedUserEmail: user.email,
+            },
+          });
+
+          if (response.data.success) {
+            setData(response.data.users);
+          } else {
+            toast.error(response.data.message);
+          }
+        } catch (error) {
+          console.error("Error fetching assigned users:", error);
+          toast.error("Error fetching assigned users. Please try again later.");
+        }
+      }
     };
 
-    fetchData();
-  }, []);
+    if (isAuthenticated && user) {
+      fetchData();
+    }
+  }, [isAuthenticated, user]);
+
+  const filteredData = selectedGroup ? data.filter((user) => user.auGroup === selectedGroup) : data;
 
   return {
     columns: [
@@ -144,23 +144,11 @@ export default function data() {
     ],
 
     rows:
-      data.length > 0
-        ? data.map((user) => ({
-            author: <Author name={user.name} email={user.email} />,
-            group: <Branch cs={user.cs} extc={user.extc} aids={user.aids} civil={user.civil} />,
-            function: (
-              <Job
-                csp={user.csp}
-                em={user.em}
-                nego={user.nego}
-                st={user.st}
-                fpt={user.fpt}
-                src={user.src}
-                collab={user.collab}
-                ei={user.ei}
-                pm={user.pm}
-              />
-            ),
+      filteredData.length > 0
+        ? filteredData.map((user) => ({
+            author: <Author auName={user.auName} auEmail={user.auEmail} />,
+            group: <Branch auGroup={user.auGroup} />,
+            function: <Job auSkills={user.auSkills} />,
             status: (
               <MDBox ml={-1}>
                 <MDBadge badgeContent="offline" color="success" variant="gradient" size="sm" />

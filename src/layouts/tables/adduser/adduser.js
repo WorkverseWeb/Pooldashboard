@@ -1,35 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./adduser.css";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
 import typography from "assets/theme/base/typography";
 
 const AddUser = ({ onClose }) => {
+  const [departments, setDepartments] = useState([""]);
+  const { user, isAuthenticated } = useAuth0();
+  const [slotDetails, setSlotDetails] = useState(null);
+  const [branchClicked, setBranchClicked] = useState({});
+
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
+    auName: "",
+    auEmail: "",
+    auGroup: "",
+    auSkills: [],
   });
 
   const [isClicked, setIsClicked] = useState({
-    csp: false,
-    em: false,
-    nego: false,
-    st: false,
-    fpt: false,
-    src: false,
-    collab: false,
-    ei: false,
-    pm: false,
-  });
-
-  // group
-  const [branchClicked, setBranchClicked] = useState({
-    cs: false,
-    extc: false,
-    aids: false,
-    civil: false,
+    "Creative Problem solving": false,
+    "Entrepreneurial Mindset": false,
+    Negotiation: false,
+    "Story-telling": false,
+    "First Principles Thinking": false,
+    "Sharp Remote Communication": false,
+    Collaboration: false,
+    "Emotional Intelligence": false,
+    "Productivity Management": false,
   });
 
   const handleInputChange = (e) => {
@@ -37,26 +37,43 @@ const AddUser = ({ onClose }) => {
     setFormData({ ...formData, [name]: value });
   };
 
+  // skills clicked
   const handleButtonClick = (button) => {
-    const newState = { ...isClicked, [button]: !isClicked[button] };
-    setIsClicked(newState);
+    const newIsClicked = { ...isClicked, [button]: !isClicked[button] };
+    setIsClicked(newIsClicked);
+
+    let updatedSkills;
+    if (newIsClicked[button]) {
+      updatedSkills = [...formData.auSkills, button]; // Add the skill if clicked
+    } else {
+      updatedSkills = formData.auSkills.filter((skill) => skill !== button); // Remove the skill if unclicked
+    }
+
+    setFormData({
+      ...formData,
+      auSkills: updatedSkills,
+    });
   };
 
+  // group clicked
   const handleBranchButtonClick = (button) => {
-    const newBranch = {
-      cs: false,
-      extc: false,
-      aids: false,
-      civil: false,
-      [button]: true,
-    };
+    const newBranch = Object.keys(branchClicked).reduce((acc, dept) => {
+      acc[dept] = dept === button;
+      return acc;
+    }, {});
     setBranchClicked(newBranch);
+    // console.log("Branch clicked:", newBranch);
+
+    setFormData({
+      ...formData,
+      auGroup: button,
+    });
   };
 
-  // send data to backend
+  // send form data to backend
   const sendStateToBackend = async (data) => {
     try {
-      const response = await axios.post("http://localhost:8000/addusers", data);
+      const response = await axios.post("http://localhost:8000/assignUsers", data);
       return response;
     } catch (error) {
       console.error("Error during API call:", error);
@@ -64,6 +81,7 @@ const AddUser = ({ onClose }) => {
     }
   };
 
+  // forn submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -76,33 +94,60 @@ const AddUser = ({ onClose }) => {
         return;
       }
 
-      const response = await sendStateToBackend({ ...formData, ...isClicked, ...branchClicked });
+      const updatedSlotDetails = { ...slotDetails };
+      Object.entries(isClicked).forEach(([skill, clicked]) => {
+        if (clicked) {
+          updatedSlotDetails[skill] = Math.max(0, updatedSlotDetails[skill] - 1);
+        }
+      });
+      setSlotDetails(updatedSlotDetails);
+
+      const formDataObject = new FormData();
+
+      formDataObject.append("auName", formData.auName);
+      formDataObject.append("auEmail", formData.auEmail);
+      formDataObject.append("auGroup", formData.auGroup);
+      formDataObject.append("auSkills", formData.auSkills);
+      formDataObject.append("isClicked", JSON.stringify(isClicked));
+      formDataObject.append("branchClicked", JSON.stringify(branchClicked));
+
+      if (isAuthenticated && user) {
+        formDataObject.append("authenticatedUserEmail", user.email.toLowerCase());
+      } else {
+        toast.error("User is not authenticated");
+        return;
+      }
+
+      const response = await sendStateToBackend(formDataObject);
+
+      // const response = await sendStateToBackend({ ...formData, ...isClicked, ...branchClicked });
 
       if (response.data.success) {
         // RESET
         setFormData({
-          name: "",
-          email: "",
+          auName: "",
+          auEmail: "",
+          auGroup: "",
+          auSkills: [],
         });
 
         setIsClicked({
-          csp: false,
-          em: false,
-          nego: false,
-          st: false,
-          fpt: false,
-          src: false,
-          collab: false,
-          ei: false,
-          pm: false,
+          "Creative Problem solving": false,
+          "Entrepreneurial Mindset": false,
+          Negotiation: false,
+          "Story-telling": false,
+          "First Principles Thinking": false,
+          "Sharp Remote Communication": false,
+          Collaboration: false,
+          "Emotional Intelligence": false,
+          "Productivity Management": false,
         });
 
-        setBranchClicked({
-          cs: false,
-          extc: false,
-          aids: false,
-          civil: false,
-        });
+        const resetBranchClicked = Object.keys(branchClicked).reduce((acc, dept) => {
+          acc[dept] = false;
+          return acc;
+        }, {});
+        setBranchClicked(resetBranchClicked);
 
         toast.success("User Added Successfully!");
       } else {
@@ -117,13 +162,16 @@ const AddUser = ({ onClose }) => {
     }
   };
 
+  // submit button disable utnil all values are filled
   const isSubmitDisabled =
-    !formData.name ||
-    !formData.email ||
+    !formData.auName ||
+    !formData.auEmail ||
+    !formData.auGroup ||
+    !formData.auSkills ||
     !Object.values(isClicked).some((clicked) => clicked) ||
     !Object.values(branchClicked).some((clicked) => clicked);
 
-  // select all
+  // select all skills
   const handleSelectAllClick = () => {
     const allSelected = Object.values(isClicked).every((value) => value);
 
@@ -133,7 +181,85 @@ const AddUser = ({ onClose }) => {
     }
 
     setIsClicked(newIsClicked);
+
+    if (allSelected) {
+      setFormData({
+        ...formData,
+        auSkills: [],
+      });
+    } else {
+      setFormData({
+        ...formData,
+        auSkills: Object.keys(isClicked),
+      });
+    }
   };
+
+  useEffect(() => {
+    const fetchSlotDetails = async (email) => {
+      try {
+        const response = await axios.get(`http://localhost:8000/slots/${email}`);
+        console.log("Slot details fetched:", response.data.AllProducts);
+        if (response.status === 200) {
+          const data = response.data.AllProducts;
+
+          const skillOrder = [
+            "Creative Problem solving",
+            "Entrepreneurial Mindset",
+            "Negotiation",
+            "Story-telling",
+            "First Principles Thinking",
+            "Sharp Remote Communication",
+            "Collaboration",
+            "Emotional Intelligence",
+            "Productivity Management",
+          ];
+
+          const mappedSlotDetails = {};
+          skillOrder.forEach((skill) => {
+            mappedSlotDetails[skill] = data[`level${skillOrder.indexOf(skill) + 1}`] || 0;
+          });
+
+          console.log("mappedSlot", mappedSlotDetails);
+          setSlotDetails(mappedSlotDetails);
+        }
+      } catch (err) {
+        console.error("Error fetching slot details:", err);
+        setSlotDetails(null);
+      }
+    };
+
+    if (isAuthenticated && user) {
+      fetchSlotDetails(user.email);
+    }
+  }, [isAuthenticated, user]);
+
+  // fetch group
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        if (user && user.email) {
+          const response = await axios.get(`http://localhost:8000/group/${user.email}`);
+          if (response.status === 200 && response.data.groupname) {
+            const dbDepartments = response.data.groupname.filter((dept) => dept.trim() !== "");
+            setDepartments(dbDepartments);
+            const initialBranchClicked = dbDepartments.reduce((acc, dept) => {
+              acc[dept] = false;
+              return acc;
+            }, {});
+            setBranchClicked(initialBranchClicked);
+          } else {
+            setDepartments([]);
+            setBranchClicked({});
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchDepartments();
+  }, [user]);
 
   return (
     <div className="add-container">
@@ -145,12 +271,12 @@ const AddUser = ({ onClose }) => {
           </span>
         </div>
 
-        <form action="POST" onSubmit={handleSubmit}>
+        <form action="" onSubmit={handleSubmit}>
           <input
             type="text"
-            name="name"
+            name="auName"
             placeholder="Name"
-            value={formData.name}
+            value={formData.auName}
             onChange={handleInputChange}
             required
             style={{ marginBottom: "15px" }}
@@ -158,50 +284,35 @@ const AddUser = ({ onClose }) => {
 
           <input
             type="email"
-            name="email"
+            name="auEmail"
             placeholder="Email"
-            value={formData.email}
+            value={formData.auEmail}
             onChange={handleInputChange}
             required
             style={{ marginBottom: "10px" }}
           />
 
+          {/* GROUP */}
           <div className="select-group">
             <div style={{ textAlign: "start", paddingLeft: "5px" }}>
               <label htmlFor="skills" style={{ fontSize: "15px" }}>
                 Group :
               </label>
             </div>
-            <button
-              type="button"
-              className={branchClicked.cs ? "branch-button clicked" : "branch-button"}
-              onClick={() => handleBranchButtonClick("cs")}
-            >
-              Cs
-            </button>
-            <button
-              type="button"
-              className={branchClicked.extc ? "branch-button clicked" : "branch-button"}
-              onClick={() => handleBranchButtonClick("extc")}
-            >
-              Extc
-            </button>
-            <button
-              type="button"
-              className={branchClicked.aids ? "branch-button clicked" : "branch-button"}
-              onClick={() => handleBranchButtonClick("aids")}
-            >
-              Ai&ds
-            </button>
-            <button
-              type="button"
-              className={branchClicked.civil ? "branch-button clicked" : "branch-button"}
-              onClick={() => handleBranchButtonClick("civil")}
-            >
-              Civil
-            </button>
+            {departments.map((department, index) => (
+              <button
+                type="button"
+                className={branchClicked[department] ? "branch-button clicked" : "branch-button"}
+                onClick={() => handleBranchButtonClick(department)}
+                key={index}
+                value={department}
+              >
+                {department}
+              </button>
+            ))}
           </div>
 
+          {/* SKILLS */}
           <div className="select-btn">
             <div
               style={{
@@ -226,71 +337,29 @@ const AddUser = ({ onClose }) => {
               </button>
             </div>
 
-            <button
-              type="button"
-              className={isClicked.csp ? "audio-button clicked" : "audio-button"}
-              onClick={() => handleButtonClick("csp")}
-            >
-              Creative Problem solving
-            </button>
-            <button
-              type="button"
-              className={isClicked.em ? "audio-button clicked" : "audio-button"}
-              onClick={() => handleButtonClick("em")}
-            >
-              Entrepreneurial Mindset
-            </button>
-            <button
-              type="button"
-              className={isClicked.nego ? "audio-button clicked" : "audio-button"}
-              onClick={() => handleButtonClick("nego")}
-            >
-              Negotiation
-            </button>
-            <button
-              type="button"
-              className={isClicked.st ? "audio-button clicked" : "audio-button"}
-              onClick={() => handleButtonClick("st")}
-            >
-              Story-telling
-            </button>
-            <button
-              type="button"
-              className={isClicked.fpt ? "audio-button clicked" : "audio-button"}
-              onClick={() => handleButtonClick("fpt")}
-            >
-              First Principles Thinking
-            </button>
-
-            <button
-              type="button"
-              className={isClicked.src ? "audio-button clicked" : "audio-button"}
-              onClick={() => handleButtonClick("src")}
-            >
-              Sharp Remote Communication
-            </button>
-            <button
-              type="button"
-              className={isClicked.collab ? "audio-button clicked" : "audio-button"}
-              onClick={() => handleButtonClick("collab")}
-            >
-              Collaboration
-            </button>
-            <button
-              type="button"
-              className={isClicked.ei ? "audio-button clicked" : "audio-button"}
-              onClick={() => handleButtonClick("ei")}
-            >
-              Emotional Intelligence
-            </button>
-
-            <button
-              type="button"
-              className={isClicked.pm ? "audio-button clicked" : "audio-button"}
-              onClick={() => handleButtonClick("pm")}
-            >
-              Productivity Management
-            </button>
+            {Object.keys(isClicked).map((skill) => {
+              const quantity =
+                slotDetails && slotDetails[skill] !== undefined ? slotDetails[skill] : 0;
+              return (
+                <button
+                  key={skill}
+                  type="button"
+                  // className={isClicked[skill] ? "audio-button clicked" : "audio-button"}
+                  className={
+                    quantity > 0
+                      ? isClicked[skill]
+                        ? "audio-button clicked"
+                        : "audio-button"
+                      : "audio-button disabled"
+                  }
+                  disabled={quantity === 0}
+                  onClick={() => handleButtonClick(skill)}
+                >
+                  {skill}
+                  <span className="badge">{quantity}</span>
+                </button>
+              );
+            })}
           </div>
 
           <div className="btn">

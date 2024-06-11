@@ -3,22 +3,36 @@ import "./customGroup.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import typography from "assets/theme/base/typography";
+import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
 
-export default function CustomGroups() {
+const CustomGroups = () => {
   const [departments, setDepartments] = useState([""]);
   const [initialDepartments, setInitialDepartments] = useState([]);
+  const { user, isAuthenticated } = useAuth0();
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  const [slotDetails, setSlotDetails] = useState(null);
+  const [slotsAvailable, setSlotsAvailable] = useState(0);
+  const [totalPlayers, setTotalPlayers] = useState(0);
 
   useEffect(() => {
-    const savedDepartments = localStorage.getItem("departments");
-    if (savedDepartments) {
-      const parsedDepartments = JSON.parse(savedDepartments);
-      setDepartments(parsedDepartments);
-      setInitialDepartments(parsedDepartments.filter((dept) => dept.trim() !== ""));
-    } else {
-      setDepartments([""]);
-      setInitialDepartments([""]);
-    }
-  }, []);
+    const fetchDepartments = async () => {
+      try {
+        if (user && user.email) {
+          const response = await axios.get(`http://localhost:8000/group/${user.email}`);
+          if (response.status === 200 && response.data.groupname) {
+            const dbDepartments = response.data.groupname.filter((dept) => dept.trim() !== "");
+            setDepartments(dbDepartments);
+            setInitialDepartments(dbDepartments);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchDepartments();
+  }, [user]);
 
   const handleAddDepartment = () => {
     if (departments.every((department) => department.trim() !== "")) {
@@ -37,20 +51,20 @@ export default function CustomGroups() {
   const handleRemoveDepartment = (index) => {
     let newDepartments;
     if (departments.length === 1) {
+      // If there's only one department, replace it with an empty string
       newDepartments = [""];
     } else {
-      newDepartments = departments.filter((_, i) => i !== index);
+      // Remove the department at the specified index
+      newDepartments = [...departments.slice(0, index), ...departments.slice(index + 1)];
     }
 
-    localStorage.setItem("departments", JSON.stringify(newDepartments));
-
     setDepartments(newDepartments);
+    saveDepartments(newDepartments);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const saveDepartments = async () => {
     const nonEmptyDepartments = departments.filter((dept) => dept.trim() !== "");
+
     if (nonEmptyDepartments.length !== departments.length) {
       toast.error("Please fill all fields before submitting.");
       return;
@@ -62,32 +76,120 @@ export default function CustomGroups() {
       return;
     }
 
-    if (
-      initialDepartments.length === nonEmptyDepartments.length &&
-      initialDepartments.every((dept, index) => dept === nonEmptyDepartments[index])
-    ) {
-      toast.error("No new group name added.");
-      return;
-    }
-
-    const departmentsChanged =
-      JSON.stringify(nonEmptyDepartments) !==
-      JSON.stringify(initialDepartments.filter((dept) => dept.trim() !== ""));
-    if (departmentsChanged) {
-      localStorage.setItem("departments", JSON.stringify(nonEmptyDepartments));
-      setInitialDepartments(nonEmptyDepartments);
-      toast.success("Groups Saved!");
+    try {
+      if (user && user.email) {
+        try {
+          const response = await axios.get(`http://localhost:8000/group/${user.email}`);
+          if (response.status === 200) {
+            await axios.patch(`http://localhost:8000/group/${user.email}`, {
+              groupname: nonEmptyDepartments,
+            });
+          }
+        } catch (error) {
+          await axios.post(`http://localhost:8000/group`, {
+            email: user.email,
+            groupname: nonEmptyDepartments,
+          });
+        }
+        setInitialDepartments(nonEmptyDepartments);
+        toast.success("Groups Saved!");
+      } else {
+        toast.error("User email not available.");
+      }
+    } catch (error) {
+      console.error("Error saving data:", error);
+      toast.error("Error occurred while saving groups.");
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    saveDepartments(departments);
+  };
+
+  //
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (isAuthenticated && user) {
+        try {
+          const response = await axios.get("http://localhost:8000/assignUsers", {
+            params: {
+              authenticatedUserEmail: user.email,
+            },
+          });
+
+          if (response.data.success) {
+            setData(response.data.users);
+          } else {
+            toast.error(response.data.message);
+          }
+        } catch (error) {
+          console.error("Error fetching assigned users:", error);
+          toast.error("Error fetching assigned users. Please try again later.");
+        }
+      }
+    };
+
+    if (isAuthenticated && user) {
+      fetchData();
+    }
+  }, [isAuthenticated, user]);
+
+  const totalCount = data.length;
+  // console.log(totalCount);
+
+  useEffect(() => {
+    const fetchSlotDetails = async (email, totalCount) => {
+      try {
+        const response = await axios.get(`http://localhost:8000/slots/${email}`);
+        if (response.status === 200) {
+          const data = response.data;
+
+          const quantities = Object.entries(data.AllProducts)
+            .filter(([key, value]) => key !== "paymentStatus")
+            .map(([key, value]) => value);
+          const totalQty = quantities.reduce((acc, qty) => acc + qty, 0);
+
+          setTotalQuantity(totalQty);
+
+          const slotsAvailable = totalQty - totalCount;
+          setSlotsAvailable(slotsAvailable);
+
+          // const totalPlayers = totalCount;
+          // setTotalPlayers(totalPlayers);
+          setSlotDetails(data);
+        }
+      } catch (err) {
+        console.error("Error fetching slot details:", err);
+        setTotalQuantity(0);
+        setSlotDetails(null);
+      }
+    };
+
+    if (isAuthenticated && user) {
+      fetchSlotDetails(user.email, totalCount);
+    }
+  }, [isAuthenticated, user, totalCount]);
+
   return (
     <div className="group-container">
-      <div className="col1">
-        <p>50 Total Purchased Slots.</p>
-        <p>34 Slots Available. </p>
-        <p>14 Total Players.</p>
-      </div>
-
+      {isAuthenticated ? (
+        <div className="col1">
+          <p>
+            <span style={{ marginRight: "5px" }}>{totalQuantity} </span> Total Purchased Slots.
+          </p>
+          <p>
+            <span style={{ marginRight: "5px" }}>{slotsAvailable}</span> Slots Available.
+          </p>
+          <p>
+            <span style={{ marginRight: "5px" }}>0</span> Total Players.
+          </p>
+        </div>
+      ) : (
+        <div>no </div>
+      )}
       <div className="col2">
         <form onSubmit={handleSubmit}>
           <div className="departments-wrapper">
@@ -125,4 +227,6 @@ export default function CustomGroups() {
       </div>
     </div>
   );
-}
+};
+
+export default CustomGroups;

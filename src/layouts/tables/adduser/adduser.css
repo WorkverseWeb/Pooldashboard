@@ -128,3 +128,19 @@
     0rem 0.25rem 1.4375rem 0rem rgba(186, 255, 247, 0.15),
     0rem 0.5rem 0.625rem -0.3125rem rgba(186, 255, 247, 0.2);
 }
+
+/* skills badge */
+
+.audio-button.disabled {
+  cursor: not-allowed !important;
+  opacity: 0.5;
+}
+
+.badge {
+  background-color: red;
+  border-radius: 10px;
+  color: white;
+  padding: 2px 6px;
+  font-size: 12px;
+  margin-left: 5px;
+}

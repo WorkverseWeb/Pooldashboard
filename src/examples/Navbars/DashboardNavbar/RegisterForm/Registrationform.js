@@ -8,10 +8,10 @@ import "./Registrationform.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function RegistrationForm() {
-  // const { isAuthenticated, user } = useAuth0();
-  // const history = useHistory();
+  const { user, isAuthenticated } = useAuth0();
   const [showForm, setShowForm] = useState(false);
   const location = useLocation();
   const [isClicked, setIsClicked] = useState({ Employee: false, Student: false });
@@ -27,20 +27,30 @@ function RegistrationForm() {
     linkdeInURL: "",
   });
 
-  // useEffect(() => {
-  //   if (isAuthenticated && user) {
-  //     if (user["https://yourdomain.com/newUser"]) {
-  //       history.push("/dashboard");
-  //     }
-  //   }
-  // }, [isAuthenticated, user, history]);
   useEffect(() => {
-    if (location.pathname === "/dashboard") {
-      setShowForm(true);
-    } else {
-      setShowForm(false);
+    const fetchUserData = async () => {
+      try {
+        if (user && user.email) {
+          const response = await axios.get(`http://localhost:8000/users?email=${user.email}`);
+          // console.log("regi form", response.data);
+          const userData = response.data;
+
+          if (userData && userData.organization) {
+            setShowForm(false);
+          } else {
+            setShowForm(true);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setShowForm(true);
+      }
+    };
+
+    if (isAuthenticated) {
+      fetchUserData();
     }
-  }, [location]);
+  }, [isAuthenticated, user]);
 
   const handleButtonClick = (button) => {
     const newState = { Employee: false, Student: false, [button]: true };
@@ -61,7 +71,8 @@ function RegistrationForm() {
     try {
       const { email } = data;
       const response = await axios.patch(`http://localhost:8000/users/${email}`, data);
-      console.log("User data registered:", response.data);
+      // console.log("User data registered:", response);
+      return response;
     } catch (error) {
       console.error("Error registering user:", error);
       toast.error("Error Registering User!");
@@ -73,10 +84,10 @@ function RegistrationForm() {
 
     const isValid = validateForm(formData);
     if (!isValid) {
-      console.log("Form data is not valid");
+      // console.log("Form data is not valid");
       return;
     }
-    console.log("Form data saved:", formData);
+    // console.log("Form data saved:", formData);
 
     const dataToSend = {
       ...formData,
@@ -113,12 +124,12 @@ function RegistrationForm() {
     return Object.values(formData).every((value) => value.trim() !== "");
   };
 
-  const handleCloseForm = () => {
-    setShowForm(false);
-    document.body.style.overflow = "";
+  // const handleCloseForm = () => {
+  //   setShowForm(false);
+  //   document.body.style.overflow = "";
 
-    sessionStorage.removeItem("isNewUser");
-  };
+  //   sessionStorage.removeItem("isNewUser");
+  // };
 
   const isSubmitDisabled =
     !formData.fullName ||
@@ -139,9 +150,9 @@ function RegistrationForm() {
           <div className="popup-content">
             <div className="registration-header">
               <h4>Registration Form</h4>
-              <span className="material-icons" onClick={handleCloseForm}>
+              {/* <span className="material-icons" onClick={handleCloseForm}>
                 &times;
-              </span>
+              </span> */}
             </div>
 
             <form onSubmit={handleSubmit}>

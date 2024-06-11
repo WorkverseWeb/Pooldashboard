@@ -2,7 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "App";
-import thunk from "redux-thunk";
+// import thunk from "redux-thunk";
 
 // React Context Provider
 import { MaterialUIControllerProvider } from "context";
@@ -15,6 +15,7 @@ const root = createRoot(container);
 import { legacy_createStore as createStore } from "redux";
 import { Provider } from "react-redux";
 import rootred from "./redux/reducers/main";
+// import { composeWithDevTools } from "redux-devtools-extension";
 // redux persist
 // import { persistStore, persistReducer } from "redux-persist";
 // import { PersistGate } from "redux-persist/integration/react";

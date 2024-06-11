@@ -168,3 +168,18 @@
   color: #0bb08c;
   text-decoration: underline !important;
 }
+
+/* skills qnty */
+.audio-button.disabled {
+  cursor: not-allowed !important;
+  opacity: 0.5;
+}
+
+.badge {
+  background-color: red;
+  border-radius: 10px;
+  color: white;
+  padding: 2px 6px;
+  font-size: 12px;
+  margin-left: 5px;
+}

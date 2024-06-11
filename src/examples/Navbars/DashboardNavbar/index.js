@@ -60,6 +60,7 @@ import RegistrationForm from "./RegisterForm/Registrationform";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const { user, isAuthenticated, logout, loginWithRedirect, isLoading } = useAuth0();
@@ -188,6 +189,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
   // const isLoggedIn = isAuthenticated;
   // const isSigningUp = !isAuthenticated;
+  const handleLogout = () => {
+    logout({ returnTo: window.location.origin });
+  };
 
   return (
     <>
@@ -253,11 +257,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                     rel="noreferrer"
                     variant="gradient"
                     color={sidenavColor}
-                    onClick={() =>
-                      logout({
-                        logoutParams: { returnTo: window.location.origin },
-                      })
-                    }
+                    onClick={handleLogout}
                     style={{ marginLeft: "5px" }}
                   >
                     Sign Out
