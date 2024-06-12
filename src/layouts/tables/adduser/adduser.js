@@ -30,6 +30,7 @@ const AddUser = ({ onClose }) => {
     Collaboration: false,
     "Emotional Intelligence": false,
     "Productivity Management": false,
+    "Entire Game": false,
   });
 
   const handleInputChange = (e) => {
@@ -141,6 +142,7 @@ const AddUser = ({ onClose }) => {
           Collaboration: false,
           "Emotional Intelligence": false,
           "Productivity Management": false,
+          "Entire Game": false,
         });
 
         const resetBranchClicked = Object.keys(branchClicked).reduce((acc, dept) => {
@@ -198,7 +200,7 @@ const AddUser = ({ onClose }) => {
   useEffect(() => {
     const fetchSlotDetails = async (email) => {
       try {
-        const response = await axios.get(`http://localhost:8000/slots/${email}`);
+        const response = await axios.get(`http://localhost:8000/initialslot/${email}`);
         console.log("Slot details fetched:", response.data.AllProducts);
         if (response.status === 200) {
           const data = response.data.AllProducts;
@@ -213,12 +215,17 @@ const AddUser = ({ onClose }) => {
             "Collaboration",
             "Emotional Intelligence",
             "Productivity Management",
+            "Entire Game",
           ];
 
           const mappedSlotDetails = {};
-          skillOrder.forEach((skill) => {
-            mappedSlotDetails[skill] = data[`level${skillOrder.indexOf(skill) + 1}`] || 0;
+          skillOrder.forEach((skill, index) => {
+            const levelKey = `level${index + 1}`;
+            const individualSkillQuantity = data[levelKey] || 0;
+            mappedSlotDetails[skill] = individualSkillQuantity;
           });
+
+          mappedSlotDetails["Entire Game"] = data["allLevels"] || 0;
 
           console.log("mappedSlot", mappedSlotDetails);
           setSlotDetails(mappedSlotDetails);
@@ -344,7 +351,6 @@ const AddUser = ({ onClose }) => {
                 <button
                   key={skill}
                   type="button"
-                  // className={isClicked[skill] ? "audio-button clicked" : "audio-button"}
                   className={
                     quantity > 0
                       ? isClicked[skill]

@@ -140,6 +140,7 @@ const UploadUser = ({ onClose }) => {
     Collaboration: false,
     "Emotional Intelligence": false,
     "Productivity Management": false,
+    "Entire Game": false,
   });
 
   const handleButtonClick = (button) => {
@@ -209,6 +210,7 @@ const UploadUser = ({ onClose }) => {
           Collaboration: false,
           "Emotional Intelligence": false,
           "Productivity Management": false,
+          "Entire Game": false,
         });
 
         const fileInput = document.getElementById("fileSelect");
@@ -276,12 +278,17 @@ const UploadUser = ({ onClose }) => {
             "Collaboration",
             "Emotional Intelligence",
             "Productivity Management",
+            "Entire Game",
           ];
 
           const mappedSlotDetails = {};
-          skillOrder.forEach((skill) => {
-            mappedSlotDetails[skill] = data[`level${skillOrder.indexOf(skill) + 1}`] || 0;
+          skillOrder.forEach((skill, index) => {
+            const levelKey = `level${index + 1}`;
+            const individualSkillQuantity = data[levelKey] || 0;
+            mappedSlotDetails[skill] = individualSkillQuantity;
           });
+
+          mappedSlotDetails["Entire Game"] = data["allLevels"] || 0;
 
           console.log("mappedSlot", mappedSlotDetails);
           setSlotDetails(mappedSlotDetails);

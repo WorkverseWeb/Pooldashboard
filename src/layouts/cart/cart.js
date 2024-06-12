@@ -53,87 +53,95 @@ export default function Cart() {
 
   const handlePurchase = async () => {
     try {
-      if (user && user.email) {
-        const AllProducts = {};
-
-        getdata.forEach((item) => {
-          if (item.title === "All Levels") {
-            AllProducts.allLevels = (AllProducts.allLevels || 0) + item.qnty;
-          } else {
-            const levelKey = item.title.toLowerCase().replace(/\s/g, "");
-            AllProducts[levelKey] = (AllProducts[levelKey] || 0) + item.qnty;
-          }
-        });
-
-        const totalAmount = getdata.reduce((acc, item) => {
-          const itemPrice = item.price || 0;
-          return acc + item.qnty * itemPrice;
-        }, 0);
-
-        const cartData = {
-          email: user.email,
-          AllProducts,
-          TotalAmount: totalAmount,
-          paymentStatus: "Success",
-        };
-
-        try {
-          const getUserResponse = await axios.get(`http://localhost:8000/slots/${user.email}`);
-
-          if (getUserResponse.status === 200) {
-            const existingData = getUserResponse.data;
-
-            const updatedAllProducts = { ...existingData.AllProducts };
-            for (const key in AllProducts) {
-              if (updatedAllProducts.hasOwnProperty(key)) {
-                updatedAllProducts[key] += AllProducts[key];
-              } else {
-                updatedAllProducts[key] = AllProducts[key];
-              }
-            }
-            const updatedTotalAmount = existingData.TotalAmount + totalAmount;
-
-            const updatedCartData = {
-              email: user.email,
-              AllProducts: updatedAllProducts,
-              TotalAmount: updatedTotalAmount,
-              paymentStatus: "Success",
-            };
-
-            const patchResponse = await axios.patch(
-              `http://localhost:8000/slots/${user.email}`,
-              updatedCartData
-            );
-            if (patchResponse.status === 200) {
-              console.log(updatedCartData);
-              toast.success("Purchase successful!");
-              setTimeout(() => {
-                dispatch(RESET());
-                toast.info("Cart reset!");
-              }, 2000);
-            }
-          }
-        } catch (error) {
-          if (error.response && error.response.status === 404) {
-            const postResponse = await axios.post(`http://localhost:8000/slots`, cartData);
-            if (postResponse.status === 201) {
-              console.log(cartData);
-              toast.success("Purchase successful!");
-              setTimeout(() => {
-                dispatch(RESET());
-                toast.info("Cart reset!");
-              }, 2000);
-            }
-          } else {
-            console.error("Error checking user:", error);
-            toast.error("Failed to purchase. Please try again later.");
-          }
-        }
+      if (!user || !user.email) {
+        return; // Exit function if user or user email is not available
       }
+
+      const AllProducts = {};
+
+      getdata.forEach((item) => {
+        if (item.title === "All Levels") {
+          AllProducts.allLevels = (AllProducts.allLevels || 0) + item.qnty;
+        } else {
+          const levelKey = item.title.toLowerCase().replace(/\s/g, "");
+          AllProducts[levelKey] = (AllProducts[levelKey] || 0) + item.qnty;
+        }
+      });
+
+      const totalAmount = getdata.reduce((acc, item) => {
+        const itemPrice = item.price || 0;
+        return acc + item.qnty * itemPrice;
+      }, 0);
+
+      const cartData = {
+        email: user.email,
+        AllProducts,
+        TotalAmount: totalAmount,
+        paymentStatus: "Success",
+      };
+
+      const [firstApiResult, secondApiResult] = await Promise.all([
+        axios.get(`http://localhost:8000/slots/${user.email}`).catch(() => null),
+        axios.get(`http://localhost:8000/initialslot/${user.email}`).catch(() => null),
+      ]);
+
+      // Handle first API
+      if (firstApiResult && firstApiResult.status === 200) {
+        await updateCartData(
+          firstApiResult.data,
+          cartData,
+          `http://localhost:8000/slots/${user.email}`
+        );
+      } else {
+        await createCartData(cartData, `http://localhost:8000/slots`);
+      }
+
+      // Handle second API
+      if (secondApiResult && secondApiResult.status === 200) {
+        await updateCartData(
+          secondApiResult.data,
+          cartData,
+          `http://localhost:8000/initialslot/${user.email}`
+        );
+      } else {
+        await createCartData(cartData, `http://localhost:8000/initialslot`);
+      }
+
+      // Success messages
+      toast.success("Purchase successful!");
+      setTimeout(() => {
+        dispatch(RESET());
+        toast.info("Cart reset!");
+      }, 2000);
     } catch (error) {
       console.error("Error purchasing:", error);
       toast.error("Failed to purchase. Please try again later.");
     }
+  };
+
+  const updateCartData = async (existingData, cartData, apiUrl) => {
+    const updatedAllProducts = { ...existingData.AllProducts };
+    for (const key in cartData.AllProducts) {
+      if (updatedAllProducts.hasOwnProperty(key)) {
+        updatedAllProducts[key] += cartData.AllProducts[key];
+      } else {
+        updatedAllProducts[key] = cartData.AllProducts[key];
+      }
+    }
+    const updatedTotalAmount = existingData.TotalAmount + cartData.TotalAmount;
+
+    const updatedCartData = {
+      email: cartData.email,
+      AllProducts: updatedAllProducts,
+      TotalAmount: updatedTotalAmount,
+      paymentStatus: "Success",
+    };
+
+    await axios.patch(apiUrl, updatedCartData);
+  };
+
+  const createCartData = async (cartData, apiUrl) => {
+    await axios.post(apiUrl, cartData);
   };
 
   return (

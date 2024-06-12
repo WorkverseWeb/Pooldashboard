@@ -106,7 +106,7 @@ export default function data({ selectedGroup }) {
           }
         } catch (error) {
           console.error("Error fetching assigned users:", error);
-          toast.error("Error fetching assigned users. Please try again later.");
+          // toast.error("Error fetching assigned users. Please try again later.");
         }
       }
     };
