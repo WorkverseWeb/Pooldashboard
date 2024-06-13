@@ -1,0 +1,104 @@
+@font-face {
+  font-family: "Magistral";
+  /* src: url('./fonts/MAGISTRAL-COMPRESS-700.TTF') format('truetype'); */
+  /* src: url("./fonts/MAGISTRAL-COMPRESS-NORMAL.TTF") format("truetype"); */
+  /* src: url("./fonts/MAGISTRAL-CONDENCE-700.TTF") format("truetype"); */
+  /* src: url('./fonts/MAGISTRAL-CONDENCED-NORMAL.TTF') format('truetype'); */
+  /* src: url("./fonts/MAGISTRAL-ITALICS-700.TTF") format("truetype"); */
+  /* src: url("./fonts/MAGISTRAL-NORMAL-700.TTF") format("truetype"); */
+  src: url("./fonts//MAGISTRAL-NORMAL-FIN.TTF") format("truetype");
+}
+
+/* styles.css */
+form input,
+form textarea,
+form .btn button,
+form .audio-button,
+form select,
+.popup-btn,
+.popup-form .btn button {
+  font-family: var(--custom-font-family);
+}
+
+#bg-main-img {
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.582), rgba(2, 27, 33, 0.582)),
+    url("./assets/images/main-bg.png") no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  min-height: 100vh;
+}
+
+/* purchase page css */
+.purchase-add,
+.purchase-delete {
+  background: transparent;
+  color: #fff;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.purchase-add {
+  padding: 0 6px;
+  margin: 0 !important;
+}
+.purchase-delete {
+  padding: 0 8px;
+}
+
+/* cart page css */
+
+.cart-container {
+  min-height: 600px;
+  padding: 20px;
+  text-align: center;
+}
+
+.add-to-cart {
+  display: flex;
+  gap: 50px;
+}
+
+.add-to-cart tbody {
+  font-size: 16px;
+}
+
+.add-to-cart th {
+  padding: 15px;
+  border-bottom: 1px solid #bafff7;
+  opacity: 0.7;
+  text-transform: uppercase;
+  color: #bafff7;
+  font-size: small;
+}
+
+.add-to-cart tr:not(:last-child) {
+  border-bottom: 1px solid #bafff7;
+}
+
+.add-to-cart td {
+  padding: 10px;
+}
+
+.card-details,
+.card-total {
+  width: 100%;
+  height: 100%;
+  color: #fff !important;
+}
+
+.card-details table,
+.card-total table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cart-purchase {
+  padding: 15px;
+}
+
+.cart-purchase button {
+  border-radius: 7px;
+  padding: 8px 15px;
+  color: #fff;
+  background: transparent;
+}

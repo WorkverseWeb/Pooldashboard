@@ -1,0 +1,50 @@
+.form-container form label {
+  font-size: 15px;
+}
+
+.form-container form select {
+  width: 100%;
+}
+.form-container form select,
+.form-container form textarea {
+  color: #fff;
+  width: 100%;
+  padding: 7px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.14) !important;
+  border: 0;
+}
+
+.form-container form select option {
+  background-color: #021b2181;
+}
+
+.form-container form select:focus,
+.form-container form textarea:focus {
+  outline: none;
+}
+
+.form-container form select:-webkit-autofill,
+.form-container form select:-webkit-autofill:hover,
+.form-container form select:-webkit-autofill:focus,
+.form-container form select:-webkit-autofill:active {
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.6);
+  background-color: rgb(0 0 0 / 24%) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.form-container form .btn {
+  text-align: end;
+  margin-top: 10px;
+}
+
+.form-container form .btn button {
+  color: #fff;
+  font-weight: 500;
+  padding: 8px;
+  border: 0;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #1effe59e;
+}

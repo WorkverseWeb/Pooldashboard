@@ -64,7 +64,7 @@ function MasterCard({ color, number, holder, expires }) {
           backgroundSize: "cover",
         }}
       />
-      <MDBox position="relative" zIndex={2} p={2}>
+      {/* <MDBox position="relative" zIndex={2} p={2}>
         <MDBox color="white" p={1} lineHeight={0} display="inline-block">
           <Icon fontSize="default">wifi</Icon>
         </MDBox>
@@ -99,7 +99,7 @@ function MasterCard({ color, number, holder, expires }) {
             <MDBox component="img" src={masterCardLogo} alt="master card" width="60%" mt={1} />
           </MDBox>
         </MDBox>
-      </MDBox>
+      </MDBox> */}
     </Card>
   );
 }

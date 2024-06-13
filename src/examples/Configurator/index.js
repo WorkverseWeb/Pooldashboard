@@ -1,16 +1,43 @@
+/**
+=========================================================
+* Material Dashboard 2 React - v2.2.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/material-dashboard-react
+* Copyright 2023 Creative Tim (https://www.creative-tim.com)
+
+Coded by www.creative-tim.com
+
+ =========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
+
 import { useState, useEffect } from "react";
+
+// react-github-btn
+import GitHubButton from "react-github-btn";
+
+// @mui material components
 import Divider from "@mui/material/Divider";
+import Switch from "@mui/material/Switch";
 import IconButton from "@mui/material/IconButton";
+import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
 
-// React components
+// @mui icons
+import TwitterIcon from "@mui/icons-material/Twitter";
+import FacebookIcon from "@mui/icons-material/Facebook";
+
+// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 
 // Custom styles for the Configurator
 import ConfiguratorRoot from "examples/Configurator/ConfiguratorRoot";
 
-// React context
+// Material Dashboard 2 React context
 import {
   useMaterialUIController,
   setOpenConfigurator,
@@ -20,6 +47,8 @@ import {
   setSidenavColor,
   setDarkMode,
 } from "context";
+
+import Doubtform from "./Doubtform";
 
 function Configurator() {
   const [controller, dispatch] = useMaterialUIController();
@@ -52,8 +81,38 @@ function Configurator() {
   }, []);
 
   const handleCloseConfigurator = () => setOpenConfigurator(dispatch, false);
-
+  const handleTransparentSidenav = () => {
+    setTransparentSidenav(dispatch, true);
+    setWhiteSidenav(dispatch, false);
+  };
+  const handleWhiteSidenav = () => {
+    setWhiteSidenav(dispatch, true);
+    setTransparentSidenav(dispatch, false);
+  };
+  const handleDarkSidenav = () => {
+    setWhiteSidenav(dispatch, false);
+    setTransparentSidenav(dispatch, false);
+  };
+  const handleFixedNavbar = () => setFixedNavbar(dispatch, !fixedNavbar);
   const handleDarkMode = () => setDarkMode(dispatch, !darkMode);
+
+  // sidenav type buttons styles
+  const sidenavTypeButtonsStyles = ({
+    functions: { pxToRem },
+    palette: { white, dark, background },
+    borders: { borderWidth },
+  }) => ({
+    height: pxToRem(39),
+    background: darkMode ? background.sidenav : white.main,
+    color: darkMode ? white.main : dark.main,
+    border: `${borderWidth[1]} solid ${darkMode ? white.main : dark.main}`,
+
+    "&:hover, &:focus, &:focus:not(:hover)": {
+      background: darkMode ? background.sidenav : white.main,
+      color: darkMode ? white.main : dark.main,
+      border: `${borderWidth[1]} solid ${darkMode ? white.main : dark.main}`,
+    },
+  });
 
   // sidenav type active button styles
   const sidenavTypeActiveButtonStyles = ({
@@ -81,9 +140,9 @@ function Configurator() {
         px={3}
       >
         <MDBox>
-          <MDTypography variant="h5"></MDTypography>
-          <MDTypography variant="body2" color="text">
-            Customize your board
+          <MDTypography variant="h5">Doubt Form</MDTypography>
+          <MDTypography variant="body2" style={{ color: "#fff", fontSize: "15px" }}>
+            Feel free to ask if you have any doubts.
           </MDTypography>
         </MDBox>
 
@@ -105,52 +164,7 @@ function Configurator() {
       <Divider />
 
       <MDBox pt={0.5} pb={3} px={3}>
-        <MDBox>
-          <MDTypography variant="h6">Sidenav Colors</MDTypography>
-
-          <MDBox mb={0.5}>
-            {sidenavColors.map((color) => (
-              <IconButton
-                key={color}
-                sx={({
-                  borders: { borderWidth },
-                  palette: { white, dark, background },
-                  transitions,
-                }) => ({
-                  width: "24px",
-                  height: "24px",
-                  padding: 0,
-                  border: `${borderWidth[1]} solid ${darkMode ? background.sidenav : white.main}`,
-                  borderColor: () => {
-                    let borderColorValue = sidenavColor === color && dark.main;
-
-                    if (darkMode && sidenavColor === color) {
-                      borderColorValue = white.main;
-                    }
-
-                    return borderColorValue;
-                  },
-                  transition: transitions.create("border-color", {
-                    easing: transitions.easing.sharp,
-                    duration: transitions.duration.shorter,
-                  }),
-                  backgroundImage: ({ functions: { linearGradient }, palette: { gradients } }) =>
-                    linearGradient(gradients[color].main, gradients[color].state),
-
-                  "&:not(:last-child)": {
-                    mr: 1,
-                  },
-
-                  "&:hover, &:focus, &:active": {
-                    borderColor: darkMode ? white.main : dark.main,
-                  },
-                })}
-                onClick={() => setSidenavColor(dispatch, color)}
-              />
-            ))}
-          </MDBox>
-        </MDBox>
-        <Divider />
+        <Doubtform />
       </MDBox>
     </ConfiguratorRoot>
   );

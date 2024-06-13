@@ -13,7 +13,10 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import typography from "assets/theme/base/typography";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -24,12 +27,58 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
 function PlatformSettings() {
-  const [followsMe, setFollowsMe] = useState(true);
-  const [answersPost, setAnswersPost] = useState(false);
-  const [mentionsMe, setMentionsMe] = useState(true);
-  const [newLaunches, setNewLaunches] = useState(false);
-  const [productUpdate, setProductUpdate] = useState(true);
-  const [newsletter, setNewsletter] = useState(false);
+  // const [followsMe, setFollowsMe] = useState(true);
+  // const [answersPost, setAnswersPost] = useState(true);
+  // const [mentionsMe, setMentionsMe] = useState(true);
+  // const [newLaunches, setNewLaunches] = useState(false);
+  // const [productUpdate, setProductUpdate] = useState(false);
+  // const [newsletter, setNewsletter] = useState(false);
+
+  const [preferences, setPreferences] = useState({});
+  const [formChanged, setFormChanged] = useState(false);
+  const { isAuthenticated, user } = useAuth0();
+
+  useEffect(() => {
+    const fetchPreferences = async () => {
+      const defaultPreferences = {
+        totalInactive: true,
+        totalChatting: true,
+        totalFinishedGame: true,
+        yesToLevelNotification: false,
+        yesToProductUpdate: false,
+        yesToSubscribeNewsletter: false,
+      };
+
+      try {
+        const response = await axios.get(`http://localhost:8000/api/preferences/${user.email}`);
+        setPreferences({ ...defaultPreferences, ...response.data });
+      } catch (error) {
+        console.error("Error fetching user preferences:", error);
+        setPreferences(defaultPreferences);
+      }
+    };
+
+    if (isAuthenticated) {
+      fetchPreferences();
+    }
+  }, [isAuthenticated, user.email]);
+
+  const handleCheckboxChange = (key) => {
+    setPreferences((prevState) => ({
+      ...prevState,
+      [key]: !prevState[key],
+    }));
+    setFormChanged(true);
+  };
+
+  const handleSavePreferences = async () => {
+    try {
+      await axios.patch(`http://localhost:8000/api/preferences/${user.email}`, preferences);
+      setFormChanged(false);
+    } catch (error) {
+      console.error("Error saving user preferences:", error);
+    }
+  };
 
   return (
     <Card sx={{ boxShadow: "none" }}>
@@ -44,7 +93,10 @@ function PlatformSettings() {
         </MDTypography>
         <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
           <MDBox mt={0.5}>
-            <Switch checked={followsMe} onChange={() => setFollowsMe(!followsMe)} />
+            <Switch
+              checked={preferences.totalInactive}
+              onChange={() => handleCheckboxChange("totalInactive")}
+            />
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <MDTypography variant="button" fontWeight="regular" color="text">
@@ -54,7 +106,10 @@ function PlatformSettings() {
         </MDBox>
         <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
           <MDBox mt={0.5}>
-            <Switch checked={answersPost} onChange={() => setAnswersPost(!answersPost)} />
+            <Switch
+              checked={preferences.totalChatting}
+              onChange={() => handleCheckboxChange("totalChatting")}
+            />
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <MDTypography variant="button" fontWeight="regular" color="text">
@@ -64,7 +119,10 @@ function PlatformSettings() {
         </MDBox>
         <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
           <MDBox mt={0.5}>
-            <Switch checked={mentionsMe} onChange={() => setMentionsMe(!mentionsMe)} />
+            <Switch
+              checked={preferences.totalFinishedGame}
+              onChange={() => handleCheckboxChange("totalFinishedGame")}
+            />
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <MDTypography variant="button" fontWeight="regular" color="text">
@@ -79,7 +137,10 @@ function PlatformSettings() {
         </MDBox>
         <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
           <MDBox mt={0.5}>
-            <Switch checked={newLaunches} onChange={() => setNewLaunches(!newLaunches)} />
+            <Switch
+              checked={preferences.yesToLevelNotification}
+              onChange={() => handleCheckboxChange("yesToLevelNotification")}
+            />
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <MDTypography variant="button" fontWeight="regular" color="text">
@@ -89,7 +150,10 @@ function PlatformSettings() {
         </MDBox>
         <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
           <MDBox mt={0.5}>
-            <Switch checked={productUpdate} onChange={() => setProductUpdate(!productUpdate)} />
+            <Switch
+              checked={preferences.yesToProductUpdate}
+              onChange={() => handleCheckboxChange("yesToProductUpdate")}
+            />
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <MDTypography variant="button" fontWeight="regular" color="text">
@@ -99,7 +163,10 @@ function PlatformSettings() {
         </MDBox>
         <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
           <MDBox mt={0.5}>
-            <Switch checked={newsletter} onChange={() => setNewsletter(!newsletter)} />
+            <Switch
+              checked={preferences.yesToSubscribeNewsletter}
+              onChange={() => handleCheckboxChange("yesToSubscribeNewsletter")}
+            />
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <MDTypography variant="button" fontWeight="regular" color="text">
@@ -107,6 +174,25 @@ function PlatformSettings() {
             </MDTypography>
           </MDBox>
         </MDBox>
+
+        {formChanged && (
+          <button
+            style={{
+              color: "#fff",
+              padding: "8px",
+              border: " 0",
+              background: "rgba(255, 255, 255, 0.14)",
+              borderRadius: "5px",
+              cursor: "pointer",
+              backgroundColor: " #021b215e",
+              margin: "20px 50px",
+              fontFamily: typography.fontFamily,
+            }}
+            onClick={handleSavePreferences}
+          >
+            Save Preferences
+          </button>
+        )}
       </MDBox>
     </Card>
   );

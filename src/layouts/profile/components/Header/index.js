@@ -1,41 +1,28 @@
-/**
-=========================================================
-* React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-import { useState, useEffect } from "react";
-
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
 
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
+
 // import AppBar from "@mui/material/AppBar";
 // import Tabs from "@mui/material/Tabs";
 // import Tab from "@mui/material/Tab";
-// import Icon from "@mui/material/Icon";
+import { Icon, IconButton } from "@mui/material";
 
 // React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 
+import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+
 // React base styles
 import breakpoints from "assets/theme/base/breakpoints";
 
-// Images
-import burceMars from "assets/images/bruce-mars.jpg";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 
 function Header({ children }) {
@@ -64,6 +51,44 @@ function Header({ children }) {
 
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
 
+  // profile image
+  const [image, setImage] = useState(null);
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const { isAuthenticated, user } = useAuth0();
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        if (user && user.email) {
+          const response = await axios.get(`http://localhost:8000/users?email=${user.email}`);
+          // console.log("API Response:", response.data);
+          setUserData(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        toast.error("Error fetching user data");
+      }
+    };
+
+    if (isAuthenticated) {
+      fetchUserData();
+    }
+  }, [isAuthenticated, user]);
+
   return (
     <MDBox position="relative" mb={5}>
       <MDBox
@@ -72,16 +97,6 @@ function Header({ children }) {
         position="relative"
         minHeight="6rem"
         borderRadius="xl"
-        sx={{
-          backgroundImage: ({ functions: { rgba, linearGradient }, palette: { gradients } }) =>
-            `${linearGradient(
-              rgba(gradients.info.main, 0.6),
-              rgba(gradients.info.state, 0.6)
-            )}, url(${backgroundImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "10%",
-          overflow: "hidden",
-        }}
       />
       <Card
         sx={{
@@ -91,44 +106,76 @@ function Header({ children }) {
           py: 2,
           px: 2,
         }}
+        style={{ background: "transparent", border: "0", boxShadow: "none" }}
       >
         <Grid container spacing={3} alignItems="center">
-          <Grid item>
-            <MDAvatar src={burceMars} alt="profile-image" size="xl" shadow="sm" />
+          <Grid item style={{ position: "relative" }}>
+            <label htmlFor="upload-image">
+              <IconButton
+                color="primary"
+                aria-label="edit profile"
+                component="span"
+                style={{ position: "absolute", top: 10, left: 85, fontSize: "14px" }}
+              >
+                <Icon>edit</Icon>
+              </IconButton>
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              style={{ display: "none" }}
+              id="upload-image"
+            />
+            <MDAvatar src={image} alt="profile-image" size="xl" shadow="sm" />
           </Grid>
-          <Grid item>
-            <MDBox height="100%" mt={0.5} lineHeight={1}>
-              <MDTypography variant="h5" fontWeight="medium">
-                Ayan Pathak
-              </MDTypography>
-              <MDTypography variant="button" color="text" fontWeight="regular">
-                CSA | Workverse University
-              </MDTypography>
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4} sx={{ ml: "auto" }}>
-            {/* <AppBar position="static">
-              <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue}>
-                <Tab
-                  label="App"
-                  icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      home
-                    </Icon>
-                  }
-                />
-                <Tab
-                  label="Message"
-                  icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      email
-                    </Icon>
-                  }
-                />
-              </Tabs>
-            </AppBar> */}
-          </Grid>
+
+          {userData && (
+            <>
+              <Grid item>
+                <MDBox height="100%" mt={0.5} lineHeight={1}>
+                  <MDTypography
+                    variant="h5"
+                    fontWeight="medium"
+                    style={{ textTransform: "Uppercase" }}
+                  >
+                    {userData.organization}
+                  </MDTypography>
+                  <MDTypography variant="button" color="text" fontWeight="regular">
+                    {userData.designation}
+                  </MDTypography>
+                </MDBox>
+              </Grid>
+
+              <div
+                style={{
+                  marginLeft: "auto",
+                  color: "#fff",
+                  fontSize: "14px",
+                  textAlign: "end",
+                  padding: "30px 10px 0",
+                }}
+              >
+                <MDTypography
+                  variant="h6"
+                  fontWeight="small"
+                  style={{
+                    fontSize: "14px",
+                  }}
+                >
+                  Status :
+                  <span style={{ color: "#fff", fontWeight: "400", marginLeft: "5px" }}>
+                    {userData.status}
+                  </span>
+                </MDTypography>
+                {userData.status.includes("NotVerified") && (
+                  <p> Email at dev@workverse to complete verification quickly.</p>
+                )}
+              </div>
+            </>
+          )}
         </Grid>
+
         {children}
       </Card>
     </MDBox>

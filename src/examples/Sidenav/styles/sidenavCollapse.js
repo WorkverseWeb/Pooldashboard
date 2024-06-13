@@ -49,15 +49,22 @@ function collapseItem(theme, ownerState) {
     "&:hover, &:focus": {
       backgroundColor: () => {
         let backgroundValue;
+        let borderValue;
 
         if (!active) {
           backgroundValue =
             transparentSidenav && !darkMode
               ? grey[300]
               : rgba(whiteSidenav ? grey[400] : white.main, 0.2);
+
+          // Set border color to white
+          borderValue = white.main;
         }
 
-        return backgroundValue;
+        return {
+          backgroundColor: backgroundValue,
+          borderColor: borderValue,
+        };
       },
     },
   };

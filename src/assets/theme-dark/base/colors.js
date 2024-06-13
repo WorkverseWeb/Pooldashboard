@@ -1,8 +1,8 @@
 const colors = {
   background: {
-    default: "#000000",
-    sidenav: "#021B21",
-    card: "#021B21",
+    default: "#021b215e",
+    sidenav: "#021b215e",
+    card: "#021b215e",
   },
 
   text: {
@@ -40,6 +40,7 @@ const colors = {
     focus: "#BAFFF7",
   },
 
+  // dashboard number  color
   success: {
     main: "#BAFFF7",
     focus: "#BAFFF7",
@@ -60,9 +61,10 @@ const colors = {
     focus: "#BAFFF7",
   },
 
+  // Text highlight color
   dark: {
-    main: "#BAFFF7",
-    focus: "#BAFFF7",
+    main: "#fff",
+    focus: "#fff",
   },
 
   grey: {
@@ -87,12 +89,13 @@ const colors = {
       main: "#0BB08C",
       state: "#0BB08C",
     },
-
+    // hightlight
     info: {
-      main: "#0BB08C",
-      state: "#0BB08C",
+      main: "#021b215e",
+      state: "#021b215e",
     },
 
+    // analytics
     success: {
       main: "97%, 0%, 17%, 7%",
       state: "97%, 0%, 17%, 17%",
@@ -112,10 +115,10 @@ const colors = {
       main: "#000000",
       state: "#000000",
     },
-
+    //navbar
     dark: {
-      main: "#000000",
-      state: "#000000",
+      main: "transparent",
+      state: "transparent",
     },
   },
 

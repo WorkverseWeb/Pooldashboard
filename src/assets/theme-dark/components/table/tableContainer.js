@@ -25,7 +25,7 @@ const { borderRadius } = borders;
 const tableContainer = {
   styleOverrides: {
     root: {
-      backgroundColor: background.card,
+      backgroundColor: background.transparent,
       boxShadow: md,
       borderRadius: borderRadius.xl,
     },

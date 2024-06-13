@@ -70,7 +70,7 @@ export default function data() {
     columns: [
       { Header: "Skills", accessor: "companies", width: "45%", align: "left" },
       { Header: "Top players", accessor: "members", width: "10%", align: "left" },
-      { Header: "Play-time per week", accessor: "budget", align: "center" },
+
       { Header: "completion", accessor: "completion", align: "center" },
     ],
 
@@ -85,11 +85,7 @@ export default function data() {
             ])}
           </MDBox>
         ),
-        budget: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            Finished
-          </MDTypography>
-        ),
+
         completion: (
           <MDBox width="8rem" textAlign="left">
             <MDProgress value={100} color="info" variant="gradient" label={false} />
@@ -108,11 +104,7 @@ export default function data() {
             ])}
           </MDBox>
         ),
-        budget: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            Finished
-          </MDTypography>
-        ),
+
         completion: (
           <MDBox width="8rem" textAlign="left">
             <MDProgress value={100} color="info" variant="gradient" label={false} />
@@ -131,11 +123,7 @@ export default function data() {
             ])}
           </MDBox>
         ),
-        budget: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            14
-          </MDTypography>
-        ),
+
         completion: (
           <MDBox width="8rem" textAlign="left">
             <MDProgress value={60} color="info" variant="gradient" label={false} />
@@ -152,11 +140,7 @@ export default function data() {
             ])}
           </MDBox>
         ),
-        budget: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            3
-          </MDTypography>
-        ),
+
         completion: (
           <MDBox width="8rem" textAlign="left">
             <MDProgress value={50} color="info" variant="gradient" label={false} />
@@ -212,11 +196,7 @@ export default function data() {
             ])}
           </MDBox>
         ),
-        budget: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            3
-          </MDTypography>
-        ),
+
         completion: (
           <MDBox width="8rem" textAlign="left">
             <MDProgress value={22} color="info" variant="gradient" label={false} />
@@ -230,11 +210,7 @@ export default function data() {
             {avatars([[team4, "Jessica Doe"]])}
           </MDBox>
         ),
-        budget: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            5
-          </MDTypography>
-        ),
+
         completion: (
           <MDBox width="8rem" textAlign="left">
             <MDProgress value={20} color="info" variant="gradient" label={false} />
@@ -251,11 +227,7 @@ export default function data() {
             ])}
           </MDBox>
         ),
-        budget: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            2
-          </MDTypography>
-        ),
+
         completion: (
           <MDBox width="8rem" textAlign="left">
             <MDProgress value={5} color="info" variant="gradient" label={false} />

@@ -12,8 +12,23 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import Icon from "@mui/material/Icon";
+
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+
 import MDButton from "components/MDButton";
 import { useAuth0 } from "@auth0/auth0-react";
+
+// toast
+import InfoIcon from "@mui/icons-material/Info";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ErrorIcon from "@mui/icons-material/Error";
+
+const notificationIcons = {
+  info: <InfoIcon />,
+  success: <CheckCircleIcon />,
+  error: <ErrorIcon />,
+};
 // React components
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
@@ -39,6 +54,13 @@ import {
   setOpenConfigurator,
 } from "context";
 import { dark } from "@mui/material/styles/createPalette";
+import RegistrationForm from "./RegisterForm/Registrationform";
+// import brandDark from "assets/images/wrench.png";
+
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const { user, isAuthenticated, logout, loginWithRedirect, isLoading } = useAuth0();
@@ -47,6 +69,34 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
+
+  // toast
+  // const [notifications, setNotifications] = useState([]);
+
+  // useEffect(() => {
+  //   fetchNotifications();
+  // }, []);
+
+  // const fetchNotifications = async () => {
+  //   try {
+  //     const response = await axios.get("/notifications");
+  //     setNotifications(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching notifications:", error);
+  //   }
+  // };
+
+  // const handleNotification = (notification) => {
+  //   if (notification.source === "automatic") {
+  //     toast.info(notification.message);
+  //   } else {
+  //     setNotifications([notification, ...notifications]);
+  //   }
+
+  //   if (notifications.length > 5) {
+  //     setNotifications(notifications.slice(0, 5));
+  //   }
+  // };
 
   useEffect(() => {
     // Setting the navbar type
@@ -68,7 +118,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
     // Remove event listener on cleanup
     return () => window.removeEventListener("scroll", handleTransparentNavbar);
-  }, [dispatch, fixedNavbar, isAuthenticated]);
+  }, [dispatch, fixedNavbar, isAuthenticated, isLoading, user]);
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
@@ -88,9 +138,40 @@ function DashboardNavbar({ absolute, light, isMini }) {
       onClose={handleCloseMenu}
       sx={{ mt: 2 }}
     >
-      <NotificationItem icon={<Icon>email</Icon>} title="Check new messages" />
+      {/* <NotificationItem icon={<Icon>email</Icon>} title="Check new messages" />
       <NotificationItem icon={<Icon>podcasts</Icon>} title="Manage Podcast sessions" />
-      <NotificationItem icon={<Icon>shopping_cart</Icon>} title="Payment successfully completed" />
+      <NotificationItem icon={<Icon>shopping_cart</Icon>} title="Payment successfully completed" /> */}
+      <ul
+        style={{
+          width: "150px",
+          listStyleType: "none",
+          margin: 0,
+          padding: 0,
+        }}
+      >
+        {/* {notifications.length > 0 ? (
+          notifications.map((notification, index) => (
+            <li
+              key={index}
+              style={{
+                borderBottom: "1px solid #bafff7",
+                padding: "5px",
+              }}
+            >
+              {notification.message}
+            </li>
+          ))
+        ) : ( */}
+        <li
+          style={{
+            padding: "5px",
+            textAlign: "center",
+          }}
+        >
+          No new notifications
+        </li>
+        {/* )} */}
+      </ul>
     </Menu>
   );
   // Styles for the navbar icons
@@ -108,9 +189,14 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
   // const isLoggedIn = isAuthenticated;
   // const isSigningUp = !isAuthenticated;
+  const handleLogout = () => {
+    logout({ returnTo: window.location.origin });
+  };
 
   return (
     <>
+      <RegistrationForm />
+
       <AppBar
         position={absolute ? "absolute" : navbarType}
         color="inherit"
@@ -138,7 +224,22 @@ function DashboardNavbar({ absolute, light, isMini }) {
                   size="small"
                   disableRipple
                   color="inherit"
-                  sx={navbarIconButton}
+                  // sx={navbarIconButton}
+                  aria-controls="build"
+                  aria-haspopup="true"
+                  variant="contained"
+                  onClick={handleConfiguratorOpen}
+                >
+                  <Icon sx={iconsStyle}>
+                    build
+                    {/* <img src={brandDark} alt="doubt logo" /> */}
+                  </Icon>
+                </IconButton>
+                <IconButton
+                  size="small"
+                  disableRipple
+                  color="inherit"
+                  // sx={navbarIconButton}
                   aria-controls="notification-menu"
                   aria-haspopup="true"
                   variant="contained"
@@ -146,6 +247,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 >
                   <Icon sx={iconsStyle}>notifications</Icon>
                 </IconButton>
+                {renderMenu()}
               </MDBox>
               {isAuthenticated ? (
                 <>
@@ -155,11 +257,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
                     rel="noreferrer"
                     variant="gradient"
                     color={sidenavColor}
-                    onClick={() =>
-                      logout({
-                        logoutParams: { returnTo: window.location.origin },
-                      })
-                    }
+                    onClick={handleLogout}
+                    style={{ marginLeft: "5px" }}
                   >
                     Sign Out
                   </MDButton>
@@ -173,6 +272,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                     variant="gradient"
                     color={sidenavColor}
                     onClick={() => loginWithRedirect()}
+                    style={{ marginLeft: "5px" }}
                   >
                     Sign In
                   </MDButton>

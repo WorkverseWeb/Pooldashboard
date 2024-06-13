@@ -2,83 +2,108 @@
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 
-// @mui icons
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import InstagramIcon from "@mui/icons-material/Instagram";
-
 // React components
 import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
 
 // React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
-import ProfilesList from "examples/Lists/ProfilesList";
-import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 
 // Overview page components
 import Header from "layouts/profile/components/Header";
 import PlatformSettings from "layouts/profile/components/PlatformSettings";
 
-// Data
-import profilesListData from "layouts/profile/data/profilesListData";
+import Login from "layouts/login";
+import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+// import PopupForm from "./popup/feedback";
 
 function Overview() {
+  const { isAuthenticated, user } = useAuth0();
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        if (user && user.email) {
+          const response = await axios.get(`http://localhost:8000/users?email=${user.email}`);
+          // console.log("API Response:", response.data);
+          setUserData(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        toast.error("Error fetching user data");
+      }
+    };
+
+    if (isAuthenticated) {
+      fetchUserData();
+    }
+  }, [isAuthenticated, user]);
+
   return (
     <DashboardLayout>
+      {/* <PopupForm /> */}
       <DashboardNavbar />
-      <MDBox mb={2} />
-      <Header>
-        <MDBox mt={5} mb={3}>
-          <Grid container spacing={1}>
-            <Grid item xs={12} md={6} xl={6}>
-              <h1>Hello</h1>
-            </Grid>
-          </Grid>
-          {/* Codespace */}
-          {/* Codespace */}
-          <Grid container spacing={1}>
-            <Grid item xs={12} md={6} xl={6}>
-              <PlatformSettings />
-            </Grid>
-            <Grid item xs={12} md={6} xl={6} sx={{ display: "flex" }}>
-              <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
-              <ProfileInfoCard
-                title="profile information"
-                description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-                info={{
-                  fullName: "Ayan Pathak",
-                  mobile: "(44) 123 1234 123",
-                  email: "Ayan@workverse.in",
-                  location: "India",
-                }}
-                social={[
-                  {
-                    link: "https://www.facebook.com/CreativeTim/",
-                    icon: <FacebookIcon />,
-                    color: "facebook",
-                  },
-                  {
-                    link: "https://twitter.com/creativetim",
-                    icon: <TwitterIcon />,
-                    color: "twitter",
-                  },
-                  {
-                    link: "https://www.instagram.com/creativetimofficial/",
-                    icon: <InstagramIcon />,
-                    color: "instagram",
-                  },
-                ]}
-                action={{ route: "", tooltip: "Edit Profile" }}
-                shadow={false}
-              />
-            </Grid>
-          </Grid>
-        </MDBox>
-      </Header>
+      <MDBox
+        pt={3}
+        pb={3}
+        style={
+          !isAuthenticated
+            ? {
+                background:
+                  "linear-gradient(45deg, rgb(5 74 25 / 9%) 30%, rgb(127 207 207 / 18%) 80%)",
+                minHeight: "85vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "10px",
+                overflow: "hidden",
+              }
+            : {}
+        }
+      >
+        {isAuthenticated ? (
+          <>
+            <Header>
+              <MDBox mt={5} mb={3}>
+                {/* <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} /> */}
+                {userData ? (
+                  <ProfileInfoCard
+                    title="profile information"
+                    description=""
+                    info={{
+                      fullName: userData.fullName,
+                      mobile: "+91 " + userData.number,
+                      email: userData.email,
+                      // creatingFor: userData.poolForCreator,
+                      organization: userData.organization,
+                      designation: userData.designation,
+                      state: userData.state,
+                      city: userData.city,
+                      location: "India",
+                      // linkedIn: userData.linkedInURL,
+                    }}
+                    action={{ route: "", tooltip: "Edit Profile" }}
+                    shadow={false}
+                  />
+                ) : (
+                  <div>Loading...</div>
+                )}
+                <Grid item xs={12} mt={5} md={6} xl={6}>
+                  <PlatformSettings />
+                </Grid>
+              </MDBox>
+            </Header>
+          </>
+        ) : (
+          <Login />
+        )}
+      </MDBox>
       <Footer />
     </DashboardLayout>
   );
