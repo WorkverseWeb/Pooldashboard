@@ -10,14 +10,15 @@
   justify-content: center;
   align-items: center;
   z-index: 999;
+  pointer-events: auto;
 }
 
 .popup-content {
   color: #fff !important;
   max-width: 410px;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 55%;
+  left: 55%;
   transform: translate(-50%, -50%);
   z-index: 1000;
   backdrop-filter: blur(20px);
@@ -33,11 +34,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 20px;
+  padding: 0px 10px;
   text-align: center;
+  margin-bottom: 10px;
 }
 
-.registration-header h3 {
+.registration-header h4 {
   font-weight: 400;
   margin: 0;
   /* background-image: linear-gradient(to top, #00e641, #00e8f8);
@@ -46,7 +48,7 @@
 
 .popup-content form {
   font-size: 14px;
-  padding: 20px;
+  padding: 10px;
 }
 
 .popup-content form div {
@@ -78,6 +80,7 @@
 .popup-content .btn {
   margin-top: 25px;
   text-align: end;
+  margin-bottom: 0;
 }
 
 .popup-content .btn button {
@@ -87,7 +90,7 @@
   background: rgba(255, 255, 255, 0.14);
   border-radius: 5px;
   cursor: pointer;
-  background-color: #0BB08C;
+  background-color: #021b215e;
 }
 
 .audio-button {
@@ -103,7 +106,7 @@
 }
 
 .audio-button.clicked {
-  background-color: #0BB08C;
+  background-color: #021b215e;
 }
 
 .registration-header span {
@@ -113,5 +116,5 @@
 }
 
 .registration-header span:hover {
-  color: #0BB08C;
+  color: #0bb08c;
 }

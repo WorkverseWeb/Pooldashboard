@@ -33,7 +33,12 @@
   transition: background-color 5000s ease-in-out 0s;
 }
 
-.form-container form button {
+.form-container form .btn {
+  text-align: end;
+  margin-top: 10px;
+}
+
+.form-container form .btn button {
   color: #fff;
   font-weight: 500;
   padding: 8px;

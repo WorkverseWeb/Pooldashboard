@@ -31,6 +31,7 @@ import {
   setTransparentSidenav,
   setWhiteSidenav,
 } from "context";
+import boxShadow from "assets/theme/functions/boxShadow";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [controller, dispatch] = useMaterialUIController();
@@ -84,13 +85,13 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           <SidenavCollapse
             name={name}
             icon={icon}
-            active={key === collapseName}
+            // active={key === collapseName}
             noCollapse={noCollapse}
           />
         </Link>
       ) : (
         <NavLink key={key} to={route}>
-          <SidenavCollapse name={name} icon={icon} active={key === collapseName} />
+          <SidenavCollapse name={name} icon={icon} />
         </NavLink>
       );
     } else if (type === "title") {
@@ -146,15 +147,15 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           </MDTypography>
         </MDBox>
         <MDBox component={NavLink} to="/" display="flex" alignItems="center">
-          {brand && <MDBox component="img" src={brand} alt="Brand" width="2rem" />}
-          <MDBox
+          {brand && <MDBox component="img" src={brand} alt="Brand" width="10rem" />}
+          {/* <MDBox
             width={!brandName && "100%"}
             sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}
           >
             <MDTypography component="h6" variant="button" fontWeight="medium" color={textColor}>
               {brandName}
             </MDTypography>
-          </MDBox>
+          </MDBox> */}
         </MDBox>
       </MDBox>
       <Divider

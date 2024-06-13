@@ -1,118 +1,178 @@
 import React, { useState, useEffect } from "react";
 // import { useAuth0 } from "@auth0/auth0-react";
 import { useLocation } from "react-router-dom";
-import typography from "assets/theme/base/typography";
+
 import brandDark from "assets/images/student.svg";
 import brandWhite from "assets/images/employee-man-alt.svg";
 import "./Registrationform.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function RegistrationForm() {
+  const { user, isAuthenticated } = useAuth0();
   const [showForm, setShowForm] = useState(false);
   const location = useLocation();
-
-  const { fontFamily } = typography;
-
-  // const { isAuthenticated, user } = useAuth0();
-  // const history = useHistory();
   const [isClicked, setIsClicked] = useState({ Employee: false, Student: false });
-
-  const handleButtonClick = (value) => {
-    if (formData.pool !== value) {
-      setFormData((prevData) => ({ ...prevData, pool: value }));
-      setIsClicked((prevClicked) => ({ ...prevClicked, [value]: true, [formData.pool]: false }));
-    }
-  };
-
   const [formData, setFormData] = useState({
-    fullname: "",
+    fullName: "",
+    email: "",
     number: "",
-    pool: "",
+    poolForCreator: "",
     organization: "",
     designation: "",
     state: "",
     city: "",
-    linkedIn: "",
+    linkdeInURL: "",
   });
 
-  // useEffect(() => {
-  //   if (isAuthenticated && user) {
-  //     if (user["https://yourdomain.com/newUser"]) {
-  //       history.push("/dashboard");
-  //     }
-  //   }
-  // }, [isAuthenticated, user, history]);
-
   useEffect(() => {
-    if (location.pathname === "/dashboard") {
-      setShowForm(true);
-    } else {
-      setShowForm(false);
+    const fetchUserData = async () => {
+      try {
+        if (user && user.email) {
+          const response = await axios.get(`http://localhost:8000/users?email=${user.email}`);
+          // console.log("regi form", response.data);
+          const userData = response.data;
+
+          if (userData && userData.organization) {
+            setShowForm(false);
+          } else {
+            setShowForm(true);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setShowForm(true);
+      }
+    };
+
+    if (isAuthenticated) {
+      fetchUserData();
     }
-  }, [location]);
+  }, [isAuthenticated, user]);
+
+  const handleButtonClick = (button) => {
+    const newState = { Employee: false, Student: false, [button]: true };
+    setIsClicked(newState);
+
+    setFormData({
+      ...formData,
+      poolForCreator: button,
+    });
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const sendStateToBackend = async (data) => {
+    try {
+      const { email } = data;
+      const response = await axios.patch(`http://localhost:8000/users/${email}`, data);
+      // console.log("User data registered:", response);
+      return response;
+    } catch (error) {
+      console.error("Error registering user:", error);
+      toast.error("Error Registering User!");
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const isValid = validateForm(formData);
-    if (isValid) {
-      console.log("Form data saved:", formData);
-
-      // Reset
-      setFormData({
-        fullname: "",
-        pool: "",
-        number: "",
-        organization: "",
-        designation: "",
-        state: "",
-        city: "",
-        linkedIn: "",
-      });
-
-      // Close form
-      setShowForm(false);
-      document.body.style.overflow = "";
-    } else {
-      console.log("Form data is not valid");
+    if (!isValid) {
+      // console.log("Form data is not valid");
+      return;
     }
+    // console.log("Form data saved:", formData);
+
+    const dataToSend = {
+      ...formData,
+      ...isClicked,
+      status: ["NotVerified"],
+    };
+
+    sendStateToBackend(dataToSend);
+
+    // Reset form data
+    setFormData({
+      fullName: "",
+      email: "",
+      number: "",
+      poolForCreator: "",
+      organization: "",
+      designation: "",
+      state: "",
+      city: "",
+      linkdeInURL: "",
+    });
+
+    setIsClicked({ Employee: false, Student: false });
+
+    // Close form
+    setShowForm(false);
+    document.body.style.overflow = "";
+
+    // notify
+    toast.success("User Registered !");
   };
 
   const validateForm = (formData) => {
     return Object.values(formData).every((value) => value.trim() !== "");
   };
 
-  const handleCloseForm = () => {
-    setShowForm(false);
-    document.body.style.overflow = "";
+  // const handleCloseForm = () => {
+  //   setShowForm(false);
+  //   document.body.style.overflow = "";
 
-    sessionStorage.removeItem("isNewUser");
-  };
+  //   sessionStorage.removeItem("isNewUser");
+  // };
+
+  const isSubmitDisabled =
+    !formData.fullName ||
+    !formData.email ||
+    !formData.number ||
+    !formData.organization ||
+    !formData.designation ||
+    !formData.state ||
+    !formData.city ||
+    !formData.linkdeInURL ||
+    !formData.poolForCreator ||
+    !Object.values(isClicked).some((clicked) => clicked);
 
   return (
-    <div style={{ fontFamily: fontFamily }}>
+    <div>
       {showForm && (
         <div className="popup">
           <div className="popup-content">
             <div className="registration-header">
-              <h3>Registration Form</h3>
-              <span className="material-icons" onClick={handleCloseForm}>
+              <h4>Registration Form</h4>
+              {/* <span className="material-icons" onClick={handleCloseForm}>
                 &times;
-              </span>
+              </span> */}
             </div>
 
             <form onSubmit={handleSubmit}>
               <div>
                 <input
                   type="text"
-                  name="fullname"
-                  value={formData.fullname}
+                  name="fullName"
+                  value={formData.fullName}
                   onChange={handleInputChange}
                   placeholder="Full Name"
+                  required
+                />
+              </div>
+              <div>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="Email"
                   required
                 />
               </div>
@@ -130,7 +190,7 @@ function RegistrationForm() {
               <div
                 style={{
                   display: "inline-flex",
-                  justifyContent: "space-between",
+                  gap: "15px",
                   alignItems: "center",
                   width: "100%",
                 }}
@@ -141,7 +201,9 @@ function RegistrationForm() {
                   className={isClicked.Employee ? "audio-button clicked" : "audio-button"}
                   onClick={() => handleButtonClick("Employee")}
                   type="button"
-                  style={{ fontFamily: fontFamily, width: "100px" }}
+                  name="employee"
+                  value="employee"
+                  style={{ width: "100px" }}
                 >
                   <img src={brandWhite} alt="employee img" style={{ width: "15px" }} />
                   Employee
@@ -151,7 +213,9 @@ function RegistrationForm() {
                   className={isClicked.Student ? "audio-button clicked" : "audio-button"}
                   onClick={() => handleButtonClick("Student")}
                   type="button"
-                  style={{ fontFamily: fontFamily, width: "90px" }}
+                  name="student"
+                  value="student"
+                  style={{ width: "90px" }}
                 >
                   <img src={brandDark} alt="student img" style={{ width: "15px" }} />
                   Student
@@ -200,15 +264,21 @@ function RegistrationForm() {
               <div>
                 <input
                   type="text"
-                  name="linkedIn"
-                  value={formData.linkedIn}
+                  name="linkdeInURL"
+                  value={formData.linkdeInURL}
                   onChange={handleInputChange}
-                  placeholder="LinkedIn"
+                  placeholder="linkdeIn URL"
                 />
               </div>
 
               <div className="btn">
-                <button type="submit" style={{ fontFamily: fontFamily }}>
+                <button
+                  type="submit"
+                  disabled={isSubmitDisabled}
+                  style={{
+                    cursor: isSubmitDisabled ? "not-allowed" : "pointer",
+                  }}
+                >
                   Save Data
                 </button>
               </div>

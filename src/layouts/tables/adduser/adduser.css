@@ -14,11 +14,11 @@
 
 .add-form {
   color: #fff !important;
-  max-width: 400px;
+  max-width: 600px;
   width: 100%;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 55%;
+  left: 55%;
   transform: translate(-50%, -50%);
   z-index: 1000;
   backdrop-filter: blur(20px);
@@ -83,13 +83,15 @@
   transition: background-color 5000s ease-in-out 0s;
 }
 
-.add-form form .select-btn {
+.add-form form .select-btn,
+.add-form form .select-group {
   overflow: hidden;
   text-align: start;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
 }
 
-.add-form form .select-btn .button {
+.add-form form .select-btn .audio-button,
+.add-form form .select-group .branch-button {
   color: #8d8d8dd2;
   padding: 7px;
   background-color: rgba(255, 255, 255, 0.14);
@@ -97,11 +99,13 @@
   cursor: pointer;
   border-radius: 5px;
   margin: 5px 5px;
+  font-family: var(--custom-font-family);
 }
 
-.add-form form .select-btn .button.clicked {
+.add-form form .select-btn .audio-button.clicked,
+.add-form form .select-group .branch-button.clicked {
   color: #fff;
-  background-color: #0bb08c;
+  background-color: #021b215e;
 }
 
 /* button */
@@ -111,6 +115,7 @@
 }
 
 .add-form .btn button {
+  text-transform: uppercase;
   color: #fff;
   font-weight: 500;
   padding: 10px 20px;
@@ -118,5 +123,24 @@
   background: rgba(255, 255, 255, 0.14);
   border-radius: 7px;
   cursor: pointer;
-  background-color: #0bb08c;
+  background-color: #021b215e;
+  box-shadow: 0rem 0.875rem 1.625rem -0.75rem rgba(186, 255, 247, 0.4),
+    0rem 0.25rem 1.4375rem 0rem rgba(186, 255, 247, 0.15),
+    0rem 0.5rem 0.625rem -0.3125rem rgba(186, 255, 247, 0.2);
+}
+
+/* skills badge */
+
+.audio-button.disabled {
+  cursor: not-allowed !important;
+  opacity: 0.5;
+}
+
+.badge {
+  background-color: red;
+  border-radius: 10px;
+  color: white;
+  padding: 2px 6px;
+  font-size: 12px;
+  margin-left: 5px;
 }

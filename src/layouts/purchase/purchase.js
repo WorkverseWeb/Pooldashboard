@@ -1,0 +1,328 @@
+// React examples
+import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import Footer from "examples/Footer";
+import brandDark from "assets/images/purchase-card-img.avif";
+import brandWhite from "assets/images/employee-man-alt.svg";
+import Divider from "@mui/material/Divider";
+
+// redux
+import { useDispatch, useSelector } from "react-redux";
+import Cardsdata from "layouts/cart/cardData";
+import { ADD, REMOVE, DLT } from "../../redux/actions/action";
+
+// react
+import React, { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
+
+import Login from "layouts/login";
+import { useAuth0 } from "@auth0/auth0-react";
+import MDBox from "components/MDBox";
+
+// react mui
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import typography from "assets/theme/base/typography";
+import Icon from "@mui/material/Icon";
+import { Functions } from "@mui/icons-material";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+export default function Purchase() {
+  const getdata = useSelector((state) => state.cartreducer.carts);
+
+  const [data, setData] = useState(Cardsdata);
+  const dispatch = useDispatch();
+
+  const send = (e) => {
+    dispatch(ADD(e));
+    toast.success("Item added!");
+  };
+
+  // remove one
+  const remove = (item) => {
+    dispatch(REMOVE(item));
+  };
+
+  // delete btn
+  const dlt = (id) => {
+    dispatch(DLT(id));
+  };
+
+  // const getQuantity = (id) => {
+  //   const item = getdata.find((i) => i.id === id);
+  //   return item ? item.qnty : 0;
+  // };
+
+  // auth0
+  const { isAuthenticated } = useAuth0();
+
+  return (
+    <DashboardLayout>
+      <DashboardNavbar />
+
+      <MDBox
+        style={
+          !isAuthenticated
+            ? {
+                background:
+                  "linear-gradient(45deg, rgb(5 74 25 / 9%) 30%, rgb(127 207 207 / 18%) 80%)",
+                minHeight: "85vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "10px",
+                overflow: "hidden",
+              }
+            : {}
+        }
+      >
+        {isAuthenticated ? (
+          <>
+            <div style={{ textAlign: "end", padding: "20px 20px 0 20px" }}>
+              <Link to="/cart" type="button" className="cart" style={{ position: "relative" }}>
+                <Icon fontSize="large" style={{ color: "#00E8F8" }}>
+                  shopping_cart
+                </Icon>
+                <span
+                  style={{
+                    position: "absolute",
+                    top: "-20px",
+                    left: "20px",
+                    background: "red",
+                    borderRadius: "20px",
+                    fontSize: "12px",
+                    width: "17px",
+                    height: "17px",
+                    textAlign: "center",
+                    color: "#fff",
+                  }}
+                >
+                  {getdata.length}
+                </span>
+              </Link>
+            </div>
+            <div style={{ paddingBottom: "40px" }}>
+              {data.map((e, index) => (
+                <div style={{ display: "flex", gap: "40px" }} key={e.id}>
+                  {index === 0 && (
+                    <>
+                      <div>
+                        <h4 style={{ marginBottom: "10px" }}>Whole Game :</h4>
+                        <Card sx={{ maxWidth: 345 }} style={{ position: "sticky", top: "0" }}>
+                          <CardMedia sx={{ height: 240 }} mb={3}>
+                            <img
+                              src={brandDark}
+                              alt="img"
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                borderRadius: "10px",
+                              }}
+                            />
+                          </CardMedia>
+
+                          <CardContent style={{ color: "#fff", padding: "20px" }}>
+                            <Typography gutterBottom variant="h5" component="div">
+                              {e.title}
+                            </Typography>
+
+                            <Typography variant="body2" style={{ lineHeight: "normal" }}>
+                              {e.content}
+                            </Typography>
+                          </CardContent>
+                          <CardActions
+                            style={{
+                              justifyContent: "space-between",
+                              padding: "0 8px",
+                            }}
+                          >
+                            <Button
+                              size="small"
+                              style={{
+                                fontWeight: "300",
+                                textTransform: "capitalize",
+                                fontSize: "14px",
+                              }}
+                            >
+                              Learn
+                            </Button>
+                            <Button
+                              size="small"
+                              style={{
+                                fontWeight: "300",
+                                textTransform: "capitalize",
+                                fontSize: "14px",
+                              }}
+                            >
+                              ₹ {e.price} /-
+                            </Button>
+                          </CardActions>
+
+                          <Divider
+                            orientation="horizontal"
+                            sx={{ ml: -2 }}
+                            style={{ margin: "0" }}
+                          />
+                          <CardActions
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              padding: "15px 25px ",
+                              gap: "40px",
+                            }}
+                          >
+                            {/* <button
+                              className="purchase-delete"
+                              onClick={e.qnty <= 1 ? () => dlt(e.id) : () => remove(e)}
+                            >
+                              -
+                            </button>
+                            <p style={{ color: "#fff" }}>{e.qnty}</p>
+                            <button className="purchase-add" onClick={() => send(e)}>
+                              +
+                            </button> */}
+                            <button
+                              style={{
+                                fontFamily: typography.fontFamily,
+                                textTransform: "uppercase",
+                                border: "0",
+                                background: "#021b215e",
+                                color: "#fff",
+                                padding: "10px",
+                                cursor: "pointer",
+                                borderRadius: "8px",
+                                border: "0 solid rgba(186, 255, 247, 0.125)",
+                                boxShadow:
+                                  " 0rem 0.125rem 0.125rem 0rem rgba(186, 255, 247, 0.14),0rem 0.1875rem 0.0625rem -0.125rem rgba(186, 255, 247, 0.2),0rem 0.0625rem 0.3125rem 0rem rgba(186, 255, 247, 0.12)",
+                              }}
+                              onClick={() => send(e)}
+                            >
+                              Add to Cart
+                            </button>
+                          </CardActions>
+                        </Card>
+                      </div>
+                      <div>
+                        <h4 style={{ marginBottom: "10px" }}>Skills :</h4>
+                        <div
+                          style={{
+                            display: "grid",
+                            gap: "20px",
+                            gridTemplateColumns: "repeat(3, 1fr)",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          {data.slice(1).map((item) => (
+                            <Card sx={{ maxWidth: 200 }} key={item.id}>
+                              <CardMedia sx={{ height: 100 }} mb={3}>
+                                <img
+                                  src={brandDark}
+                                  alt="img"
+                                  style={{ width: "100%", height: "100%", borderRadius: "10px" }}
+                                />
+                              </CardMedia>
+                              <CardContent style={{ paddingBottom: "10px", padding: "20px" }}>
+                                <Typography gutterBottom variant="h5" component="div">
+                                  {item.title}
+                                </Typography>
+
+                                <Typography
+                                  variant="body2"
+                                  style={{ color: "#fff", fontSize: "13px", lineHeight: "normal" }}
+                                >
+                                  {item.content2}
+                                </Typography>
+                              </CardContent>
+                              <CardActions
+                                style={{ justifyContent: "space-between", padding: "0 8px" }}
+                              >
+                                <Button
+                                  size="small"
+                                  style={{
+                                    fontWeight: "300",
+                                    textTransform: "capitalize",
+                                    fontSize: "14px",
+                                  }}
+                                >
+                                  Learn
+                                </Button>
+                                <Button
+                                  size="small"
+                                  style={{
+                                    fontWeight: "300",
+                                    textTransform: "capitalize",
+                                    fontSize: "14px",
+                                  }}
+                                >
+                                  ₹ {item.price} /-
+                                </Button>
+                              </CardActions>
+                              <Divider
+                                orientation="horizontal"
+                                sx={{ ml: -2 }}
+                                style={{ margin: "0" }}
+                              />
+
+                              <CardActions
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  padding: "15px 15px ",
+                                  gap: "30px",
+                                }}
+                              >
+                                {/* <button
+                                  className="purchase-delete"
+                                  onClick={item.qnty <= 1 ? () => dlt(item.id) : () => remove(item)}
+                                >
+                                  -
+                                </button>
+                                <span style={{ color: "#fff" }}>{item.qnty}</span>
+                                <button className="purchase-add" onClick={() => send(item)}>
+                                  +
+                                </button> */}
+                                <button
+                                  style={{
+                                    fontFamily: typography.fontFamily,
+                                    textTransform: "uppercase",
+                                    border: "0",
+                                    background: "#021b215e",
+                                    color: "#fff",
+                                    padding: "10px",
+                                    cursor: "pointer",
+                                    borderRadius: "8px",
+                                    border: "0 solid rgba(186, 255, 247, 0.125)",
+                                    boxShadow:
+                                      " 0rem 0.125rem 0.125rem 0rem rgba(186, 255, 247, 0.14),0rem 0.1875rem 0.0625rem -0.125rem rgba(186, 255, 247, 0.2),0rem 0.0625rem 0.3125rem 0rem rgba(186, 255, 247, 0.12)",
+                                  }}
+                                  onClick={() => send(item)}
+                                >
+                                  Add to Cart
+                                </button>
+                              </CardActions>
+                            </Card>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <Login />
+        )}
+      </MDBox>
+
+      <Footer />
+    </DashboardLayout>
+  );
+}
