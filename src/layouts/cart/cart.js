@@ -15,12 +15,14 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // @mui material components'
 import Card from "@mui/material/Card";
+import PopupForm from "./popup/feedback";
 
 export default function Cart() {
   const getdata = useSelector((state) => state.cartreducer.carts);
   const dispatch = useDispatch();
   const [price, setPrice] = useState(0);
   const { isAuthenticated, user } = useAuth0();
+  const [showFeedback1, setShowFeedback1] = useState(false);
 
   // total
   useEffect(() => {
@@ -54,7 +56,7 @@ export default function Cart() {
   const handlePurchase = async () => {
     try {
       if (!user || !user.email) {
-        return; // Exit function if user or user email is not available
+        return;
       }
 
       const AllProducts = {};
@@ -113,6 +115,11 @@ export default function Cart() {
         dispatch(RESET());
         toast.info("Cart reset!");
       }, 2000);
+
+      // feedback
+      setTimeout(() => {
+        setShowFeedback1(true);
+      }, 20 * 60 * 1000);
     } catch (error) {
       console.error("Error purchasing:", error);
       toast.error("Failed to purchase. Please try again later.");
@@ -143,6 +150,31 @@ export default function Cart() {
   const createCartData = async (cartData, apiUrl) => {
     await axios.post(apiUrl, cartData);
   };
+
+  useEffect(() => {
+    let timer1;
+
+    const handleFocus = () => {
+      if (isAuthenticated) {
+        timer1 = setTimeout(() => {
+          setShowFeedback1(true);
+        }, 20 * 60 * 1000);
+      }
+    };
+
+    const handleBlur = () => {
+      clearTimeout(timer1);
+    };
+
+    window.addEventListener("focus", handleFocus);
+    window.addEventListener("blur", handleBlur);
+
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+      window.removeEventListener("blur", handleBlur);
+      clearTimeout(timer1);
+    };
+  }, [isAuthenticated]);
 
   return (
     <DashboardLayout>
@@ -282,6 +314,8 @@ export default function Cart() {
           <Login />
         )}
       </MDBox>
+
+      {showFeedback1 && <PopupForm />}
 
       <Footer />
     </DashboardLayout>

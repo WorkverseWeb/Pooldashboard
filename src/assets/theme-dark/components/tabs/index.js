@@ -33,6 +33,7 @@ const tabs = {
       borderRadius: borderRadius.xl,
       minHeight: "unset",
       padding: pxToRem(4),
+      backdropFilter: "blur(7px)",
     },
 
     flexContainer: {

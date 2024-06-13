@@ -50,15 +50,14 @@
 }
 
 .feedback-heading span:hover {
-  color: #0BB08C;
+  color: #0bb08c;
 }
 
 /* content */
 .feedback-content {
   padding: 10px 0;
   border-style: solid;
-  border-image: linear-gradient(to right, rgba(49, 49, 49, 0), #1effe59e, rgba(49, 49, 49, 0))
-    1;
+  border-image: linear-gradient(to right, rgba(49, 49, 49, 0), #1effe59e, rgba(49, 49, 49, 0)) 1;
   border-width: 2px 0 0 0;
 }
 
@@ -99,5 +98,5 @@
   background: rgba(255, 255, 255, 0.14);
   border-radius: 5px;
   cursor: pointer;
-  background-color: #0BB08C;
+  background-color: #021b215e;
 }

@@ -21,7 +21,12 @@ form select,
 }
 
 #bg-main-img {
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.582), rgba(2, 27, 33, 0.582)),
+  background: linear-gradient(
+      to left,
+      rgba(0, 0, 0, 0.733),
+      rgba(0, 0, 0, 0.733),
+      rgba(2, 27, 33, 0.685)
+    ),
     url("./assets/images/main-bg.png") no-repeat;
   background-attachment: fixed;
   background-size: cover;

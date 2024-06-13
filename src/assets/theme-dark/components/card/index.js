@@ -40,6 +40,7 @@ const card = {
       borderRadius: borderRadius.xl,
       boxShadow: md,
       overflow: "visible",
+      backdropFilter: "blur(7px)",
     },
   },
 };

@@ -38,6 +38,7 @@ const autocomplete = {
       textAlign: "left",
       backgroundColor: `${background.card} !important`,
       borderRadius: borderRadius.md,
+      backdropFilter: "blur(7px)",
     },
 
     paper: {

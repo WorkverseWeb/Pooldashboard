@@ -175,26 +175,30 @@ const AddUser = ({ onClose }) => {
 
   // select all skills
   const handleSelectAllClick = () => {
-    const allSelected = Object.values(isClicked).every((value) => value);
+    const allSelected = Object.keys(isClicked).every(
+      (skill) => isClicked[skill] || (slotDetails && slotDetails[skill] === 0)
+    );
 
     const newIsClicked = {};
+    const selectedSkills = [];
+
     for (const skill in isClicked) {
-      newIsClicked[skill] = !allSelected;
+      if (slotDetails && slotDetails[skill] > 0) {
+        newIsClicked[skill] = !allSelected;
+        if (!allSelected) {
+          selectedSkills.push(skill);
+        }
+      } else {
+        newIsClicked[skill] = false;
+      }
     }
 
     setIsClicked(newIsClicked);
 
-    if (allSelected) {
-      setFormData({
-        ...formData,
-        auSkills: [],
-      });
-    } else {
-      setFormData({
-        ...formData,
-        auSkills: Object.keys(isClicked),
-      });
-    }
+    setFormData({
+      ...formData,
+      auSkills: allSelected ? [] : selectedSkills,
+    });
   };
 
   useEffect(() => {
@@ -306,17 +310,21 @@ const AddUser = ({ onClose }) => {
                 Group :
               </label>
             </div>
-            {departments.map((department, index) => (
-              <button
-                type="button"
-                className={branchClicked[department] ? "branch-button clicked" : "branch-button"}
-                onClick={() => handleBranchButtonClick(department)}
-                key={index}
-                value={department}
-              >
-                {department}
-              </button>
-            ))}
+            {departments && departments.filter(Boolean).length > 0 ? (
+              departments.filter(Boolean).map((department, index) => (
+                <button
+                  type="button"
+                  className={branchClicked[department] ? "branch-button clicked" : "branch-button"}
+                  onClick={() => handleBranchButtonClick(department)}
+                  key={index}
+                  value={department}
+                >
+                  {department}
+                </button>
+              ))
+            ) : (
+              <p style={{ fontSize: "14px", margin: "10px" }}>Add groups first</p>
+            )}
           </div>
 
           {/* SKILLS */}
