@@ -1,7 +1,7 @@
 const colors = {
   background: {
     default: "#0000006e",
-    sidenav: "#021b215e",
+    sidenav: "black",
     card: "#0000006e",
   },
 
@@ -42,8 +42,8 @@ const colors = {
 
   // dashboard number  color
   success: {
-    main: "#BAFFF7",
-    focus: "#BAFFF7",
+    main: "#9ce325",
+    focus: "#9ce325",
   },
 
   warning: {
@@ -56,9 +56,10 @@ const colors = {
     focus: "#BAFFF7",
   },
 
+  // table container border bottom color
   light: {
-    main: "#BAFFF7",
-    focus: "#BAFFF7",
+    main: "#9ce325",
+    focus: "#9ce325",
   },
 
   // Text highlight color
@@ -67,16 +68,17 @@ const colors = {
     focus: "#fff",
   },
 
+  // toggle button in profile page and for this also "/" in navbar
   grey: {
-    100: "#BAFFF7",
-    200: "#BAFFF7",
-    300: "#BAFFF7",
-    400: "#BAFFF7",
-    500: "#BAFFF7",
-    600: "#BAFFF7",
-    700: "#BAFFF7",
-    800: "#BAFFF7",
-    900: "#BAFFF7",
+    100: "#9ce325",
+    200: "#9ce325",
+    300: "#9ce325",
+    400: "#9ce325",
+    500: "#9ce325",
+    600: "#9ce325",
+    700: "#9ce325",
+    800: "#9ce325",
+    900: "#9ce325",
   },
 
   gradients: {

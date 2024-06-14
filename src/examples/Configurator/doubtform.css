@@ -47,4 +47,7 @@
   border-radius: 5px;
   cursor: pointer;
   background-color: #021b215e;
+  border: 1px solid transparent;
+  border-style: solid;
+  border-image: linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1;
 }

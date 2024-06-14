@@ -23,9 +23,9 @@ form select,
 #bg-main-img {
   background: linear-gradient(
       to left,
-      rgba(0, 0, 0, 0.733),
-      rgba(0, 0, 0, 0.733),
-      rgba(2, 27, 33, 0.685)
+      rgba(0, 0, 0, 0.753),
+      rgba(0, 0, 0, 0.753),
+      rgba(2, 27, 33, 0.747)
     ),
     url("./assets/images/main-bg.png") no-repeat;
   background-attachment: fixed;
@@ -41,6 +41,9 @@ form select,
   font-size: 20px;
   border-radius: 5px;
   cursor: pointer;
+  border: 1px solid transparent;
+  border-style: solid;
+  border-image: linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1;
 }
 .purchase-add {
   padding: 0 6px;
@@ -69,7 +72,7 @@ form select,
 
 .add-to-cart th {
   padding: 15px;
-  border-bottom: 1px solid #bafff7;
+  border-bottom: 1px solid #ffffffde;
   opacity: 0.7;
   text-transform: uppercase;
   color: #bafff7;
@@ -77,7 +80,7 @@ form select,
 }
 
 .add-to-cart tr:not(:last-child) {
-  border-bottom: 1px solid #bafff7;
+  border-bottom: 1px solid #ffffff34;
 }
 
 .add-to-cart td {

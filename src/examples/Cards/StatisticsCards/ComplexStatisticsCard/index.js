@@ -24,6 +24,7 @@ import Icon from "@mui/material/Icon";
 // React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import boxShadow from "assets/theme/functions/boxShadow";
 
 function ComplexStatisticsCard({ color, title, count, percentage, icon, children }) {
   return (
@@ -41,9 +42,9 @@ function ComplexStatisticsCard({ color, title, count, percentage, icon, children
           height="4rem"
           mt={-3}
           style={{
-            background: "#021b215e",
-            boxShadow:
-              " 0rem 0.875rem 1.625rem -0.75rem rgba(186, 255, 247, 0.4),0rem 0.25rem 1.4375rem 0rem rgba(186, 255, 247, 0.15),0rem 0.5rem 0.625rem -0.3125rem rgba(186, 255, 247, 0.2)",
+            background: "#0000006e",
+            boxShadow: "none",
+            // border: "1px solid #fff",
           }}
         >
           <Icon fontSize="medium" color="inherit">

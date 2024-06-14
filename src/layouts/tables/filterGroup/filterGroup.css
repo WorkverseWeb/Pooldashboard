@@ -1,25 +1,13 @@
-.filter-container {
-  /* border-image: linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1; */
-  border-radius: 50em !important;
-}
-
 .filter-container select {
   color: #fff;
   width: 100%;
   padding: 8px 18px;
-  /* border-radius: 5px; */
   background-color: #021b215e;
-  /* box-shadow: 0rem 0.875rem 1.625rem -0.75rem rgba(186, 255, 247, 0.4),
-    0rem 0.25rem 1.4375rem 0rem rgba(186, 255, 247, 0.15),
-    0rem 0.5rem 0.625rem -0.3125rem rgba(186, 255, 247, 0.2); */
-  /* border: 0; */
   cursor: pointer;
   border: 1px solid transparent;
   border-style: solid;
   border-image: linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1;
-  /* background: #021b215e, linear-gradient(to right, darkblue, darkorchid) border-box; */
   border-radius: 50em !important;
-  /* border: 4px solid transparent; */
 }
 
 .filter-container select option {

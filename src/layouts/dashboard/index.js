@@ -195,7 +195,15 @@ function Dashboard() {
 
             <Grid container spacing={3}>
               <Grid item xs={12} md={6} lg={3}>
-                <MDBox mb={1.5}>
+                <MDBox
+                  mb={1.5}
+                  style={{
+                    border: "1px solid transparent",
+                    borderStyle: "solid",
+                    borderImage:
+                      "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+                  }}
+                >
                   <ComplexStatisticsCard
                     color="primary"
                     icon="weekend"
@@ -210,7 +218,15 @@ function Dashboard() {
                 </MDBox>
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
-                <MDBox mb={1.5}>
+                <MDBox
+                  mb={1.5}
+                  style={{
+                    border: "1px solid transparent",
+                    borderStyle: "solid",
+                    borderImage:
+                      "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+                  }}
+                >
                   <ComplexStatisticsCard
                     color="primary"
                     icon="person_add"
@@ -261,7 +277,15 @@ function Dashboard() {
               <MDBox mt={4.5}>
                 <Grid container spacing={3}>
                   <Grid item xs={12} md={6} lg={4}>
-                    <MDBox mb={3}>
+                    <MDBox
+                      mb={3}
+                      style={{
+                        border: "1px solid transparent",
+                        borderStyle: "solid",
+                        borderImage:
+                          "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+                      }}
+                    >
                       <ReportsBarChart
                         color="success"
                         title="Active Users"

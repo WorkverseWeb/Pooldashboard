@@ -200,13 +200,14 @@ function Tables() {
                     padding: "9px 18px",
                     backgroundColor: "#021b215e",
                     color: "white",
-                    border: "none",
                     borderRadius: "7px",
                     cursor: "pointer",
                     fontWeight: "600",
                     textTransform: "uppercase",
-                    boxShadow:
-                      "0rem 0.875rem 1.625rem -0.75rem rgba(186, 255, 247, 0.4), 0rem 0.25rem 1.4375rem 0rem rgba(186, 255, 247, 0.15), 0rem 0.5rem 0.625rem -0.3125rem rgba(186, 255, 247, 0.2)",
+                    border: "1px solid transparent",
+                    borderStyle: "solid",
+                    borderImage:
+                      "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
                   }}
                   className="popup-btn"
                   onClick={toggleForm}
@@ -232,12 +233,14 @@ function Tables() {
                     fontWeight: "600",
                     backgroundColor: "#021b215e",
                     color: "white",
-                    border: "none",
                     borderRadius: "7px",
                     cursor: "pointer",
                     textTransform: "uppercase",
-                    boxShadow:
-                      "0rem 0.875rem 1.625rem -0.75rem rgba(186, 255, 247, 0.4), 0rem 0.25rem 1.4375rem 0rem rgba(186, 255, 247, 0.15), 0rem 0.5rem 0.625rem -0.3125rem rgba(186, 255, 247, 0.2)",
+                    textTransform: "uppercase",
+                    border: "1px solid transparent",
+                    borderStyle: "solid",
+                    borderImage:
+                      "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
                   }}
                   className="popup-btn"
                   onClick={uploadForm}
@@ -262,7 +265,14 @@ function Tables() {
 
             <Grid container pt={6} spacing={6}>
               <Grid item xs={12}>
-                <Card>
+                <Card
+                  style={{
+                    border: " 1px solid transparent",
+                    borderStyle: "solid",
+                    borderImage:
+                      "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+                  }}
+                >
                   <MDBox pt={3}>
                     <DataTable
                       table={{ columns, rows }}
