@@ -201,7 +201,7 @@ function Dashboard() {
                     border: "1px solid transparent",
                     borderStyle: "solid",
                     borderImage:
-                      "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+                      "linear-gradient(to top, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
                   }}
                 >
                   <ComplexStatisticsCard
@@ -224,7 +224,7 @@ function Dashboard() {
                     border: "1px solid transparent",
                     borderStyle: "solid",
                     borderImage:
-                      "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+                      "linear-gradient(to top, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
                   }}
                 >
                   <ComplexStatisticsCard
@@ -241,7 +241,15 @@ function Dashboard() {
                 </MDBox>
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
-                <MDBox mb={1.5}>
+                <MDBox
+                  mb={1.5}
+                  style={{
+                    border: "1px solid transparent",
+                    borderStyle: "solid",
+                    borderImage:
+                      "linear-gradient(to top, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+                  }}
+                >
                   <ComplexStatisticsCard
                     color="primary"
                     icon="store"
@@ -256,7 +264,15 @@ function Dashboard() {
                 </MDBox>
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
-                <MDBox mb={1.5}>
+                <MDBox
+                  mb={1.5}
+                  style={{
+                    border: "1px solid transparent",
+                    borderStyle: "solid",
+                    borderImage:
+                      "linear-gradient(to top, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+                  }}
+                >
                   <ComplexStatisticsCard
                     color="primary"
                     icon="leaderboard"
@@ -283,7 +299,7 @@ function Dashboard() {
                         border: "1px solid transparent",
                         borderStyle: "solid",
                         borderImage:
-                          "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+                          "linear-gradient(to top, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
                       }}
                     >
                       <ReportsBarChart
@@ -296,7 +312,15 @@ function Dashboard() {
                     </MDBox>
                   </Grid>
                   <Grid item xs={12} md={6} lg={4}>
-                    <MDBox mb={3}>
+                    <MDBox
+                      mb={3}
+                      style={{
+                        border: "1px solid transparent",
+                        borderStyle: "solid",
+                        borderImage:
+                          "linear-gradient(to top, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+                      }}
+                    >
                       <ReportsLineChart
                         color="success"
                         title="Monthly User Game Time"
@@ -322,7 +346,15 @@ function Dashboard() {
               </MDBox>
             </Grid> */}
                   <Grid item xs={12} md={6} lg={4}>
-                    <MDBox mb={3}>
+                    <MDBox
+                      mb={3}
+                      style={{
+                        border: "1px solid transparent",
+                        borderStyle: "solid",
+                        borderImage:
+                          "linear-gradient(to top, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+                      }}
+                    >
                       <ReportsLineChart
                         color="success"
                         title="Monthly time spend with Neuroda"
