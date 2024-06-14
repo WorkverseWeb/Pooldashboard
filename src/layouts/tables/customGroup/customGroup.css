@@ -5,9 +5,9 @@
   border-radius: 8px;
   background: #021b215e;
   border: 0 solid rgba(186, 255, 247, 0.125);
-  box-shadow: 0rem 0.125rem 0.125rem 0rem rgba(186, 255, 247, 0.14),
+  /* box-shadow: 0rem 0.125rem 0.125rem 0rem rgba(186, 255, 247, 0.14),
     0rem 0.1875rem 0.0625rem -0.125rem rgba(186, 255, 247, 0.2),
-    0rem 0.0625rem 0.3125rem 0rem rgba(186, 255, 247, 0.12);
+    0rem 0.0625rem 0.3125rem 0rem rgba(186, 255, 247, 0.12); */
 }
 
 .group-container .col1,
@@ -79,9 +79,9 @@
   padding: 7px;
   border-radius: 7px;
   background-color: #021b215e;
-  box-shadow: 0rem 0.875rem 1.625rem -0.75rem rgba(186, 255, 247, 0.4),
+  /* box-shadow: 0rem 0.875rem 1.625rem -0.75rem rgba(186, 255, 247, 0.4),
     0rem 0.25rem 1.4375rem 0rem rgba(186, 255, 247, 0.15),
-    0rem 0.5rem 0.625rem -0.3125rem rgba(186, 255, 247, 0.2);
+    0rem 0.5rem 0.625rem -0.3125rem rgba(186, 255, 247, 0.2); */
   border: 0;
   margin-top: 10px;
 }

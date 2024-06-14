@@ -16,14 +16,14 @@ Coded by www.creative-tim.com
 // React base styles
 import colors from "assets/theme-dark/base/colors";
 import borders from "assets/theme-dark/base/borders";
-import boxShadows from "assets/theme-dark/base/boxShadows";
+// import boxShadows from "assets/theme-dark/base/boxShadows";
 
 // React helper functions
 import pxToRem from "assets/theme-dark/functions/pxToRem";
 
 const { background } = colors;
 const { borderRadius } = borders;
-const { md } = boxShadows;
+// const { md } = boxShadows;
 
 const tabs = {
   styleOverrides: {
@@ -57,7 +57,7 @@ const tabs = {
       height: "100%",
       borderRadius: borderRadius.lg,
       backgroundColor: background.default,
-      boxShadow: md,
+      // boxShadow: md,
       transition: "all 500ms ease",
     },
   },

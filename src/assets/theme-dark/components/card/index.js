@@ -16,14 +16,14 @@ Coded by www.creative-tim.com
 // React Base Styles
 import colors from "assets/theme-dark/base/colors";
 import borders from "assets/theme-dark/base/borders";
-import boxShadows from "assets/theme-dark/base/boxShadows";
+// import boxShadows from "assets/theme-dark/base/boxShadows";
 
 // React Helper Function
 import rgba from "assets/theme-dark/functions/rgba";
 
 const { black, background } = colors;
 const { borderWidth, borderRadius } = borders;
-const { md } = boxShadows;
+// const { md } = boxShadows;
 
 const card = {
   styleOverrides: {
@@ -38,7 +38,7 @@ const card = {
       backgroundClip: "border-box",
       border: `${borderWidth[0]} solid ${rgba(black.main, 0.125)}`,
       borderRadius: borderRadius.xl,
-      boxShadow: md,
+      // boxShadow: md,
       overflow: "visible",
       backdropFilter: "blur(7px)",
     },

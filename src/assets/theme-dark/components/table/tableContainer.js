@@ -15,18 +15,18 @@ Coded by www.creative-tim.com
 
 // React base styles
 import colors from "assets/theme-dark/base/colors";
-import boxShadows from "assets/theme-dark/base/boxShadows";
+// import boxShadows from "assets/theme-dark/base/boxShadows";
 import borders from "assets/theme-dark/base/borders";
 
 const { background } = colors;
-const { md } = boxShadows;
+// const { md } = boxShadows;
 const { borderRadius } = borders;
 
 const tableContainer = {
   styleOverrides: {
     root: {
       backgroundColor: background.transparent,
-      boxShadow: md,
+      // boxShadow: md,
       borderRadius: borderRadius.xl,
     },
   },
