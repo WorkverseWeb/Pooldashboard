@@ -41,6 +41,7 @@ function Dashboard() {
   const [slotDetails, setSlotDetails] = useState(null);
   const [slotsAvailable, setSlotsAvailable] = useState(0);
   const [totalPlayers, setTotalPlayers] = useState(0);
+  const [userData, setUserData] = useState(null);
   // checking active users
   // const [activePlayers, setActivePlayers] = useState(0);
 
@@ -77,7 +78,7 @@ function Dashboard() {
           }
         } catch (error) {
           console.error("Error fetching assigned users:", error);
-          toast.error("Error fetching assigned users. Please try again later.");
+          // toast.error("Error fetching assigned users. Please try again later.");
         }
       }
     };
@@ -127,6 +128,25 @@ function Dashboard() {
     }
   }, [isAuthenticated, user, totalCount]);
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        if (user && user.email) {
+          const response = await axios.get(`http://localhost:8000/users?email=${user.email}`);
+          // console.log("API Response:", response.data);
+          setUserData(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        // toast.error("Error fetching user data");
+      }
+    };
+
+    if (isAuthenticated) {
+      fetchUserData();
+    }
+  }, [isAuthenticated, user]);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -149,26 +169,41 @@ function Dashboard() {
       >
         {isAuthenticated ? (
           <>
-            <Grid container py={5} spacing={3} alignItems="center">
-              <Grid item>
-                <MDAvatar src={""} alt="profile-image" size="xl" shadow="sm" />
-              </Grid>
-              <Grid item>
-                <MDBox height="100%" mt={0.5} lineHeight={1}>
-                  <MDTypography variant="h5" fontWeight="medium">
-                    {/* Ayan Pathak */}
-                    {user.nickname}
-                  </MDTypography>
-                  <MDTypography variant="button" color="text" fontWeight="regular">
-                    CSA | Workverse University
-                  </MDTypography>
-                </MDBox>
-              </Grid>
-            </Grid>
+            {userData && (
+              <>
+                <Grid container py={5} spacing={3} alignItems="center">
+                  <Grid item>
+                    <MDAvatar src={""} alt="profile-image" size="xl" shadow="sm" />
+                  </Grid>
+                  <Grid item>
+                    <MDBox height="100%" mt={0.5} lineHeight={1}>
+                      <MDTypography
+                        variant="h5"
+                        fontWeight="medium"
+                        style={{ textTransform: "Uppercase" }}
+                      >
+                        {userData.organization}
+                      </MDTypography>
+                      <MDTypography variant="button" color="text" fontWeight="regular">
+                        {userData.designation}
+                      </MDTypography>
+                    </MDBox>
+                  </Grid>
+                </Grid>
+              </>
+            )}
 
             <Grid container spacing={3}>
               <Grid item xs={12} md={6} lg={3}>
-                <MDBox mb={1.5}>
+                <MDBox
+                  mb={1.5}
+                  style={{
+                    border: "1px solid transparent",
+                    borderStyle: "solid",
+                    borderImage:
+                      "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+                  }}
+                >
                   <ComplexStatisticsCard
                     color="primary"
                     icon="weekend"
@@ -183,7 +218,15 @@ function Dashboard() {
                 </MDBox>
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
-                <MDBox mb={1.5}>
+                <MDBox
+                  mb={1.5}
+                  style={{
+                    border: "1px solid transparent",
+                    borderStyle: "solid",
+                    borderImage:
+                      "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+                  }}
+                >
                   <ComplexStatisticsCard
                     color="primary"
                     icon="person_add"
@@ -234,7 +277,15 @@ function Dashboard() {
               <MDBox mt={4.5}>
                 <Grid container spacing={3}>
                   <Grid item xs={12} md={6} lg={4}>
-                    <MDBox mb={3}>
+                    <MDBox
+                      mb={3}
+                      style={{
+                        border: "1px solid transparent",
+                        borderStyle: "solid",
+                        borderImage:
+                          "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+                      }}
+                    >
                       <ReportsBarChart
                         color="success"
                         title="Active Users"

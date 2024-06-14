@@ -60,7 +60,13 @@ function Projects() {
   );
 
   return (
-    <Card>
+    <Card
+      style={{
+        border: "1px solid transparent",
+        borderStyle: "solid",
+        borderImage: "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+      }}
+    >
       <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
         <MDBox>
           <MDTypography variant="h6" gutterBottom>

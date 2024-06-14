@@ -27,6 +27,8 @@ import { format } from "date-fns";
 import { useAuth0 } from "@auth0/auth0-react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Feedback2 from "../feedbackform/feedback2";
+import Feedback3 from "../feedbackform/feedback3";
 
 export default function data({ selectedGroup }) {
   const Author = ({ image, auName, auEmail }) => (
@@ -88,6 +90,8 @@ export default function data({ selectedGroup }) {
 
   const [data, setData] = useState([]);
   const { user, isAuthenticated } = useAuth0();
+  // const [showFeedback2, setShowFeedback2] = useState(false);
+  // const [showFeedback3, setShowFeedback3] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -115,6 +119,26 @@ export default function data({ selectedGroup }) {
       fetchData();
     }
   }, [isAuthenticated, user]);
+
+  // useEffect(() => {
+  //   const allWIPGenerated = data.every((user) => user.auWIP.includes("generated"));
+
+  //   if (allWIPGenerated) {
+  //     const oneMonth = 30 * 24 * 60 * 60 * 1000; // 1 month in milliseconds
+  //     const timer = setTimeout(() => {
+  //       setShowFeedback3(true);
+  //     }, oneMonth);
+
+  //     return () => clearTimeout(timer);
+  //   }
+
+  //   const generatedCount = data.filter((user) => user.auWIP.includes("generated")).length;
+  //   const generatedPercentage = (generatedCount / data.length) * 100;
+
+  //   if (generatedPercentage >= 70) {
+  //     setShowFeedback2(true);
+  //   }
+  // }, [data]);
 
   const filteredData = selectedGroup ? data.filter((user) => user.auGroup === selectedGroup) : data;
 
@@ -173,7 +197,7 @@ export default function data({ selectedGroup }) {
                 color="text"
                 fontWeight="medium"
               >
-                Download
+                {user.auWIP}
               </MDTypography>
             ),
           }))

@@ -46,7 +46,15 @@ function ProfileInfoCard({ title, description, info, action, shadow }) {
   ));
 
   return (
-    <Card sx={{ height: "100%", boxShadow: !shadow && "none" }}>
+    <Card
+      sx={{
+        height: "100%",
+        boxShadow: !shadow && "none",
+        border: "1px solid transparent",
+        borderStyle: "solid",
+        borderImage: "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+      }}
+    >
       <MDBox display="flex" justifyContent="space-between" alignItems="center" pt={2} px={2}>
         <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
           {title}

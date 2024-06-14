@@ -85,7 +85,7 @@ export default function Purchase() {
           <>
             <div style={{ textAlign: "end", padding: "20px 20px 0 20px" }}>
               <Link to="/cart" type="button" className="cart" style={{ position: "relative" }}>
-                <Icon fontSize="large" style={{ color: "#00E8F8" }}>
+                <Icon fontSize="large" style={{ color: "#fff" }}>
                   shopping_cart
                 </Icon>
                 <span
@@ -93,7 +93,7 @@ export default function Purchase() {
                     position: "absolute",
                     top: "-20px",
                     left: "20px",
-                    background: "red",
+                    background: "#9ce325",
                     borderRadius: "20px",
                     fontSize: "12px",
                     width: "17px",
@@ -113,7 +113,17 @@ export default function Purchase() {
                     <>
                       <div>
                         <h4 style={{ marginBottom: "10px" }}>Whole Game :</h4>
-                        <Card sx={{ maxWidth: 345 }} style={{ position: "sticky", top: "0" }}>
+                        <Card
+                          sx={{ maxWidth: 345 }}
+                          style={{
+                            position: "sticky",
+                            top: "0",
+                            border: "1px solid transparent",
+                            borderStyle: "solid",
+                            borderImage:
+                              "linear-gradient(to bottom, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+                          }}
+                        >
                           <CardMedia sx={{ height: 240 }} mb={3}>
                             <img
                               src={brandDark}
@@ -147,6 +157,7 @@ export default function Purchase() {
                                 fontWeight: "300",
                                 textTransform: "capitalize",
                                 fontSize: "14px",
+                                color: "#9ce325",
                               }}
                             >
                               Learn
@@ -157,6 +168,7 @@ export default function Purchase() {
                                 fontWeight: "300",
                                 textTransform: "capitalize",
                                 fontSize: "14px",
+                                color: "#9ce325",
                               }}
                             >
                               ₹ {e.price} /-
@@ -192,13 +204,14 @@ export default function Purchase() {
                                 textTransform: "uppercase",
                                 border: "0",
                                 background: "#021b215e",
-                                color: "#fff",
+                                color: "#9ce325",
                                 padding: "10px",
                                 cursor: "pointer",
                                 borderRadius: "8px",
-                                border: "0 solid rgba(186, 255, 247, 0.125)",
-                                boxShadow:
-                                  " 0rem 0.125rem 0.125rem 0rem rgba(186, 255, 247, 0.14),0rem 0.1875rem 0.0625rem -0.125rem rgba(186, 255, 247, 0.2),0rem 0.0625rem 0.3125rem 0rem rgba(186, 255, 247, 0.12)",
+                                border: "1px solid transparent",
+                                borderStyle: "solid",
+                                borderImage:
+                                  " linear-gradient(to right, rgb(156 227 37), rgba(49, 49, 49, 0)) 1",
                               }}
                               onClick={() => send(e)}
                             >
@@ -248,6 +261,7 @@ export default function Purchase() {
                                     fontWeight: "300",
                                     textTransform: "capitalize",
                                     fontSize: "14px",
+                                    color: "#9ce325",
                                   }}
                                 >
                                   Learn
@@ -258,6 +272,7 @@ export default function Purchase() {
                                     fontWeight: "300",
                                     textTransform: "capitalize",
                                     fontSize: "14px",
+                                    color: "#9ce325",
                                   }}
                                 >
                                   ₹ {item.price} /-
@@ -298,9 +313,10 @@ export default function Purchase() {
                                     padding: "10px",
                                     cursor: "pointer",
                                     borderRadius: "8px",
-                                    border: "0 solid rgba(186, 255, 247, 0.125)",
-                                    boxShadow:
-                                      " 0rem 0.125rem 0.125rem 0rem rgba(186, 255, 247, 0.14),0rem 0.1875rem 0.0625rem -0.125rem rgba(186, 255, 247, 0.2),0rem 0.0625rem 0.3125rem 0rem rgba(186, 255, 247, 0.12)",
+                                    border: "1px solid transparent",
+                                    borderStyle: "solid",
+                                    borderImage:
+                                      "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
                                   }}
                                   onClick={() => send(item)}
                                 >

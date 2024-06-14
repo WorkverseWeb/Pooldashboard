@@ -19,8 +19,7 @@ import Login from "layouts/login";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
-// import PopupForm from "./popup/feedback";
+
 
 function Overview() {
   const { isAuthenticated, user } = useAuth0();
@@ -36,7 +35,7 @@ function Overview() {
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
-        toast.error("Error fetching user data");
+        // toast.error("Error fetching user data");
       }
     };
 
@@ -47,7 +46,6 @@ function Overview() {
 
   return (
     <DashboardLayout>
-      {/* <PopupForm /> */}
       <DashboardNavbar />
       <MDBox
         pt={3}

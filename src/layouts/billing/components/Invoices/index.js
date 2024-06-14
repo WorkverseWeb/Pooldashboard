@@ -26,12 +26,24 @@ import Invoice from "layouts/billing/components/Invoice";
 
 function Invoices() {
   return (
-    <Card sx={{ height: "100%" }}>
+    <Card
+      sx={{ height: "100%" }}
+      style={{
+        border: " 1px solid transparent",
+        borderStyle: "solid",
+        borderImage: "linear-gradient(to bottom, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+      }}
+    >
       <MDBox pt={2} px={2} display="flex" justifyContent="space-between" alignItems="center">
         <MDTypography variant="h6" fontWeight="medium">
           Invoices
         </MDTypography>
-        <MDButton variant="outlined" color="info" size="small">
+        <MDButton
+          variant="outlined"
+          color="info"
+          size="small"
+          style={{ color: "#9ce325", border: "1px solid #9ce325" }}
+        >
           view all
         </MDButton>
       </MDBox>

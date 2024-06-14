@@ -80,7 +80,7 @@ function Header({ children }) {
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
-        toast.error("Error fetching user data");
+        // toast.error("Error fetching user data");
       }
     };
 
@@ -168,7 +168,7 @@ function Header({ children }) {
                     {userData.status}
                   </span>
                 </MDTypography>
-                {userData.status.includes("NotVerified") && (
+                {userData && userData.status && userData.status.includes("NotVerified") && (
                   <p> Email at dev@workverse to complete verification quickly.</p>
                 )}
               </div>
