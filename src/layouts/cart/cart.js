@@ -15,12 +15,14 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // @mui material components'
 import Card from "@mui/material/Card";
+import PopupForm from "./popup/feedback";
 
 export default function Cart() {
   const getdata = useSelector((state) => state.cartreducer.carts);
   const dispatch = useDispatch();
   const [price, setPrice] = useState(0);
   const { isAuthenticated, user } = useAuth0();
+  const [showFeedback1, setShowFeedback1] = useState(false);
 
   // total
   useEffect(() => {
@@ -54,7 +56,7 @@ export default function Cart() {
   const handlePurchase = async () => {
     try {
       if (!user || !user.email) {
-        return; // Exit function if user or user email is not available
+        return;
       }
 
       const AllProducts = {};
@@ -113,6 +115,11 @@ export default function Cart() {
         dispatch(RESET());
         toast.info("Cart reset!");
       }, 2000);
+
+      // feedback
+      setTimeout(() => {
+        setShowFeedback1(true);
+      }, 20 * 60 * 1000);
     } catch (error) {
       console.error("Error purchasing:", error);
       toast.error("Failed to purchase. Please try again later.");
@@ -144,6 +151,31 @@ export default function Cart() {
     await axios.post(apiUrl, cartData);
   };
 
+  useEffect(() => {
+    let timer1;
+
+    const handleFocus = () => {
+      if (isAuthenticated) {
+        timer1 = setTimeout(() => {
+          setShowFeedback1(true);
+        }, 20 * 60 * 1000);
+      }
+    };
+
+    const handleBlur = () => {
+      clearTimeout(timer1);
+    };
+
+    window.addEventListener("focus", handleFocus);
+    window.addEventListener("blur", handleBlur);
+
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+      window.removeEventListener("blur", handleBlur);
+      clearTimeout(timer1);
+    };
+  }, [isAuthenticated]);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -168,16 +200,24 @@ export default function Cart() {
           <div className="cart-container">
             {getdata.length ? (
               <div className="add-to-cart ">
-                <Card style={{ width: "70%" }}>
+                <Card
+                  style={{
+                    width: "70%",
+                    border: "1px solid transparent",
+                    borderStyle: "solid",
+                    borderImage:
+                      "linear-gradient(to bottom, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+                  }}
+                >
                   <div className="card-details">
                     <table>
                       <thead>
                         <tr>
-                          <th></th>
                           <th>Product</th>
                           <th>Price</th>
                           <th>Quantity</th>
                           <th>Subtotal</th>
+                          <th></th>
                         </tr>
                       </thead>
 
@@ -186,19 +226,6 @@ export default function Cart() {
                           return (
                             <>
                               <tr key={e.id}>
-                                <td>
-                                  <IconButton
-                                    onClick={() => dlt(e.id)}
-                                    aria-label="delete"
-                                    size="small"
-                                    style={{
-                                      color: "red",
-                                    }}
-                                  >
-                                    <Icon>delete</Icon>
-                                  </IconButton>
-                                </td>
-
                                 <td>{e.title}</td>
                                 <td>₹ {e.price}.00</td>
 
@@ -226,6 +253,19 @@ export default function Cart() {
                                 </td>
 
                                 <td>₹ {e.price * e.qnty}.00</td>
+
+                                <td>
+                                  <IconButton
+                                    onClick={() => dlt(e.id)}
+                                    aria-label="delete"
+                                    size="small"
+                                    style={{
+                                      color: "#9CE325",
+                                    }}
+                                  >
+                                    <Icon>delete</Icon>
+                                  </IconButton>
+                                </td>
                               </tr>
                             </>
                           );
@@ -235,7 +275,16 @@ export default function Cart() {
                   </div>
                 </Card>
                 {/* cart totals */}
-                <Card style={{ width: "30%", textAlign: "left" }}>
+                <Card
+                  style={{
+                    width: "30%",
+                    textAlign: "left",
+                    border: "1px solid transparent",
+                    borderStyle: "solid",
+                    borderImage:
+                      "linear-gradient(to bottom, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+                  }}
+                >
                   <div className="card-total">
                     <table>
                       <thead>
@@ -249,7 +298,7 @@ export default function Cart() {
                           <td>Subtotal :</td>
                           <td>₹ {price}.00</td>
                         </tr>
-                        <tr>
+                        <tr style={{ borderBottom: "none" }}>
                           <td>Total :</td>
                           <td>₹ {price}.00</td>
                         </tr>
@@ -260,6 +309,10 @@ export default function Cart() {
                             style={{
                               fontFamily: typography.fontFamily,
                               textTransform: "uppercase",
+                              border: "1px solid transparent",
+                              borderStyle: "solid",
+                              borderImage:
+                                "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
                             }}
                           >
                             Purchase
@@ -282,6 +335,8 @@ export default function Cart() {
           <Login />
         )}
       </MDBox>
+
+      {showFeedback1 && <PopupForm />}
 
       <Footer />
     </DashboardLayout>

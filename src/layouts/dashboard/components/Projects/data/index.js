@@ -40,8 +40,6 @@ export default function data() {
           alt="name"
           size="xs"
           sx={{
-            border: ({ borders: { borderWidth }, palette: { white } }) =>
-              `${borderWidth[2]} solid ${white.main}`,
             cursor: "pointer",
             position: "relative",
 

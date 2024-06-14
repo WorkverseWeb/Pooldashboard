@@ -81,7 +81,14 @@ function PlatformSettings() {
   };
 
   return (
-    <Card sx={{ boxShadow: "none" }}>
+    <Card
+      sx={{
+        boxShadow: "none",
+        border: "1px solid transparent",
+        borderStyle: "solid",
+        borderImage: "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+      }}
+    >
       <MDBox p={2}>
         <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
           platform settings

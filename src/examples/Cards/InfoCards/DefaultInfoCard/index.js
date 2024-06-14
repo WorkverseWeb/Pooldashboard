@@ -27,19 +27,24 @@ import MDTypography from "components/MDTypography";
 
 function DefaultInfoCard({ color, icon, title, description, value }) {
   return (
-    <Card>
+    <Card
+      style={{
+        border: " 1px solid transparent",
+        borderStyle: "solid",
+        borderImage: "linear-gradient(to bottom, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+      }}
+    >
       <MDBox p={2} mx={3} display="flex" justifyContent="center">
         <MDBox
           display="grid"
           justifyContent="center"
           alignItems="center"
-          bgColor={color}
           color="white"
           width="4rem"
           height="4rem"
-          shadow="md"
           borderRadius="lg"
           variant="gradient"
+          style={{ backgroundColor: "#0000006e" }}
         >
           <Icon fontSize="default">{icon}</Icon>
         </MDBox>

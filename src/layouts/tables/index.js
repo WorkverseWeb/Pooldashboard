@@ -50,12 +50,17 @@ import typography from "assets/theme/base/typography";
 import UploadUser from "./uploaduser/uploaduser";
 import CustomGroups from "./customGroup/customGroup";
 import FilterGroup from "./filterGroup/filterGroup";
+import axios from "axios";
 
 function Tables() {
   const [selectedGroup, setSelectedGroup] = useState("");
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
   const { columns, rows } = data({ selectedGroup });
   const { columns: pColumns, rows: pRows } = projectsTableData();
+
+  const [userData, setUserData] = useState([]);
+  const [showFeedback2, setShowFeedback2] = useState(false);
+  const [showFeedback3, setShowFeedback3] = useState(false);
 
   const handleSelectedGroupChange = (group) => {
     setSelectedGroup(group);
@@ -73,11 +78,79 @@ function Tables() {
     setFormOpen(!FormOpen);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      if (isAuthenticated && user) {
+        try {
+          const response = await axios.get("http://localhost:8000/assignUsers", {
+            params: {
+              authenticatedUserEmail: user.email,
+            },
+          });
+
+          if (response.data.success) {
+            const wipData = response.data.users.map((user) => user.auWIP);
+            // console.log("wip", wipData);
+            setUserData(wipData);
+          } else {
+            toast.error(response.data.message);
+          }
+        } catch (error) {
+          console.error("Error fetching assigned users:", error);
+          // toast.error("Error fetching assigned users. Please try again later.");
+        }
+      }
+    };
+
+    if (isAuthenticated && user) {
+      fetchData();
+    }
+  }, [isAuthenticated, user]);
+
+  useEffect(() => {
+    if (userData.length === 0) return;
+
+    const generatedCount = userData.filter((wip) => wip.includes("generated")).length;
+    const generatedPercentage = (generatedCount / userData.length) * 100;
+
+    if (generatedCount === userData.length) {
+      setShowFeedback2(false);
+
+      const oneMonth = 30 * 24 * 60 * 60 * 1000;
+
+      const completionTime = new Date(userData[userData.length - 1].timestamp).getTime() + oneMonth;
+
+      const currentTime = new Date().getTime();
+
+      const delay = completionTime - currentTime;
+
+      const delayInHours = 720;
+      const delayInMilliseconds = delayInHours * 60 * 60 * 1000;
+
+      if (delay > delayInMilliseconds) {
+        const timer = setTimeout(() => {
+          setShowFeedback3(true);
+        }, delayInMilliseconds);
+
+        return () => clearTimeout(timer);
+      } else {
+        setShowFeedback3(true);
+      }
+    } else if (generatedPercentage >= 70) {
+      setShowFeedback2(true);
+    } else {
+      setShowFeedback2(false);
+    }
+  }, [userData]);
+
   return (
     <DashboardLayout>
-      {/* <Feedback2 />
-      <Feedback3 /> */}
-
+      {isAuthenticated && (
+        <>
+          {showFeedback2 && <Feedback2 />}
+          {showFeedback3 && <Feedback3 />}
+        </>
+      )}
       <DashboardNavbar />
 
       <MDBox
@@ -127,13 +200,14 @@ function Tables() {
                     padding: "9px 18px",
                     backgroundColor: "#021b215e",
                     color: "white",
-                    border: "none",
                     borderRadius: "7px",
                     cursor: "pointer",
                     fontWeight: "600",
                     textTransform: "uppercase",
-                    boxShadow:
-                      "0rem 0.875rem 1.625rem -0.75rem rgba(186, 255, 247, 0.4), 0rem 0.25rem 1.4375rem 0rem rgba(186, 255, 247, 0.15), 0rem 0.5rem 0.625rem -0.3125rem rgba(186, 255, 247, 0.2)",
+                    border: "1px solid transparent",
+                    borderStyle: "solid",
+                    borderImage:
+                      "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
                   }}
                   className="popup-btn"
                   onClick={toggleForm}
@@ -159,12 +233,14 @@ function Tables() {
                     fontWeight: "600",
                     backgroundColor: "#021b215e",
                     color: "white",
-                    border: "none",
                     borderRadius: "7px",
                     cursor: "pointer",
                     textTransform: "uppercase",
-                    boxShadow:
-                      "0rem 0.875rem 1.625rem -0.75rem rgba(186, 255, 247, 0.4), 0rem 0.25rem 1.4375rem 0rem rgba(186, 255, 247, 0.15), 0rem 0.5rem 0.625rem -0.3125rem rgba(186, 255, 247, 0.2)",
+                    textTransform: "uppercase",
+                    border: "1px solid transparent",
+                    borderStyle: "solid",
+                    borderImage:
+                      "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
                   }}
                   className="popup-btn"
                   onClick={uploadForm}
@@ -189,7 +265,14 @@ function Tables() {
 
             <Grid container pt={6} spacing={6}>
               <Grid item xs={12}>
-                <Card>
+                <Card
+                  style={{
+                    border: " 1px solid transparent",
+                    borderStyle: "solid",
+                    borderImage:
+                      "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
+                  }}
+                >
                   <MDBox pt={3}>
                     <DataTable
                       table={{ columns, rows }}

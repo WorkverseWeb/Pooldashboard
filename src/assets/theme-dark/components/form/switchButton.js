@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 // React base styles
 import colors from "assets/theme-dark/base/colors";
 import borders from "assets/theme-dark/base/borders";
-import boxShadows from "assets/theme-dark/base/boxShadows";
+// import boxShadows from "assets/theme-dark/base/boxShadows";
 
 // React helper functions
 // import rgba from "assets/theme-dark/functions/rgba";
@@ -25,7 +25,7 @@ import linearGradient from "assets/theme-dark/functions/linearGradient";
 
 const { white, gradients, grey, transparent } = colors;
 const { borderWidth } = borders;
-const { md } = boxShadows;
+// const { md } = boxShadows;
 
 const switchButton = {
   defaultProps: {
@@ -69,7 +69,7 @@ const switchButton = {
 
     thumb: {
       backgroundColor: white.main,
-      boxShadow: md,
+      // boxShadow: md,
       border: `${borderWidth[1]} solid ${grey[400]}`,
     },
 

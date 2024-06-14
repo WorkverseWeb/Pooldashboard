@@ -24,14 +24,6 @@ const UploadUser = ({ onClose }) => {
       try {
         if (user && user.email) {
           const response = await axios.get(`http://localhost:8000/group/${user.email}`);
-          // console.log("resposne", response.data.groupname);
-          // if (response.status === 200 && response.data.groupname) {
-          //   const dbDepartments = response.data.groupname.filter((dept) => dept.trim() !== "");
-          //   setDepartments(dbDepartments);
-          //   console.log(dbDepartments);
-          // } else {
-          //   setDepartments([]);
-          // }
           if (response.status === 200 && response.data.groupname) {
             const fetchedDepartments = response.data.groupname.filter((dept) => dept.trim() !== "");
             setDbDepartments(fetchedDepartments);
@@ -263,7 +255,7 @@ const UploadUser = ({ onClose }) => {
   useEffect(() => {
     const fetchSlotDetails = async (email) => {
       try {
-        const response = await axios.get(`http://localhost:8000/slots/${email}`);
+        const response = await axios.get(`http://localhost:8000/initialslot/${email}`);
         console.log("Slot details fetched:", response.data.AllProducts);
         if (response.status === 200) {
           const data = response.data.AllProducts;
@@ -314,10 +306,17 @@ const UploadUser = ({ onClose }) => {
 
   // select all
   const handleSelectAllClick = () => {
-    const allSelected = Object.values(isClicked).every((value) => value);
+    const allSelected = Object.keys(isClicked).every(
+      (skill) => isClicked[skill] || (slotDetails && slotDetails[skill] === 0)
+    );
+
     const newIsClicked = {};
     for (const skill in isClicked) {
-      newIsClicked[skill] = !allSelected;
+      if (slotDetails && slotDetails[skill] > 0) {
+        newIsClicked[skill] = !allSelected;
+      } else {
+        newIsClicked[skill] = false;
+      }
     }
     setIsClicked(newIsClicked);
   };
