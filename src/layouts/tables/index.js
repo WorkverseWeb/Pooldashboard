@@ -154,7 +154,7 @@ function Tables() {
       <DashboardNavbar />
 
       <MDBox
-        pt={3}
+        pt={4}
         pb={3}
         style={
           !isAuthenticated
@@ -180,7 +180,7 @@ function Tables() {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                padding: "30px 20px 20px",
+                padding: "40px 20px",
               }}
             >
               <FilterGroup
@@ -195,94 +195,72 @@ function Tables() {
                   alignItems: "center",
                 }}
               >
-                <button
-                  style={{
-                    padding: "9px 18px",
-                    backgroundColor: "#021b215e",
-                    color: "white",
-                    borderRadius: "7px",
-                    cursor: "pointer",
-                    fontWeight: "600",
-                    textTransform: "uppercase",
-                    border: "1px solid transparent",
-                    borderStyle: "solid",
-                    borderImage:
-                      "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
-                  }}
-                  className="popup-btn"
-                  onClick={toggleForm}
-                >
-                  <IconButton
-                    size="small"
-                    disableRipple
-                    color="inherit"
-                    aria-controls="add"
-                    aria-haspopup="true"
-                    variant="contained"
-                    style={{ padding: "0 ", marginRight: "7px" }}
+                <div className="border-container">
+                  <button
+                    style={{
+                      padding: "9px 18px",
+                      fontWeight: "600",
+                    }}
+                    className="popup-btn border"
+                    onClick={toggleForm}
                   >
-                    <Icon>add_outlined</Icon>
-                  </IconButton>
-                  assign user
-                </button>
-                {isFormOpen && <AddUser onClose={toggleForm} />}
-
-                <button
-                  style={{
-                    padding: "9px 10px",
-                    fontWeight: "600",
-                    backgroundColor: "#021b215e",
-                    color: "white",
-                    borderRadius: "7px",
-                    cursor: "pointer",
-                    textTransform: "uppercase",
-                    textTransform: "uppercase",
-                    border: "1px solid transparent",
-                    borderStyle: "solid",
-                    borderImage:
-                      "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
-                  }}
-                  className="popup-btn"
-                  onClick={uploadForm}
-                >
-                  <IconButton
-                    size="small"
-                    disableRipple
-                    color="inherit"
-                    aria-controls="upload"
-                    aria-haspopup="true"
-                    variant="contained"
-                    style={{ padding: "0 2px" }}
+                    <IconButton
+                      size="small"
+                      disableRipple
+                      color="inherit"
+                      aria-controls="add"
+                      aria-haspopup="true"
+                      variant="contained"
+                      style={{ padding: "0 ", marginRight: "7px" }}
+                    >
+                      <Icon>add_outlined</Icon>
+                    </IconButton>
+                    assign user
+                  </button>
+                  {isFormOpen && <AddUser onClose={toggleForm} />}
+                </div>
+                <div className="border-container">
+                  <button
+                    style={{
+                      padding: "9px 10px",
+                      fontWeight: "600",
+                    }}
+                    className="popup-btn border"
+                    onClick={uploadForm}
                   >
-                    <Icon>file_upload_outlined</Icon>
-                  </IconButton>
-                  Upload to assign
-                  {/* <span style={{ textTransform: "lowercase" }}> to assign</span> */}
-                </button>
-                {FormOpen && <UploadUser onClose={uploadForm} />}
+                    <IconButton
+                      size="small"
+                      disableRipple
+                      color="inherit"
+                      aria-controls="upload"
+                      aria-haspopup="true"
+                      variant="contained"
+                      style={{ padding: "0 2px" }}
+                    >
+                      <Icon>file_upload_outlined</Icon>
+                    </IconButton>
+                    Upload to assign
+                  </button>
+                  {FormOpen && <UploadUser onClose={uploadForm} />}
+                </div>
               </div>
             </div>
 
-            <Grid container pt={6} spacing={6}>
-              <Grid item xs={12}>
-                <Card
-                  style={{
-                    border: " 1px solid transparent",
-                    borderStyle: "solid",
-                    borderImage:
-                      "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
-                  }}
-                >
-                  <MDBox pt={3}>
-                    <DataTable
-                      table={{ columns, rows }}
-                      isSorted={false}
-                      entriesPerPage={false}
-                      showTotalEntries={true}
-                      noEndBorder
-                    />
-                    {/* <Data selectedGroup={selectedGroup} /> */}
-                  </MDBox>
+            <Grid container spacing={6} style={{ marginTop: "0" }}>
+              <Grid item xs={12} style={{ paddingTop: "0" }}>
+                <Card className="border-container-box">
+                  <div className="border-box">
+                    <MDBox pt={3}>
+                      <DataTable
+                        table={{ columns, rows }}
+                        isSorted={false}
+                        entriesPerPage={false}
+                        showTotalEntries={true}
+                        noEndBorder
+                      />
+                      {/* <Data selectedGroup={selectedGroup} /> */}
+                    </MDBox>
+                  </div>
                 </Card>
               </Grid>
             </Grid>

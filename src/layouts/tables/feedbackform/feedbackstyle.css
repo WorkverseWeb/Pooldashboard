@@ -1,34 +1,3 @@
-.popup-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(30px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.popup-form {
-  color: #fff !important;
-  max-width: 400px;
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  left: 55%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-  backdrop-filter: blur(20px);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: #2a40303d;
-  box-shadow: 0 5px 50px 0 #bafff754;
-  padding: 15px;
-}
-
 /* heading */
 .feedback-heading {
   position: relative;
@@ -83,20 +52,4 @@
 
 .feedback-content .emoji-buttons button.selected {
   transform: scale(1.6);
-}
-
-/* button */
-.popup-form .btn {
-  text-align: end;
-}
-
-.popup-form .btn button {
-  color: #fff;
-  font-weight: 500;
-  padding: 8px;
-  border: 0;
-  background: rgba(255, 255, 255, 0.14);
-  border-radius: 7px;
-  cursor: pointer;
-  background-color: #021b215e;
 }

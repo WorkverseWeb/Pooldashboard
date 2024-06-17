@@ -27,44 +27,40 @@ import MDTypography from "components/MDTypography";
 
 function DefaultInfoCard({ color, icon, title, description, value }) {
   return (
-    <Card
-      style={{
-        border: " 1px solid transparent",
-        borderStyle: "solid",
-        borderImage: "linear-gradient(to bottom, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
-      }}
-    >
-      <MDBox p={2} mx={3} display="flex" justifyContent="center">
-        <MDBox
-          display="grid"
-          justifyContent="center"
-          alignItems="center"
-          color="white"
-          width="4rem"
-          height="4rem"
-          borderRadius="lg"
-          variant="gradient"
-          style={{ backgroundColor: "#0000006e" }}
-        >
-          <Icon fontSize="default">{icon}</Icon>
+    <Card className="border-container-bottom">
+      <div className="border-bottom">
+        <MDBox p={2} mx={3} display="flex" justifyContent="center">
+          <MDBox
+            display="grid"
+            justifyContent="center"
+            alignItems="center"
+            color="white"
+            width="4rem"
+            height="4rem"
+            borderRadius="lg"
+            variant="gradient"
+            style={{ backgroundColor: "#0000006e" }}
+          >
+            <Icon fontSize="default">{icon}</Icon>
+          </MDBox>
         </MDBox>
-      </MDBox>
-      <MDBox pb={2} px={2} textAlign="center" lineHeight={1.25}>
-        <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
-          {title}
-        </MDTypography>
-        {description && (
-          <MDTypography variant="caption" color="text" fontWeight="regular">
-            {description}
+        <MDBox pb={2} px={2} textAlign="center" lineHeight={1.25}>
+          <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
+            {title}
           </MDTypography>
-        )}
-        {description && !value ? null : <Divider />}
-        {value && (
-          <MDTypography variant="h5" fontWeight="medium">
-            {value}
-          </MDTypography>
-        )}
-      </MDBox>
+          {description && (
+            <MDTypography variant="caption" color="text" fontWeight="regular">
+              {description}
+            </MDTypography>
+          )}
+          {description && !value ? null : <Divider />}
+          {value && (
+            <MDTypography variant="h5" fontWeight="medium" style={{ color: "rgb(156, 227, 37)" }}>
+              {value}
+            </MDTypography>
+          )}
+        </MDBox>
+      </div>
     </Card>
   );
 }

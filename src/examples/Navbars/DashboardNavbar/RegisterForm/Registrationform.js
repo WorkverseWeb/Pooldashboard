@@ -270,15 +270,19 @@ function RegistrationForm() {
                 />
               </div>
 
-              <div className="btn">
+              <div
+                className="btn border-container"
+                style={{ marginTop: "15px", marginBottom: "0", left: "265px" }}
+              >
                 <button
                   type="submit"
+                  className="border"
                   disabled={isSubmitDisabled}
                   style={{
                     cursor: isSubmitDisabled ? "not-allowed" : "pointer",
                   }}
                 >
-                  Save Data
+                  Save
                 </button>
               </div>
             </form>

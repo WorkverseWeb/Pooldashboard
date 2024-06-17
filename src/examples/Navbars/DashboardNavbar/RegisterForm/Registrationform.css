@@ -25,7 +25,6 @@
   border-radius: 10px;
   /* border: 1px solid rgba(255, 255, 255, 0.18); */
   background: #2a40303d;
-  /* box-shadow: 0 5px 50px 0 #bafff754; */
   padding: 15px;
 }
 
@@ -75,22 +74,6 @@
   -webkit-text-fill-color: rgba(255, 255, 255, 0.6);
   background-color: rgb(0 0 0 / 24%) !important;
   transition: background-color 5000s ease-in-out 0s;
-}
-
-.popup-content .btn {
-  margin-top: 25px;
-  text-align: end;
-  margin-bottom: 0;
-}
-
-.popup-content .btn button {
-  color: #fff;
-  padding: 8px;
-  border: 0;
-  background: rgba(255, 255, 255, 0.14);
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #021b215e;
 }
 
 .audio-button {

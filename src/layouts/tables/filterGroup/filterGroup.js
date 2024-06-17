@@ -35,11 +35,12 @@ function FilterGroup({ selectedGroup, onGroupChange }) {
   };
 
   return (
-    <div className="filter-container">
+    <div className="filter-container border-container">
       <select
         style={{ fontFamily: typography.fontFamily, fontWeight: "600", textTransform: "uppercase" }}
         value={selectedGroup}
         onChange={handleGroupChange}
+        className="border"
       >
         <option value="">Select Group</option>
         {departments.map((department, index) => (

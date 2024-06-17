@@ -36,10 +36,16 @@ export default styled(LinearProgress)(({ theme, ownerState }) => {
   }
 
   return {
+    height: "8px",
+    borderRadius: "5px",
+    backgroundColor: "transparent",
+    border: "1px solid #9ce32599",
+    padding: "1px",
+
     "& .MuiLinearProgress-bar": {
+      borderRadius: "5px",
       background: backgroundValue,
       width: `${value}%`,
-      color: text.main,
     },
   };
 });

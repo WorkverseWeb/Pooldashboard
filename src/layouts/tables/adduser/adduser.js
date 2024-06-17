@@ -274,7 +274,7 @@ const AddUser = ({ onClose }) => {
 
   return (
     <div className="add-container">
-      <div className="add-form">
+      <div className="add-form ">
         <div className="purchase-heading">
           <h4>Add User</h4>
           <span className="material-icons" onClick={onClose}>
@@ -376,12 +376,14 @@ const AddUser = ({ onClose }) => {
             })}
           </div>
 
-          <div className="btn">
+          <div className="btn border-container" style={{ left: "490px ", marginTop: "10px" }}>
             <button
               type="submit"
               disabled={isSubmitDisabled}
+              className="border"
               style={{
                 cursor: isSubmitDisabled ? "not-allowed" : "pointer",
+                padding: "8px 20px",
               }}
             >
               Add

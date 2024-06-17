@@ -16,6 +16,7 @@ import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
+import PropTypes from "prop-types";
 
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
@@ -60,6 +61,21 @@ function Dashboard() {
   // }
 
   const [data, setData] = useState([]);
+
+  const CustomPercentageComponent = ({ label, amount, color }) => (
+    <MDTypography component="p" variant="button" color="text" display="flex">
+      {label && <>&nbsp;{label}</>}
+      <MDTypography component="span" variant="button" fontWeight="bold" color={color}>
+        &nbsp;{amount}
+      </MDTypography>
+    </MDTypography>
+  );
+
+  CustomPercentageComponent.propTypes = {
+    label: PropTypes.string,
+    amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    color: PropTypes.string,
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -171,7 +187,7 @@ function Dashboard() {
           <>
             {userData && (
               <>
-                <Grid container py={5} spacing={3} alignItems="center">
+                <Grid container pt={4} pb={5} spacing={3} alignItems="center">
                   <Grid item>
                     <MDAvatar src={""} alt="profile-image" size="xl" shadow="sm" />
                   </Grid>
@@ -195,18 +211,10 @@ function Dashboard() {
 
             <Grid container spacing={3}>
               <Grid item xs={12} md={6} lg={3}>
-                <MDBox
-                  mb={1.5}
-                  style={{
-                    border: "1px solid transparent",
-                    borderStyle: "solid",
-                    borderImage:
-                      "linear-gradient(to top, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
-                  }}
-                >
+                <MDBox mb={1.5}>
                   <ComplexStatisticsCard
                     color="primary"
-                    icon="weekend"
+                    icon="person_add"
                     title="User"
                     count={totalPlayers}
                     percentage={{
@@ -218,18 +226,10 @@ function Dashboard() {
                 </MDBox>
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
-                <MDBox
-                  mb={1.5}
-                  style={{
-                    border: "1px solid transparent",
-                    borderStyle: "solid",
-                    borderImage:
-                      "linear-gradient(to top, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
-                  }}
-                >
+                <MDBox mb={1.5}>
                   <ComplexStatisticsCard
                     color="primary"
-                    icon="person_add"
+                    icon="group_rounded"
                     title="Total Purchased Users"
                     count={totalQuantity}
                     percentage={{
@@ -241,38 +241,24 @@ function Dashboard() {
                 </MDBox>
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
-                <MDBox
-                  mb={1.5}
-                  style={{
-                    border: "1px solid transparent",
-                    borderStyle: "solid",
-                    borderImage:
-                      "linear-gradient(to top, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
-                  }}
-                >
+                <MDBox mb={1.5}>
                   <ComplexStatisticsCard
                     color="primary"
-                    icon="store"
+                    icon="attach_money"
                     title="Total amount paid"
                     count={totalAmount}
-                    percentage={{
-                      color: "success",
-                      amount: "Paid",
-                      label: "Using credit card",
-                    }}
+                    percentageComponent={
+                      <CustomPercentageComponent
+                        color="success"
+                        label="Paid Using"
+                        amount="credit card"
+                      />
+                    }
                   />
                 </MDBox>
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
-                <MDBox
-                  mb={1.5}
-                  style={{
-                    border: "1px solid transparent",
-                    borderStyle: "solid",
-                    borderImage:
-                      "linear-gradient(to top, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
-                  }}
-                >
+                <MDBox mb={1.5}>
                   <ComplexStatisticsCard
                     color="primary"
                     icon="leaderboard"
@@ -293,15 +279,7 @@ function Dashboard() {
               <MDBox mt={4.5}>
                 <Grid container spacing={3}>
                   <Grid item xs={12} md={6} lg={4}>
-                    <MDBox
-                      mb={3}
-                      style={{
-                        border: "1px solid transparent",
-                        borderStyle: "solid",
-                        borderImage:
-                          "linear-gradient(to top, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
-                      }}
-                    >
+                    <MDBox mb={3}>
                       <ReportsBarChart
                         color="success"
                         title="Active Users"
@@ -312,21 +290,14 @@ function Dashboard() {
                     </MDBox>
                   </Grid>
                   <Grid item xs={12} md={6} lg={4}>
-                    <MDBox
-                      mb={3}
-                      style={{
-                        border: "1px solid transparent",
-                        borderStyle: "solid",
-                        borderImage:
-                          "linear-gradient(to top, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
-                      }}
-                    >
+                    <MDBox mb={3}>
                       <ReportsLineChart
                         color="success"
                         title="Monthly User Game Time"
                         description={
                           <>
-                            (<strong>+15%</strong>) increase in today playtime.
+                            (<strong style={{ color: "rgb(156, 227, 37)" }}>+15%</strong>) increase
+                            in today playtime.
                           </>
                         }
                         date="updated 4 min ago"
@@ -346,21 +317,14 @@ function Dashboard() {
               </MDBox>
             </Grid> */}
                   <Grid item xs={12} md={6} lg={4}>
-                    <MDBox
-                      mb={3}
-                      style={{
-                        border: "1px solid transparent",
-                        borderStyle: "solid",
-                        borderImage:
-                          "linear-gradient(to top, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
-                      }}
-                    >
+                    <MDBox mb={3}>
                       <ReportsLineChart
                         color="success"
                         title="Monthly time spend with Neuroda"
                         description={
                           <>
-                            (<strong>+15%</strong>) increase in today chat-time.
+                            (<strong style={{ color: "rgb(156, 227, 37)" }}>+15%</strong>) increase
+                            in today chat-time.
                           </>
                         }
                         date="updated 4 min ago"

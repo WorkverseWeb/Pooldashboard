@@ -407,7 +407,7 @@ const UploadUser = ({ onClose }) => {
                 aria-label="delete"
                 size="small"
                 style={{
-                  color: "red",
+                  color: "#9ce325",
                   borderRadius: "0 5px 5px 0",
                   backgroundColor: " rgba(255, 255, 255, 0.14)",
                   height: "31px",
@@ -475,12 +475,14 @@ const UploadUser = ({ onClose }) => {
             </div>
           )}
 
-          <div className="btn">
+          <div className="btn border-container" style={{ left: "600px" }}>
             <button
               type="submit"
               disabled={isSubmitDisabled}
+              className="border"
               style={{
                 cursor: isSubmitDisabled ? "not-allowed" : "pointer",
+                padding: "8px 20px",
               }}
             >
               Submit

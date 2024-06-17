@@ -53,56 +53,56 @@ function Projects() {
       open={Boolean(menu)}
       onClose={closeMenu}
     >
-      <MenuItem onClick={closeMenu}>Action</MenuItem>
+      {/* <MenuItem onClick={closeMenu}>Action</MenuItem>
       <MenuItem onClick={closeMenu}>Another action</MenuItem>
-      <MenuItem onClick={closeMenu}>Something else</MenuItem>
+      <MenuItem onClick={closeMenu}>Something else</MenuItem> */}
     </Menu>
   );
 
   return (
-    <Card
-      style={{
-        border: "1px solid transparent",
-        borderStyle: "solid",
-        borderImage: "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
-      }}
-    >
-      <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-        <MDBox>
-          <MDTypography variant="h6" gutterBottom>
-            Skills
-          </MDTypography>
-          <MDBox display="flex" alignItems="center" lineHeight={0}>
-            <Icon
-              sx={{
-                fontWeight: "bold",
-                color: ({ palette: { info } }) => info.main,
-                mt: -0.5,
-              }}
-            >
-              done
-            </Icon>
-            <MDTypography variant="button" fontWeight="regular" color="text">
-              &nbsp;<strong>91 done</strong> this month
+    <Card className="border-container-top ">
+      <div className="border-top">
+        <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
+          <MDBox>
+            <MDTypography variant="h6" gutterBottom>
+              Skills
             </MDTypography>
+            <MDBox display="flex" alignItems="center" lineHeight={0}>
+              <Icon
+                sx={{
+                  fontWeight: "bold",
+                  color: ({ palette: { info } }) => info.main,
+                  mt: -0.5,
+                }}
+              >
+                done
+              </Icon>
+              <MDTypography variant="button" fontWeight="regular" color="text">
+                &nbsp;<strong style={{ color: "rgb(156, 227, 37)" }}>91 done</strong> this month
+              </MDTypography>
+            </MDBox>
           </MDBox>
+          <MDBox color="text" px={2}>
+            <Icon
+              sx={{ cursor: "pointer", fontWeight: "bold" }}
+              fontSize="small"
+              onClick={openMenu}
+            >
+              more_vert
+            </Icon>
+          </MDBox>
+          {renderMenu}
         </MDBox>
-        <MDBox color="text" px={2}>
-          <Icon sx={{ cursor: "pointer", fontWeight: "bold" }} fontSize="small" onClick={openMenu}>
-            more_vert
-          </Icon>
+        <MDBox>
+          <DataTable
+            table={{ columns, rows }}
+            showTotalEntries={false}
+            isSorted={false}
+            noEndBorder
+            entriesPerPage={false}
+          />
         </MDBox>
-        {renderMenu}
-      </MDBox>
-      <MDBox>
-        <DataTable
-          table={{ columns, rows }}
-          showTotalEntries={false}
-          isSorted={false}
-          noEndBorder
-          entriesPerPage={false}
-        />
-      </MDBox>
+      </div>
     </Card>
   );
 }

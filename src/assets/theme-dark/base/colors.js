@@ -26,13 +26,13 @@ const colors = {
   },
 
   primary: {
-    main: "#BAFFF7",
-    focus: "#BAFFF7",
+    main: "#fff",
+    focus: "#fff",
   },
 
   secondary: {
-    main: "#BAFFF7",
-    focus: "#BAFFF7",
+    main: "#fff",
+    focus: "#fff",
   },
 
   info: {
@@ -58,8 +58,8 @@ const colors = {
 
   // table container border bottom color
   light: {
-    main: "#9ce325",
-    focus: "#9ce325",
+    main: "#fff",
+    focus: "#fff",
   },
 
   // Text highlight color
@@ -93,8 +93,8 @@ const colors = {
     },
     // hightlight
     info: {
-      main: "#021b215e",
-      state: "#021b215e",
+      main: "rgb(156, 227, 37)",
+      state: "rgb(156, 227, 37)",
     },
 
     // analytics

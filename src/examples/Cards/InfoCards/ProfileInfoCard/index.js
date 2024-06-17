@@ -50,42 +50,42 @@ function ProfileInfoCard({ title, description, info, action, shadow }) {
       sx={{
         height: "100%",
         boxShadow: !shadow && "none",
-        border: "1px solid transparent",
-        borderStyle: "solid",
-        borderImage: "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
       }}
+      className="border-container-box"
     >
-      <MDBox display="flex" justifyContent="space-between" alignItems="center" pt={2} px={2}>
-        <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
-          {title}
-        </MDTypography>
-        <MDTypography component={Link} to={action.route} variant="body2" color="secondary">
-          <Tooltip title={action.tooltip} placement="top">
-            <Icon>edit</Icon>
-          </Tooltip>
-        </MDTypography>
-      </MDBox>
-      <MDBox p={2}>
-        <MDBox mb={2} lineHeight={1}>
-          <MDTypography variant="button" color="text" fontWeight="light">
-            {description}
+      <div className="border-box">
+        <MDBox display="flex" justifyContent="space-between" alignItems="center" pt={2} px={2}>
+          <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
+            {title}
+          </MDTypography>
+          <MDTypography component={Link} to={action.route} variant="body2" color="secondary">
+            <Tooltip title={action.tooltip} placement="top">
+              <Icon>edit</Icon>
+            </Tooltip>
           </MDTypography>
         </MDBox>
-        <MDBox opacity={0.3}>
-          <Divider />
-        </MDBox>
-        <MDBox>
-          {renderItems}
-          <MDBox display="flex" py={1} pr={2}>
-            <MDTypography
-              variant="button"
-              fontWeight="bold"
-              textTransform="capitalize"
-            ></MDTypography>
-            {/* {renderSocial} */}
+        <MDBox p={2}>
+          <MDBox mb={2} lineHeight={1}>
+            <MDTypography variant="button" color="text" fontWeight="light">
+              {description}
+            </MDTypography>
+          </MDBox>
+          <MDBox opacity={0.3}>
+            <Divider />
+          </MDBox>
+          <MDBox>
+            {renderItems}
+            <MDBox display="flex" py={1} pr={2}>
+              <MDTypography
+                variant="button"
+                fontWeight="bold"
+                textTransform="capitalize"
+              ></MDTypography>
+              {/* {renderSocial} */}
+            </MDBox>
           </MDBox>
         </MDBox>
-      </MDBox>
+      </div>
     </Card>
   );
 }
