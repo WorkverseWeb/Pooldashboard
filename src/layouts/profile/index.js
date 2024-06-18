@@ -20,7 +20,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-
 function Overview() {
   const { isAuthenticated, user } = useAuth0();
   const [userData, setUserData] = useState(null);
@@ -48,7 +47,6 @@ function Overview() {
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox
-        pt={3}
         pb={3}
         style={
           !isAuthenticated

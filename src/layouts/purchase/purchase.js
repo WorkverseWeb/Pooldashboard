@@ -99,7 +99,8 @@ export default function Purchase() {
                     width: "17px",
                     height: "17px",
                     textAlign: "center",
-                    color: "#fff",
+                    color: "black",
+                    fontWeight: "600",
                   }}
                 >
                   {getdata.length}
@@ -118,106 +119,86 @@ export default function Purchase() {
                           style={{
                             position: "sticky",
                             top: "0",
-                            border: "1px solid transparent",
-                            borderStyle: "solid",
-                            borderImage:
-                              "linear-gradient(to bottom, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
                           }}
+                          className="border-container-bottom"
                         >
-                          <CardMedia sx={{ height: 240 }} mb={3}>
-                            <img
-                              src={brandDark}
-                              alt="img"
+                          <div className="border-bottom" style={{ padding: "0" }}>
+                            <CardMedia sx={{ height: 240 }} mb={3}>
+                              <img
+                                src={brandDark}
+                                alt="img"
+                                style={{
+                                  width: "100%",
+                                  height: "100%",
+                                  borderRadius: "10px",
+                                }}
+                              />
+                            </CardMedia>
+
+                            <CardContent style={{ color: "#fff", padding: "20px" }}>
+                              <Typography gutterBottom variant="h5" component="div">
+                                {e.title}
+                              </Typography>
+
+                              <Typography variant="body2" style={{ lineHeight: "normal" }}>
+                                {e.content}
+                              </Typography>
+                            </CardContent>
+                            <CardActions
                               style={{
-                                width: "100%",
-                                height: "100%",
-                                borderRadius: "10px",
+                                justifyContent: "space-between",
+                                padding: "0 8px",
                               }}
+                            >
+                              <Button
+                                size="small"
+                                style={{
+                                  fontWeight: "300",
+                                  textTransform: "capitalize",
+                                  fontSize: "14px",
+                                  color: "#fff",
+                                }}
+                              >
+                                Learn
+                              </Button>
+                              <Button
+                                size="small"
+                                style={{
+                                  fontWeight: "300",
+                                  textTransform: "capitalize",
+                                  fontSize: "14px",
+                                  color: "#9ce325",
+                                }}
+                              >
+                                ₹ {e.price} /-
+                              </Button>
+                            </CardActions>
+
+                            <Divider
+                              orientation="horizontal"
+                              sx={{ ml: -2 }}
+                              style={{ margin: "0" }}
                             />
-                          </CardMedia>
-
-                          <CardContent style={{ color: "#fff", padding: "20px" }}>
-                            <Typography gutterBottom variant="h5" component="div">
-                              {e.title}
-                            </Typography>
-
-                            <Typography variant="body2" style={{ lineHeight: "normal" }}>
-                              {e.content}
-                            </Typography>
-                          </CardContent>
-                          <CardActions
-                            style={{
-                              justifyContent: "space-between",
-                              padding: "0 8px",
-                            }}
-                          >
-                            <Button
-                              size="small"
+                            <CardActions
                               style={{
-                                fontWeight: "300",
-                                textTransform: "capitalize",
-                                fontSize: "14px",
-                                color: "#9ce325",
+                                width: "35%",
+                                padding: "0",
+                                margin: "20px auto",
                               }}
+                              className="border-container-green"
                             >
-                              Learn
-                            </Button>
-                            <Button
-                              size="small"
-                              style={{
-                                fontWeight: "300",
-                                textTransform: "capitalize",
-                                fontSize: "14px",
-                                color: "#9ce325",
-                              }}
-                            >
-                              ₹ {e.price} /-
-                            </Button>
-                          </CardActions>
-
-                          <Divider
-                            orientation="horizontal"
-                            sx={{ ml: -2 }}
-                            style={{ margin: "0" }}
-                          />
-                          <CardActions
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              padding: "15px 25px ",
-                              gap: "40px",
-                            }}
-                          >
-                            {/* <button
-                              className="purchase-delete"
-                              onClick={e.qnty <= 1 ? () => dlt(e.id) : () => remove(e)}
-                            >
-                              -
-                            </button>
-                            <p style={{ color: "#fff" }}>{e.qnty}</p>
-                            <button className="purchase-add" onClick={() => send(e)}>
-                              +
-                            </button> */}
-                            <button
-                              style={{
-                                fontFamily: typography.fontFamily,
-                                textTransform: "uppercase",
-                                border: "0",
-                                background: "#021b215e",
-                                color: "#9ce325",
-                                padding: "10px",
-                                cursor: "pointer",
-                                borderRadius: "8px",
-                                border: "1px solid transparent",
-                                borderStyle: "solid",
-                                borderImage:
-                                  " linear-gradient(to right, rgb(156 227 37), rgba(49, 49, 49, 0)) 1",
-                              }}
-                              onClick={() => send(e)}
-                            >
-                              Add to Cart
-                            </button>
-                          </CardActions>
+                              <button
+                                style={{
+                                  fontFamily: typography.fontFamily,
+                                  padding: "10px",
+                                }}
+                                className="border-green"
+                                onClick={() => send(e)}
+                              >
+                                Add to Cart
+                              </button>
+                            </CardActions>
+                          </div>
                         </Card>
                       </div>
                       <div>
@@ -232,97 +213,84 @@ export default function Purchase() {
                           }}
                         >
                           {data.slice(1).map((item) => (
-                            <Card sx={{ maxWidth: 200 }} key={item.id}>
-                              <CardMedia sx={{ height: 100 }} mb={3}>
-                                <img
-                                  src={brandDark}
-                                  alt="img"
-                                  style={{ width: "100%", height: "100%", borderRadius: "10px" }}
+                            <Card
+                              sx={{ maxWidth: 200 }}
+                              key={item.id}
+                              className="border-container-bottom"
+                            >
+                              <div className="border-bottom" style={{ padding: "0" }}>
+                                <CardMedia sx={{ height: 100 }} mb={3}>
+                                  <img
+                                    src={brandDark}
+                                    alt="img"
+                                    style={{ width: "100%", height: "100%", borderRadius: "10px" }}
+                                  />
+                                </CardMedia>
+                                <CardContent style={{ paddingBottom: "10px", padding: "20px" }}>
+                                  <Typography gutterBottom variant="h5" component="div">
+                                    {item.title}
+                                  </Typography>
+
+                                  <Typography
+                                    variant="body2"
+                                    style={{
+                                      color: "#fff",
+                                      fontSize: "13px",
+                                      lineHeight: "normal",
+                                    }}
+                                  >
+                                    {item.content2}
+                                  </Typography>
+                                </CardContent>
+                                <CardActions
+                                  style={{ justifyContent: "space-between", padding: "0 8px" }}
+                                >
+                                  <Button
+                                    size="small"
+                                    style={{
+                                      fontWeight: "300",
+                                      textTransform: "capitalize",
+                                      fontSize: "14px",
+                                      color: "#fff",
+                                    }}
+                                  >
+                                    Learn
+                                  </Button>
+                                  <Button
+                                    size="small"
+                                    style={{
+                                      fontWeight: "300",
+                                      textTransform: "capitalize",
+                                      fontSize: "14px",
+                                      color: "#9ce325",
+                                    }}
+                                  >
+                                    ₹ {item.price} /-
+                                  </Button>
+                                </CardActions>
+                                <Divider
+                                  orientation="horizontal"
+                                  sx={{ ml: -2 }}
+                                  style={{ margin: "0" }}
                                 />
-                              </CardMedia>
-                              <CardContent style={{ paddingBottom: "10px", padding: "20px" }}>
-                                <Typography gutterBottom variant="h5" component="div">
-                                  {item.title}
-                                </Typography>
 
-                                <Typography
-                                  variant="body2"
-                                  style={{ color: "#fff", fontSize: "13px", lineHeight: "normal" }}
-                                >
-                                  {item.content2}
-                                </Typography>
-                              </CardContent>
-                              <CardActions
-                                style={{ justifyContent: "space-between", padding: "0 8px" }}
-                              >
-                                <Button
-                                  size="small"
+                                <CardActions
                                   style={{
-                                    fontWeight: "300",
-                                    textTransform: "capitalize",
-                                    fontSize: "14px",
-                                    color: "#9ce325",
+                                    width: "60%",
+                                    margin: "20px auto",
+                                    padding: "0",
                                   }}
+                                  className="border-container"
                                 >
-                                  Learn
-                                </Button>
-                                <Button
-                                  size="small"
-                                  style={{
-                                    fontWeight: "300",
-                                    textTransform: "capitalize",
-                                    fontSize: "14px",
-                                    color: "#9ce325",
-                                  }}
-                                >
-                                  ₹ {item.price} /-
-                                </Button>
-                              </CardActions>
-                              <Divider
-                                orientation="horizontal"
-                                sx={{ ml: -2 }}
-                                style={{ margin: "0" }}
-                              />
-
-                              <CardActions
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                  padding: "15px 15px ",
-                                  gap: "30px",
-                                }}
-                              >
-                                {/* <button
-                                  className="purchase-delete"
-                                  onClick={item.qnty <= 1 ? () => dlt(item.id) : () => remove(item)}
-                                >
-                                  -
-                                </button>
-                                <span style={{ color: "#fff" }}>{item.qnty}</span>
-                                <button className="purchase-add" onClick={() => send(item)}>
-                                  +
-                                </button> */}
-                                <button
-                                  style={{
-                                    fontFamily: typography.fontFamily,
-                                    textTransform: "uppercase",
-                                    border: "0",
-                                    background: "#021b215e",
-                                    color: "#fff",
-                                    padding: "10px",
-                                    cursor: "pointer",
-                                    borderRadius: "8px",
-                                    border: "1px solid transparent",
-                                    borderStyle: "solid",
-                                    borderImage:
-                                      "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
-                                  }}
-                                  onClick={() => send(item)}
-                                >
-                                  Add to Cart
-                                </button>
-                              </CardActions>
+                                  <button
+                                    className="border"
+                                    style={{ padding: "10px", fontFamily: typography.fontFamily }}
+                                    onClick={() => send(item)}
+                                  >
+                                    Add to Cart
+                                  </button>
+                                </CardActions>
+                              </div>
                             </Card>
                           ))}
                         </div>

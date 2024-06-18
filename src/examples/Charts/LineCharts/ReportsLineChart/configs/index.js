@@ -23,7 +23,7 @@ function configs(labels, datasets) {
           tension: 0,
           pointRadius: 5,
           pointBorderColor: "transparent",
-          pointBackgroundColor: "rgba(255, 255, 255, .8)",
+          pointBackgroundColor: "rgb(156, 227, 37)", //green
           borderColor: "rgba(255, 255, 255, .8)",
           borderWidth: 4,
           backgroundColor: "transparent",
@@ -62,7 +62,7 @@ function configs(labels, datasets) {
             font: {
               size: 14,
               weight: 300,
-              family: "Roboto",
+              family: "Magistral",
               style: "normal",
               lineHeight: 2,
             },
@@ -83,7 +83,7 @@ function configs(labels, datasets) {
             font: {
               size: 14,
               weight: 300,
-              family: "Roboto",
+              family: "Magistral",
               style: "normal",
               lineHeight: 2,
             },

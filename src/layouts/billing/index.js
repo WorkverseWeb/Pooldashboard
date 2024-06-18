@@ -101,7 +101,7 @@ function Billing() {
                     </Grid> */}
                     <Grid item xs={12} xl={3}>
                       <DefaultInfoCard
-                        icon="account_balance"
+                        icon="attach_money"
                         title="Total paid"
                         description="One time payment"
                         value={totalAmount}

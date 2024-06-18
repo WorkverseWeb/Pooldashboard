@@ -13,9 +13,6 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import Icon from "@mui/material/Icon";
 
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-
 import MDButton from "components/MDButton";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -31,7 +28,6 @@ const notificationIcons = {
 };
 // React components
 import MDBox from "components/MDBox";
-import MDInput from "components/MDInput";
 
 // React example components
 import Breadcrumbs from "examples/Breadcrumbs";
@@ -61,6 +57,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import boxShadow from "assets/theme/functions/boxShadow";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const { user, isAuthenticated, logout, loginWithRedirect, isLoading } = useAuth0();
@@ -230,10 +227,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                   variant="contained"
                   onClick={handleConfiguratorOpen}
                 >
-                  <Icon sx={iconsStyle}>
-                    build
-                    {/* <img src={brandDark} alt="doubt logo" /> */}
-                  </Icon>
+                  <Icon sx={iconsStyle}>support_agent</Icon>
                 </IconButton>
                 <IconButton
                   size="small"
@@ -250,7 +244,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 {renderMenu()}
               </MDBox>
               {isAuthenticated ? (
-                <>
+                <div className="border-container" style={{ marginLeft: "5px" }}>
                   <MDButton
                     // component=""
                     // target="_blank"
@@ -258,13 +252,14 @@ function DashboardNavbar({ absolute, light, isMini }) {
                     variant="gradient"
                     color={sidenavColor}
                     onClick={handleLogout}
-                    style={{ marginLeft: "5px" }}
+                    className="border"
+                    style={{ boxShadow: "none", background: "#021b215e" }}
                   >
                     Sign Out
                   </MDButton>
-                </>
+                </div>
               ) : (
-                <>
+                <div className="border-container" style={{ marginLeft: "5px" }}>
                   <MDButton
                     // component=""
                     // target="_blank"
@@ -272,11 +267,12 @@ function DashboardNavbar({ absolute, light, isMini }) {
                     variant="gradient"
                     color={sidenavColor}
                     onClick={() => loginWithRedirect()}
-                    style={{ marginLeft: "5px" }}
+                    className="border"
+                    style={{ boxShadow: "none" }}
                   >
                     Sign In
                   </MDButton>
-                </>
+                </div>
               )}
             </MDBox>
           )}

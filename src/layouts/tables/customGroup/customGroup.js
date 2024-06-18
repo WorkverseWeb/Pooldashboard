@@ -174,58 +174,62 @@ const CustomGroups = () => {
   }, [isAuthenticated, user, totalCount]);
 
   return (
-    <div className="group-container">
-      {isAuthenticated ? (
-        <div className="col1">
-          <p>
-            <span style={{ marginRight: "5px" }}>{totalQuantity} </span> Total Purchased Slots.
-          </p>
-          <p>
-            <span style={{ marginRight: "5px" }}>{slotsAvailable}</span> Slots Available.
-          </p>
-          <p>
-            <span style={{ marginRight: "5px" }}>0</span> Total Players.
-          </p>
-        </div>
-      ) : (
-        <div>no </div>
-      )}
-      <div className="col2">
-        <form onSubmit={handleSubmit}>
-          <div className="departments-wrapper">
-            {departments.map((department, index) => (
-              <div key={index} className="department-item">
-                <input
-                  type="text"
-                  placeholder="Add Group"
-                  value={department}
-                  onChange={(e) => handleDepartmentChange(index, e.target.value)}
-                  style={{ width: department ? `${department.length + 2}ch` : "100px" }}
-                />
-                {department && (
-                  <button className="btn1" onClick={() => handleRemoveDepartment(index)}>
-                    -
-                  </button>
-                )}
-                {index === departments.length - 1 && (
-                  <button className="btn2" onClick={handleAddDepartment}>
-                    +
-                  </button>
-                )}
-              </div>
-            ))}
+    <section className="group-container border-container-box">
+      <div className="border-box" style={{ display: "flex", gap: "20px", padding: "20px" }}>
+        {isAuthenticated ? (
+          <div className="col1">
+            <p>
+              <span style={{ marginRight: "5px" }}>{totalQuantity} </span> Total Purchased Slots.
+            </p>
+            <p>
+              <span style={{ marginRight: "5px" }}>{slotsAvailable}</span> Slots Available.
+            </p>
+            <p>
+              <span style={{ marginRight: "5px" }}>0</span> Total Players.
+            </p>
           </div>
+        ) : (
+          <div>no </div>
+        )}
+        <div className="col2">
+          <form onSubmit={handleSubmit}>
+            <div className="departments-wrapper">
+              {departments.map((department, index) => (
+                <div key={index} className="department-item">
+                  <input
+                    type="text"
+                    placeholder="Add Group"
+                    value={department}
+                    onChange={(e) => handleDepartmentChange(index, e.target.value)}
+                    style={{ width: department ? `${department.length + 2}ch` : "100px" }}
+                  />
+                  {department && (
+                    <button className="btn1" onClick={() => handleRemoveDepartment(index)}>
+                      -
+                    </button>
+                  )}
+                  {index === departments.length - 1 && (
+                    <button className="btn2" onClick={handleAddDepartment}>
+                      +
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
 
-          <button
-            type="submit"
-            className="group-submit"
-            style={{ fontFamily: typography.fontFamily }}
-          >
-            Save
-          </button>
-        </form>
+            <div className="border-container" style={{ marginTop: "10px" }}>
+              <button
+                type="submit"
+                className="border"
+                style={{ fontFamily: typography.fontFamily }}
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

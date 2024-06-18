@@ -55,10 +55,10 @@ export default function data() {
       </Tooltip>
     ));
 
-  const Company = ({ image, name }) => (
+  const Company = ({ name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={image} name={name} size="sm" />
-      <MDTypography variant="button" fontWeight="medium" ml={1} lineHeight={1}>
+      {/* <MDAvatar name={name} size="sm" /> */}
+      <MDTypography variant="button" fontWeight="regular" lineHeight={1}>
         {name}
       </MDTypography>
     </MDBox>
@@ -66,7 +66,12 @@ export default function data() {
 
   return {
     columns: [
-      { Header: "Skills", accessor: "companies", width: "45%", align: "left" },
+      {
+        Header: "Skills",
+        accessor: "companies",
+        width: "45%",
+        align: "left",
+      },
       { Header: "Top players", accessor: "members", width: "10%", align: "left" },
 
       { Header: "completion", accessor: "completion", align: "center" },
@@ -74,7 +79,7 @@ export default function data() {
 
     rows: [
       {
-        companies: <Company image={logoBulb} name="Creative Problem solving" />,
+        companies: <Company name="Creative Problem solving" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([
@@ -91,7 +96,7 @@ export default function data() {
         ),
       },
       {
-        companies: <Company image={logoBulb} name="Entrepreneurial Mindset" />,
+        companies: <Company name="Entrepreneurial Mindset" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([
@@ -110,7 +115,7 @@ export default function data() {
         ),
       },
       {
-        companies: <Company image={logoBulb} name="Negotiation" />,
+        companies: <Company name="Negotiation" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([
@@ -129,7 +134,7 @@ export default function data() {
         ),
       },
       {
-        companies: <Company image={logoBulb} name="Story-telling" />,
+        companies: <Company name="Story-telling" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([
@@ -146,7 +151,7 @@ export default function data() {
         ),
       },
       {
-        companies: <Company image={logoBulb} name="First Principles Thinking" />,
+        companies: <Company name="First Principles Thinking" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([[team4, "Jessica Doe"]])}
@@ -164,7 +169,7 @@ export default function data() {
         ),
       },
       {
-        companies: <Company image={logoBulb} name="Emotional Intelligencp" />,
+        companies: <Company name="Emotional Intelligencp" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([
@@ -185,7 +190,7 @@ export default function data() {
         ),
       },
       {
-        companies: <Company image={logoBulb} name="Collaboration" />,
+        companies: <Company name="Collaboration" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([
@@ -202,7 +207,7 @@ export default function data() {
         ),
       },
       {
-        companies: <Company image={logoBulb} name="Sharp Remote Communication" />,
+        companies: <Company name="Sharp Remote Communication" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([[team4, "Jessica Doe"]])}
@@ -216,7 +221,7 @@ export default function data() {
         ),
       },
       {
-        companies: <Company image={logoBulb} name="Productivity Management" />,
+        companies: <Company name="Productivity Management" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([

@@ -24,6 +24,9 @@ import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
+// React context
+import { useMaterialUIController, setOpenConfigurator } from "context";
+
 // React base styles
 import typography from "assets/theme/base/typography";
 
@@ -31,16 +34,34 @@ function Footer({ company, links }) {
   const { href, name } = company;
   const { size } = typography;
 
-  const renderLinks = () =>
-    links.map((link) => (
-      <MDBox key={link.name} component="li" px={2} lineHeight={1}>
-        <Link href={link.href} target="_blank">
-          <MDTypography variant="button" fontWeight="regular" color="text">
-            {link.name}
-          </MDTypography>
-        </Link>
+  const [controller, dispatch] = useMaterialUIController();
+  const { openConfigurator } = controller;
+
+  const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
+
+  const renderLinks = () => (
+    <>
+      <MDBox component="li" px={2} lineHeight={1}>
+        <MDTypography
+          variant="button"
+          fontWeight="regular"
+          onClick={handleConfiguratorOpen}
+          style={{ cursor: "pointer" }}
+        >
+          &nbsp;Have a question ?&nbsp;
+        </MDTypography>
       </MDBox>
-    ));
+      {links.map((link) => (
+        <MDBox key={link.name} component="li" px={2} lineHeight={1}>
+          <Link href={link.href} target="_blank">
+            <MDTypography variant="button" fontWeight="regular" color="text">
+              {link.name}
+            </MDTypography>
+          </Link>
+        </MDBox>
+      ))}
+    </>
+  );
 
   return (
     <MDBox

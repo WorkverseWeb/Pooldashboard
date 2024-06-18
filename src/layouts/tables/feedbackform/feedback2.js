@@ -67,8 +67,13 @@ export default function Feedback2() {
                 </button>
               </div>
             </div>
-            <div className="btn">
-              <button type="submit" onClick={handleSubmit} disabled={!selectedEmoji}>
+            <div className="btn border-container" style={{ marginTop: "15px", left: "280px" }}>
+              <button
+                type="submit"
+                className="border"
+                onClick={handleSubmit}
+                disabled={!selectedEmoji}
+              >
                 Submit
               </button>
             </div>
