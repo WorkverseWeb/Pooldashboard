@@ -246,6 +246,7 @@ function Dashboard() {
                     color="primary"
                     icon="attach_money"
                     title="Total amount paid"
+                    // count={totalAmount}
                     count={totalAmount}
                     percentageComponent={
                       <CustomPercentageComponent

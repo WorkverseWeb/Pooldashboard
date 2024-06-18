@@ -71,6 +71,42 @@ form select,
   z-index: 0;
 }
 
+/* border-left for buttons */
+.border-container-left {
+  position: relative;
+  display: inline-block;
+}
+
+.border-container-left .border-left {
+  color: #fff;
+  width: 100%;
+  padding: 8px 18px;
+  background-color: #021b215e;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  position: relative;
+  z-index: 1;
+  text-transform: uppercase;
+}
+
+.border-container-left::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 8px;
+  padding: 2px;
+  background: linear-gradient(to left, rgb(255, 255, 255), rgba(49, 49, 49, 0));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 0;
+}
+
 /* border-right for containers */
 .border-container-box {
   position: relative;

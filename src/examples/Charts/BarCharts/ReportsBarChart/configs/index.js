@@ -14,17 +14,6 @@ Coded by www.creative-tim.com
 */
 
 function configs(labels, datasets) {
-  const generateColors = (length) => {
-    const colors = [];
-    for (let i = 0; i < length; i++) {
-      const color = i % 2 === 0 ? "rgba(156, 227, 37, 0.8)" : "rgba(255, 255, 255, 0.8)";
-      colors.push(color);
-    }
-    return colors;
-  };
-
-  const backgroundColors = generateColors(datasets.data.length);
-
   return {
     data: {
       labels,
@@ -35,7 +24,7 @@ function configs(labels, datasets) {
           borderWidth: 0,
           borderRadius: 4,
           borderSkipped: false,
-          backgroundColor: backgroundColors,
+          backgroundColor: "rgba(156, 227, 37, 0.8)",
           data: datasets.data,
           maxBarThickness: 6,
         },

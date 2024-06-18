@@ -4,10 +4,6 @@ import PropTypes from "prop-types";
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-
-// import AppBar from "@mui/material/AppBar";
-// import Tabs from "@mui/material/Tabs";
-// import Tab from "@mui/material/Tab";
 import { Icon, IconButton } from "@mui/material";
 
 // React components
@@ -22,8 +18,7 @@ import { toast } from "react-toastify";
 
 // React base styles
 import breakpoints from "assets/theme/base/breakpoints";
-
-import backgroundImage from "assets/images/bg-profile.jpeg";
+import boxShadow from "assets/theme/functions/boxShadow";
 
 function Header({ children }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
@@ -90,23 +85,28 @@ function Header({ children }) {
   }, [isAuthenticated, user]);
 
   return (
-    <MDBox position="relative" mb={5}>
+    <MDBox position="relative">
       <MDBox
         display="flex"
         alignItems="center"
         position="relative"
-        minHeight="6rem"
+        minHeight="5rem"
         borderRadius="xl"
       />
       <Card
         sx={{
-          position: "relative",
+          position: "absolute",
           mt: -8,
           mx: 3,
           py: 2,
           px: 2,
         }}
-        style={{ background: "transparent", border: "0", boxShadow: "none" }}
+        style={{
+          background: "transparent",
+          zIndex: "999",
+          backdropFilter: "blur(0)",
+          top: "88px",
+        }}
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item style={{ position: "relative" }}>
@@ -127,7 +127,13 @@ function Header({ children }) {
               style={{ display: "none" }}
               id="upload-image"
             />
-            <MDAvatar src={image} alt="profile-image" size="xl" shadow="sm" />
+            <MDAvatar
+              src={image}
+              alt="profile-image"
+              size="xl"
+              shadow="sm"
+              style={{ background: "#00000096", boxShadow: "none" }}
+            />
           </Grid>
 
           {userData && (
@@ -147,7 +153,7 @@ function Header({ children }) {
                 </MDBox>
               </Grid>
 
-              <div
+              {/* <div
                 style={{
                   marginLeft: "auto",
                   color: "#fff",
@@ -171,7 +177,7 @@ function Header({ children }) {
                 {userData && userData.status && userData.status.includes("NotVerified") && (
                   <p> Email at dev@workverse to complete verification quickly.</p>
                 )}
-              </div>
+              </div> */}
             </>
           )}
         </Grid>

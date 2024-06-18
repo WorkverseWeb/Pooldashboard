@@ -51,27 +51,24 @@ function ProfileInfoCard({ title, description, info, action, shadow }) {
         height: "100%",
         boxShadow: !shadow && "none",
       }}
-      className="border-container-box"
+      className="border-container-top"
     >
-      <div className="border-box">
-        <MDBox display="flex" justifyContent="space-between" alignItems="center" pt={2} px={2}>
+      <div className="border-top">
+        <MDBox display="flex" justifyContent="space-between" alignItems="center" pt={1} px={1}>
           <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
             {title}
           </MDTypography>
-          <MDTypography component={Link} to={action.route} variant="body2" color="secondary">
-            <Tooltip title={action.tooltip} placement="top">
+          <MDTypography component={Link} to={action.route} variant="body2">
+            <Tooltip title={action.tooltip} placement="top" style={{ color: "rgb(156, 227, 37)" }}>
               <Icon>edit</Icon>
             </Tooltip>
           </MDTypography>
         </MDBox>
-        <MDBox p={2}>
+        <MDBox px={2}>
           <MDBox mb={2} lineHeight={1}>
             <MDTypography variant="button" color="text" fontWeight="light">
               {description}
             </MDTypography>
-          </MDBox>
-          <MDBox opacity={0.3}>
-            <Divider />
           </MDBox>
           <MDBox>
             {renderItems}
