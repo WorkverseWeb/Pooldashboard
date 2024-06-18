@@ -26,36 +26,34 @@ import Invoice from "layouts/billing/components/Invoice";
 
 function Invoices() {
   return (
-    <Card
-      sx={{ height: "100%" }}
-      style={{
-        border: " 1px solid transparent",
-        borderStyle: "solid",
-        borderImage: "linear-gradient(to bottom, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
-      }}
-    >
-      <MDBox pt={2} px={2} display="flex" justifyContent="space-between" alignItems="center">
-        <MDTypography variant="h6" fontWeight="medium">
-          Invoices
-        </MDTypography>
-        <MDButton
-          variant="outlined"
-          color="info"
-          size="small"
-          style={{ color: "#9ce325", border: "1px solid #9ce325" }}
-        >
-          view all
-        </MDButton>
-      </MDBox>
-      <MDBox p={2}>
-        <MDBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
-          <Invoice date="April, 22, 2024" id="#MS-415646" price="Rs. 4000/-" />
-          <Invoice date="April, 20, 2024" id="#RV-126749" price="Rs. 300000/-" noGutter />
-          <Invoice date="April, 20, 2024" id="#RV-126749" price="Rs. 300000/-" noGutter />
-          <Invoice date="April, 20, 2024" id="#RV-126749" price="Rs. 300000/-" noGutter />
-          <Invoice date="April, 20, 2024" id="#RV-126749" price="Rs. 300000/-" noGutter />
+    <Card sx={{ height: "100%" }} className="border-container-bottom">
+      <div className="border-bottom">
+        <MDBox pt={2} px={2} display="flex" justifyContent="space-between" alignItems="center">
+          <MDTypography variant="h6" fontWeight="medium">
+            Invoices
+          </MDTypography>
+          <div className="border-container-green">
+            <MDButton
+              variant="outlined"
+              color="info"
+              size="small"
+              className="border-green"
+              // style={{ color: "#9ce325", border: "1px solid #9ce325" }}
+            >
+              view all
+            </MDButton>
+          </div>
         </MDBox>
-      </MDBox>
+        <MDBox p={2}>
+          <MDBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
+            <Invoice date="April, 22, 2024" id="#MS-415646" price="Rs. 4000/-" />
+            <Invoice date="April, 20, 2024" id="#RV-126749" price="Rs. 300000/-" noGutter />
+            <Invoice date="April, 20, 2024" id="#RV-126749" price="Rs. 300000/-" noGutter />
+            <Invoice date="April, 20, 2024" id="#RV-126749" price="Rs. 300000/-" noGutter />
+            <Invoice date="April, 20, 2024" id="#RV-126749" price="Rs. 300000/-" noGutter />
+          </MDBox>
+        </MDBox>
+      </div>
     </Card>
   );
 }

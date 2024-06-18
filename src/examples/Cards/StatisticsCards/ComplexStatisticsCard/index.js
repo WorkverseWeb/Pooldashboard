@@ -26,63 +26,75 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import boxShadow from "assets/theme/functions/boxShadow";
 
-function ComplexStatisticsCard({ color, title, count, percentage, icon, children }) {
+function ComplexStatisticsCard({
+  color,
+  title,
+  count,
+  percentage,
+  icon,
+  children,
+  percentageComponent,
+}) {
   return (
-    <Card>
-      <MDBox display="flex" justifyContent="space-between" pt={1} px={2}>
-        <MDBox
-          variant="gradient"
-          color={color === "light" ? "dark" : "white"}
-          coloredShadow={color}
-          borderRadius="xl"
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          width="4rem"
-          height="4rem"
-          mt={-3}
-          style={{
-            background: "#0000006e",
-            boxShadow: "none",
-            // border: "1px solid #fff",
-          }}
-        >
-          <Icon fontSize="medium" color="inherit">
-            {icon}
-          </Icon>
-        </MDBox>
-        <MDBox
-          textAlign="right"
-          lineHeight={1.25}
-          style={title === "Add user individually /upload csv file" ? { maxWidth: "150px" } : {}}
-        >
-          <MDTypography variant="button" fontWeight="light" color="text">
-            {title}
-          </MDTypography>
-          <MDTypography variant="h4">{count}</MDTypography>
-        </MDBox>
-      </MDBox>
-      <Divider />
-      <MDBox pb={2} px={2}>
-        {percentage && (
-          <MDTypography component="p" variant="button" color="text" display="flex">
-            <MDTypography
-              component="span"
-              variant="button"
-              fontWeight="bold"
-              color={percentage.color}
-            >
-              {percentage.amount}
-            </MDTypography>
-            {percentage.label && <>&nbsp;{percentage.label}</>}
-          </MDTypography>
-        )}
-        {children && (
-          <MDBox mt={1} display="flex" justifyContent="space-between">
-            {children}
+    <Card className="border-container-top">
+      <div className="border-top" style={{ padding: "0" }}>
+        <MDBox display="flex" justifyContent="space-between" pt={1} px={2}>
+          <MDBox
+            variant="gradient"
+            color={color === "light" ? "dark" : "white"}
+            coloredShadow={color}
+            borderRadius="xl"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            width="4rem"
+            height="4rem"
+            mt={-3}
+            style={{
+              background: "#0000006e",
+              boxShadow: "none",
+              // border: "1px solid #fff",
+            }}
+          >
+            <Icon fontSize="medium" color="inherit">
+              {icon}
+            </Icon>
           </MDBox>
-        )}
-      </MDBox>
+          <MDBox
+            textAlign="right"
+            lineHeight={1.25}
+            style={title === "Add user individually /upload csv file" ? { maxWidth: "150px" } : {}}
+          >
+            <MDTypography variant="button" fontWeight="light" color="text">
+              {title}
+            </MDTypography>
+            <MDTypography variant="h4">{count}</MDTypography>
+          </MDBox>
+        </MDBox>
+        <Divider />
+        <MDBox pb={2} px={2}>
+          {percentageComponent
+            ? percentageComponent
+            : percentage && (
+                <MDTypography component="p" variant="button" color="text" display="flex">
+                  <MDTypography
+                    component="span"
+                    variant="button"
+                    fontWeight="bold"
+                    color={percentage.color}
+                  >
+                    {percentage.amount}
+                  </MDTypography>
+                  {percentage.label && <>&nbsp;{percentage.label}</>}
+                </MDTypography>
+              )}
+          {children && (
+            <MDBox mt={1} display="flex" justifyContent="space-between">
+              {children}
+            </MDBox>
+          )}
+        </MDBox>
+      </div>
     </Card>
   );
 }
@@ -95,6 +107,7 @@ ComplexStatisticsCard.defaultProps = {
     text: "",
     label: "",
   },
+  percentageComponent: null,
 };
 
 // Typechecking props for the ComplexStatisticsCard
@@ -127,6 +140,7 @@ ComplexStatisticsCard.propTypes = {
   }),
   icon: PropTypes.node.isRequired,
   children: PropTypes.node,
+  percentageComponent: PropTypes.node,
 };
 
 export default ComplexStatisticsCard;

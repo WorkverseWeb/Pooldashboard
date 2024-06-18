@@ -204,6 +204,7 @@ function DataTable({
         <TableBody {...getTableBodyProps()}>
           {page.map((row, key) => {
             prepareRow(row);
+            const isFirstRow = key === 0;
             return (
               <TableRow key={key} {...row.getRowProps()}>
                 {row.cells.map((cell, idx) => (
@@ -211,6 +212,7 @@ function DataTable({
                     key={idx}
                     noBorder={noEndBorder && rows.length - 1 === key}
                     align={cell.column.align ? cell.column.align : "left"}
+                    isFirstRow={isFirstRow}
                     {...cell.getCellProps()}
                   >
                     {cell.render("Cell")}

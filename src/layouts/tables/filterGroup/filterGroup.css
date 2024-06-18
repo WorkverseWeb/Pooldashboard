@@ -1,4 +1,4 @@
-.filter-container select {
+/* .filter-container select {
   color: #fff;
   width: 100%;
   padding: 8px 18px;
@@ -8,7 +8,7 @@
   border-style: solid;
   border-image: linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1;
   border-radius: 50em !important;
-}
+} */
 
 .filter-container select option {
   background-color: #021b215e;

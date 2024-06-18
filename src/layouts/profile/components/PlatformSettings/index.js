@@ -25,6 +25,7 @@ import Switch from "@mui/material/Switch";
 // React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import { Diversity1 } from "@mui/icons-material";
 
 function PlatformSettings() {
   // const [followsMe, setFollowsMe] = useState(true);
@@ -84,123 +85,123 @@ function PlatformSettings() {
     <Card
       sx={{
         boxShadow: "none",
-        border: "1px solid transparent",
-        borderStyle: "solid",
-        borderImage: "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
       }}
+      className="border-container-box"
     >
-      <MDBox p={2}>
-        <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
-          platform settings
-        </MDTypography>
-      </MDBox>
-      <MDBox pt={1} pb={2} px={2} lineHeight={1.25}>
-        <MDTypography variant="caption" fontWeight="bold" color="text" textTransform="uppercase">
-          account
-        </MDTypography>
-        <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
-          <MDBox mt={0.5}>
-            <Switch
-              checked={preferences.totalInactive}
-              onChange={() => handleCheckboxChange("totalInactive")}
-            />
-          </MDBox>
-          <MDBox width="80%" ml={0.5}>
-            <MDTypography variant="button" fontWeight="regular" color="text">
-              Email me when someone is inactive
-            </MDTypography>
-          </MDBox>
-        </MDBox>
-        <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
-          <MDBox mt={0.5}>
-            <Switch
-              checked={preferences.totalChatting}
-              onChange={() => handleCheckboxChange("totalChatting")}
-            />
-          </MDBox>
-          <MDBox width="80%" ml={0.5}>
-            <MDTypography variant="button" fontWeight="regular" color="text">
-              Email me when someone is not interacting with Neuroda
-            </MDTypography>
-          </MDBox>
-        </MDBox>
-        <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
-          <MDBox mt={0.5}>
-            <Switch
-              checked={preferences.totalFinishedGame}
-              onChange={() => handleCheckboxChange("totalFinishedGame")}
-            />
-          </MDBox>
-          <MDBox width="80%" ml={0.5}>
-            <MDTypography variant="button" fontWeight="regular" color="text">
-              Email me when someone finish the game
-            </MDTypography>
-          </MDBox>
-        </MDBox>
-        <MDBox mt={3}>
-          <MDTypography variant="caption" fontWeight="bold" color="text" textTransform="uppercase">
-            application
+      <div className="border-box">
+        <MDBox p={2}>
+          <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
+            platform settings
           </MDTypography>
         </MDBox>
-        <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
-          <MDBox mt={0.5}>
-            <Switch
-              checked={preferences.yesToLevelNotification}
-              onChange={() => handleCheckboxChange("yesToLevelNotification")}
-            />
+        <MDBox pt={1} pb={2} px={2} lineHeight={1.25}>
+          <MDTypography variant="caption" fontWeight="bold" color="text" textTransform="uppercase">
+            account
+          </MDTypography>
+          <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
+            <MDBox mt={0.5}>
+              <Switch
+                checked={preferences.totalInactive}
+                onChange={() => handleCheckboxChange("totalInactive")}
+              />
+            </MDBox>
+            <MDBox width="80%" ml={0.5}>
+              <MDTypography variant="button" fontWeight="regular" color="text">
+                Email me when someone is inactive
+              </MDTypography>
+            </MDBox>
           </MDBox>
-          <MDBox width="80%" ml={0.5}>
-            <MDTypography variant="button" fontWeight="regular" color="text">
-              New level is added
+          <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
+            <MDBox mt={0.5}>
+              <Switch
+                checked={preferences.totalChatting}
+                onChange={() => handleCheckboxChange("totalChatting")}
+              />
+            </MDBox>
+            <MDBox width="80%" ml={0.5}>
+              <MDTypography variant="button" fontWeight="regular" color="text">
+                Email me when someone is not interacting with Neuroda
+              </MDTypography>
+            </MDBox>
+          </MDBox>
+          <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
+            <MDBox mt={0.5}>
+              <Switch
+                checked={preferences.totalFinishedGame}
+                onChange={() => handleCheckboxChange("totalFinishedGame")}
+              />
+            </MDBox>
+            <MDBox width="80%" ml={0.5}>
+              <MDTypography variant="button" fontWeight="regular" color="text">
+                Email me when someone finish the game
+              </MDTypography>
+            </MDBox>
+          </MDBox>
+          <MDBox mt={3}>
+            <MDTypography
+              variant="caption"
+              fontWeight="bold"
+              color="text"
+              textTransform="uppercase"
+            >
+              application
             </MDTypography>
           </MDBox>
-        </MDBox>
-        <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
-          <MDBox mt={0.5}>
-            <Switch
-              checked={preferences.yesToProductUpdate}
-              onChange={() => handleCheckboxChange("yesToProductUpdate")}
-            />
+          <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
+            <MDBox mt={0.5}>
+              <Switch
+                checked={preferences.yesToLevelNotification}
+                onChange={() => handleCheckboxChange("yesToLevelNotification")}
+              />
+            </MDBox>
+            <MDBox width="80%" ml={0.5}>
+              <MDTypography variant="button" fontWeight="regular" color="text">
+                New level is added
+              </MDTypography>
+            </MDBox>
           </MDBox>
-          <MDBox width="80%" ml={0.5}>
-            <MDTypography variant="button" fontWeight="regular" color="text">
-              Monthly product updates
-            </MDTypography>
+          <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
+            <MDBox mt={0.5}>
+              <Switch
+                checked={preferences.yesToProductUpdate}
+                onChange={() => handleCheckboxChange("yesToProductUpdate")}
+              />
+            </MDBox>
+            <MDBox width="80%" ml={0.5}>
+              <MDTypography variant="button" fontWeight="regular" color="text">
+                Monthly product updates
+              </MDTypography>
+            </MDBox>
           </MDBox>
-        </MDBox>
-        <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
-          <MDBox mt={0.5}>
-            <Switch
-              checked={preferences.yesToSubscribeNewsletter}
-              onChange={() => handleCheckboxChange("yesToSubscribeNewsletter")}
-            />
+          <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
+            <MDBox mt={0.5}>
+              <Switch
+                checked={preferences.yesToSubscribeNewsletter}
+                onChange={() => handleCheckboxChange("yesToSubscribeNewsletter")}
+              />
+            </MDBox>
+            <MDBox width="80%" ml={0.5}>
+              <MDTypography variant="button" fontWeight="regular" color="text">
+                Subscribe to newsletter
+              </MDTypography>
+            </MDBox>
           </MDBox>
-          <MDBox width="80%" ml={0.5}>
-            <MDTypography variant="button" fontWeight="regular" color="text">
-              Subscribe to newsletter
-            </MDTypography>
-          </MDBox>
-        </MDBox>
 
-        {formChanged && (
-          <button
-            style={{
-              color: "#fff",
-              padding: "8px",
-              border: " 0",
-              background: "rgba(255, 255, 255, 0.14)",
-              borderRadius: "5px",
-              cursor: "pointer",
-              backgroundColor: " #021b215e",
-              margin: "20px 50px",
-              fontFamily: typography.fontFamily,
-            }}
-            onClick={handleSavePreferences}
-          >
-            Save Preferences
-          </button>
-        )}
-      </MDBox>
+          {formChanged && (
+            <div className="border-container" style={{ marginTop: "25px" }}>
+              <button
+                style={{
+                  fontFamily: typography.fontFamily,
+                }}
+                className="border"
+                onClick={handleSavePreferences}
+              >
+                Save
+              </button>
+            </div>
+          )}
+        </MDBox>
+      </div>
     </Card>
   );
 }

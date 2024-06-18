@@ -119,7 +119,7 @@ export default function Cart() {
       // feedback
       setTimeout(() => {
         setShowFeedback1(true);
-      }, 20 * 60 * 1000);
+      }, 1 * 60 * 1000);
     } catch (error) {
       console.error("Error purchasing:", error);
       toast.error("Failed to purchase. Please try again later.");
@@ -203,13 +203,10 @@ export default function Cart() {
                 <Card
                   style={{
                     width: "70%",
-                    border: "1px solid transparent",
-                    borderStyle: "solid",
-                    borderImage:
-                      "linear-gradient(to bottom, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
                   }}
+                  className="border-container-bottom"
                 >
-                  <div className="card-details">
+                  <div className="card-details border-bottom">
                     <table>
                       <thead>
                         <tr>
@@ -239,16 +236,31 @@ export default function Cart() {
                                       margin: "auto",
                                     }}
                                   >
-                                    <button
-                                      className="purchase-delete"
-                                      onClick={e.qnty <= 1 ? () => dlt(e.id) : () => remove(e)}
-                                    >
-                                      -
-                                    </button>
+                                    <div className="border-container">
+                                      <button
+                                        className=" border"
+                                        style={{
+                                          padding: "0 9px",
+                                          fontSize: "20px",
+                                        }}
+                                        onClick={e.qnty <= 1 ? () => dlt(e.id) : () => remove(e)}
+                                      >
+                                        -
+                                      </button>
+                                    </div>
                                     <span>{e.qnty}</span>
-                                    <button className="purchase-add" onClick={() => send(e)}>
-                                      +
-                                    </button>
+                                    <div className="border-container">
+                                      <button
+                                        className=" border"
+                                        style={{
+                                          padding: "0 6px",
+                                          fontSize: "20px",
+                                        }}
+                                        onClick={() => send(e)}
+                                      >
+                                        +
+                                      </button>
+                                    </div>
                                   </div>
                                 </td>
 
@@ -279,13 +291,10 @@ export default function Cart() {
                   style={{
                     width: "30%",
                     textAlign: "left",
-                    border: "1px solid transparent",
-                    borderStyle: "solid",
-                    borderImage:
-                      "linear-gradient(to bottom, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
                   }}
+                  className="border-container-bottom"
                 >
-                  <div className="card-total">
+                  <div className="card-total border-bottom">
                     <table>
                       <thead>
                         <tr style={{ borderBottom: "1px solid #bafff7" }}>
@@ -303,16 +312,12 @@ export default function Cart() {
                           <td>₹ {price}.00</td>
                         </tr>
 
-                        <div className="cart-purchase">
+                        <div className=" border-container" style={{ margin: "35px 8px" }}>
                           <button
+                            className="border"
                             onClick={handlePurchase}
                             style={{
                               fontFamily: typography.fontFamily,
-                              textTransform: "uppercase",
-                              border: "1px solid transparent",
-                              borderStyle: "solid",
-                              borderImage:
-                                "linear-gradient(to right, rgb(255, 255, 255), rgba(49, 49, 49, 0)) 1",
                             }}
                           >
                             Purchase

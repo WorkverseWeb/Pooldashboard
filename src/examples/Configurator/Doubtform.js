@@ -48,8 +48,10 @@ export default function Doubtform() {
           />
         </div>
 
-        <div className="btn">
-          <button type="submit">Submit</button>
+        <div className="btn border-container">
+          <button type="submit" className="border">
+            Submit
+          </button>
         </div>
       </form>
     </div>
