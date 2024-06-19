@@ -117,7 +117,7 @@ form select,
   color: #fff;
   width: 100%;
   padding: 8px 18px;
-  background-color: #0000006e;
+  /* background-color: #0000006e; */
   border: 1px solid transparent;
   border-radius: 8px;
   position: relative;
@@ -151,7 +151,7 @@ form select,
   color: rgb(156, 227, 37);
   width: 100%;
   padding: 8px 18px;
-  background-color: #021b215e;
+  /* background-color: #021b215e; */
   cursor: pointer;
   border: 1px solid transparent;
   border-radius: 8px;
@@ -187,7 +187,7 @@ form select,
   color: #fff;
   width: 100%;
   padding: 8px 18px;
-  background-color: #0000006e;
+  /* background-color: #0000006e; */
   border: 1px solid transparent;
   border-radius: 8px;
   position: relative;
@@ -221,7 +221,7 @@ form select,
   color: #fff;
   width: 100%;
   padding: 8px 18px;
-  background-color: #0000006e;
+  /* background-color: #0000006e; */
   border: 1px solid transparent;
   border-radius: 8px;
   position: relative;

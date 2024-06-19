@@ -23,7 +23,7 @@ function navbar(theme, ownerState) {
 
   return {
     boxShadow: transparentNavbar || absolute ? "none" : navbarBoxShadow,
-    backdropFilter: transparentNavbar || absolute ? "none" : `saturate(200%) blur(${pxToRem(30)})`,
+    backdropFilter: transparentNavbar || absolute ? "none" : ` blur(${pxToRem(10)})`,
     backgroundColor:
       transparentNavbar || absolute
         ? `${transparent.main} !important`

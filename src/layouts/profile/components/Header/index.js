@@ -103,9 +103,10 @@ function Header({ children }) {
         }}
         style={{
           background: "transparent",
-          zIndex: "999",
+          zIndex: "99",
           backdropFilter: "blur(0)",
           top: "88px",
+          boxShadow: "none",
         }}
       >
         <Grid container spacing={3} alignItems="center">

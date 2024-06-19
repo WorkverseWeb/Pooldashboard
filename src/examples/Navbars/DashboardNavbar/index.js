@@ -233,9 +233,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 disableRipple
                 color="inherit"
                 onClick={handleOpenMenu}
-                style={{ fontSize: "35px" }}
+                style={{ fontSize: "35px", background: "#0000006e", borderRadius: "25px" }}
               >
-                <Icon style={{ fontSize: "35px" }}>account_circle</Icon>
+                <Icon style={{ fontSize: "35px" }}>person_rounded</Icon>
               </IconButton>
 
               <Menu anchorEl={openMenu} open={Boolean(openMenu)} onClose={handleCloseMenu}>

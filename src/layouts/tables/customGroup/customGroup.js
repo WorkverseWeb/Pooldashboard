@@ -174,7 +174,7 @@ const CustomGroups = () => {
   }, [isAuthenticated, user, totalCount]);
 
   return (
-    <section className="group-container border-container-box">
+    <div className="group-container border-container-box">
       <div className="border-box" style={{ display: "flex", gap: "20px", padding: "20px" }}>
         {isAuthenticated ? (
           <div className="col1">
@@ -229,7 +229,7 @@ const CustomGroups = () => {
           </form>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

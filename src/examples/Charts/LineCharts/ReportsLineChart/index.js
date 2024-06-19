@@ -67,13 +67,12 @@ function ReportsLineChart({ color, title, description, date, chart }) {
             () => (
               <MDBox
                 variant="gradient"
-                bgColor={color}
                 borderRadius="lg"
-                coloredShadow={color}
                 py={2}
                 pr={0.5}
                 mt={-5}
                 height="12.5rem"
+                style={{ background: "#0000006e" }}
               >
                 <Line data={data} options={options} redraw />
               </MDBox>

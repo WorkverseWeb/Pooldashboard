@@ -116,7 +116,14 @@ export default function App() {
             pauseOnHover={false}
             pauseOnFocusLoss={false}
             hideProgressBar={true}
-            toastStyle={{ minHeight: "50px", width: "270px", fontSize: "15px" }}
+            toastStyle={{
+              minHeight: "50px",
+              width: "270px",
+              fontSize: "15px",
+              backgroundColor: "#000000",
+              color: "#ffffff",
+              // border: "1px solid #fff",
+            }}
           />
         )}
         {layout === "dashboard" && (
