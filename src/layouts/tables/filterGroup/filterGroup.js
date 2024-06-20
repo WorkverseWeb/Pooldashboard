@@ -13,7 +13,7 @@ function FilterGroup({ selectedGroup, onGroupChange }) {
     const fetchDepartments = async () => {
       try {
         if (user && user.email) {
-          const response = await axios.get(`BASE_URL/group/${user.email}`);
+          const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/group/${user.email}`);
           if (response.status === 200 && response.data.groupname) {
             const dbDepartments = response.data.groupname.filter((dept) => dept.trim() !== "");
             setDepartments(dbDepartments);

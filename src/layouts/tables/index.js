@@ -82,7 +82,7 @@ function Tables() {
     const fetchData = async () => {
       if (isAuthenticated && user) {
         try {
-          const response = await axios.get("BASE_URL/assignUsers", {
+          const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/assignUsers`, {
             params: {
               authenticatedUserEmail: user.email,
             },

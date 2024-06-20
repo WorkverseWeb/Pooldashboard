@@ -74,7 +74,7 @@ const AddUser = ({ onClose }) => {
   // send form data to backend
   const sendStateToBackend = async (data) => {
     try {
-      const response = await axios.post("BASE_URL/assignUsers", data);
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/assignUsers`, data);
       return response;
     } catch (error) {
       console.error("Error during API call:", error);
@@ -204,7 +204,7 @@ const AddUser = ({ onClose }) => {
   useEffect(() => {
     const fetchSlotDetails = async (email) => {
       try {
-        const response = await axios.get(`BASE_URL/initialslot/${email}`);
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/initialslot/${email}`);
         console.log("Slot details fetched:", response.data.AllProducts);
         if (response.status === 200) {
           const data = response.data.AllProducts;
@@ -250,7 +250,7 @@ const AddUser = ({ onClose }) => {
     const fetchDepartments = async () => {
       try {
         if (user && user.email) {
-          const response = await axios.get(`BASE_URL/group/${user.email}`);
+          const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/group/${user.email}`);
           if (response.status === 200 && response.data.groupname) {
             const dbDepartments = response.data.groupname.filter((dept) => dept.trim() !== "");
             setDepartments(dbDepartments);

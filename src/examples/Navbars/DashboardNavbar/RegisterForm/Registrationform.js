@@ -30,7 +30,7 @@ function RegistrationForm() {
     const fetchUserData = async () => {
       try {
         if (user && user.email) {
-          const response = await axios.get(`BASE_URL/users?email=${user.email}`);
+          const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/users?email=${user.email}`);
           // console.log("regi form", response.data);
           const userData = response.data;
 
@@ -69,7 +69,7 @@ function RegistrationForm() {
   const sendStateToBackend = async (data) => {
     try {
       const { email } = data;
-      const response = await axios.patch(`BASE_URL/users/${email}`, data);
+      const response = await axios.patch(`${process.env.REACT_APP_BASE_URL}/users/${email}`, data);
       // console.log("User data registered:", response);
       toast.success("User Registered !");
       return response;
