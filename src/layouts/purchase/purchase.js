@@ -69,14 +69,15 @@ export default function Purchase() {
         style={
           !isAuthenticated
             ? {
-                background:
-                  "linear-gradient(45deg, rgb(5 74 25 / 9%) 30%, rgb(127 207 207 / 18%) 80%)",
+                background: "linear-gradient(45deg, rgb(0 0 0 / 7%) 30%, rgb(0 0 0 / 56%) 80%)",
+                backdropFilter: "blur(8px)",
                 minHeight: "85vh",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 borderRadius: "10px",
                 overflow: "hidden",
+                marginBottom: "20px",
               }
             : {}
         }

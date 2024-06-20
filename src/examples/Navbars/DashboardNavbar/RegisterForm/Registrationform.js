@@ -30,7 +30,10 @@ function RegistrationForm() {
     const fetchUserData = async () => {
       try {
         if (user && user.email) {
-          const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/users?email=${user.email}`);
+          const response = await axios.get(
+            `${process.env.REACT_APP_BASE_URL}/users?email=${user.email}`
+          );
+
           // console.log("regi form", response.data);
           const userData = response.data;
 
