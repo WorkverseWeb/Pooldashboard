@@ -83,8 +83,8 @@ export default function Cart() {
       };
 
       const [firstApiResult, secondApiResult] = await Promise.all([
-        axios.get(`BASE_URL/slots/${user.email}`).catch(() => null),
-        axios.get(`BASE_URL/initialslot/${user.email}`).catch(() => null),
+        axios.get(`${process.env.REACT_APP_BASE_URL}/slots/${user.email}`).catch(() => null),
+        axios.get(`${process.env.REACT_APP_BASE_URL}/initialslot/${user.email}`).catch(() => null),
       ]);
 
       // Handle first API
@@ -92,10 +92,10 @@ export default function Cart() {
         await updateCartData(
           firstApiResult.data,
           cartData,
-          `BASE_URL/slots/${user.email}`
+          `${process.env.REACT_APP_BASE_URL}/slots/${user.email}`
         );
       } else {
-        await createCartData(cartData, `BASE_URL/slots`);
+        await createCartData(cartData, `${process.env.REACT_APP_BASE_URL}/slots`);
       }
 
       // Handle second API
@@ -103,10 +103,10 @@ export default function Cart() {
         await updateCartData(
           secondApiResult.data,
           cartData,
-          `BASE_URL/initialslot/${user.email}`
+          `${process.env.REACT_APP_BASE_URL}/initialslot/${user.email}`
         );
       } else {
-        await createCartData(cartData, `BASE_URL/initialslot`);
+        await createCartData(cartData, `${process.env.REACT_APP_BASE_URL}/initialslot`);
       }
 
       // Success messages

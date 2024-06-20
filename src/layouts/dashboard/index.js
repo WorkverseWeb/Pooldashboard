@@ -81,7 +81,7 @@ function Dashboard() {
     const fetchData = async () => {
       if (isAuthenticated && user) {
         try {
-          const response = await axios.get("BASE_URL/assignUsers", {
+          const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/assignUsers`, {
             params: {
               authenticatedUserEmail: user.email,
             },
@@ -110,7 +110,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchSlotDetails = async (email, totalCount) => {
       try {
-        const response = await axios.get(`BASE_URL/slots/${user.email}`);
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/slots/${user.email}`);
         // console.log("Response:", response);
         if (response.status === 200) {
           const data = response.data;
@@ -148,7 +148,9 @@ function Dashboard() {
     const fetchUserData = async () => {
       try {
         if (user && user.email) {
-          const response = await axios.get(`BASE_URL/users?email=${user.email}`);
+          const response = await axios.get(
+            `${process.env.REACT_APP_BASE_URL}/users?email=${user.email}`
+          );
           // console.log("API Response:", response.data);
           setUserData(response.data);
         }
