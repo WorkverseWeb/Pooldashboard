@@ -51,7 +51,7 @@ function PlatformSettings() {
       };
 
       try {
-        const response = await axios.get(`http://localhost:8000/api/preferences/${user.email}`);
+        const response = await axios.get(`BASE_URL/api/preferences/${user.email}`);
         setPreferences({ ...defaultPreferences, ...response.data });
       } catch (error) {
         console.error("Error fetching user preferences:", error);
@@ -74,7 +74,7 @@ function PlatformSettings() {
 
   const handleSavePreferences = async () => {
     try {
-      await axios.patch(`http://localhost:8000/api/preferences/${user.email}`, preferences);
+      await axios.patch(`BASE_URL/api/preferences/${user.email}`, preferences);
       setFormChanged(false);
     } catch (error) {
       console.error("Error saving user preferences:", error);
