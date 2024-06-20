@@ -71,6 +71,7 @@ function RegistrationForm() {
       const { email } = data;
       const response = await axios.patch(`http://localhost:8000/users/${email}`, data);
       // console.log("User data registered:", response);
+      toast.success("User Registered !");
       return response;
     } catch (error) {
       console.error("Error registering user:", error);
@@ -81,45 +82,55 @@ function RegistrationForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const isValid = validateForm(formData);
-    if (!isValid) {
-      // console.log("Form data is not valid");
+    try {
+      const isValid = validateForm(formData);
+      if (!isValid) {
+        // console.log("Form data is not valid");
+        return;
+      }
+      // console.log("Form data saved:", formData);
+
+      const dataToSend = {
+        ...formData,
+        ...isClicked,
+        status: ["NotVerified"],
+      };
+
+      sendStateToBackend(dataToSend);
+
+      // Reset form data
+      setFormData({
+        fullName: "",
+        email: "",
+        number: "",
+        poolForCreator: "",
+        organization: "",
+        designation: "",
+        state: "",
+        city: "",
+        linkdeInURL: "",
+      });
+
+      setIsClicked({ Employee: false, Student: false });
+
+      // notify
+      // toast.success("User Registered !");
+    } catch (error) {
+      console.error("Error handling form submission:", error);
+      // toast.error("Error Registering User!");
       return;
     }
-    // console.log("Form data saved:", formData);
 
-    const dataToSend = {
-      ...formData,
-      ...isClicked,
-      status: ["NotVerified"],
-    };
-
-    sendStateToBackend(dataToSend);
-
-    // Reset form data
-    setFormData({
-      fullName: "",
-      email: "",
-      number: "",
-      poolForCreator: "",
-      organization: "",
-      designation: "",
-      state: "",
-      city: "",
-      linkdeInURL: "",
-    });
-
-    setIsClicked({ Employee: false, Student: false });
-
-    // Close form
     setShowForm(false);
     document.body.style.overflow = "";
-
-    // notify
-    toast.success("User Registered !");
   };
 
   const validateForm = (formData) => {
+    const phoneNumberRegex = /^\d{10}$/;
+    if (!phoneNumberRegex.test(formData.number.trim())) {
+      toast.error("Phone number should be 10 digits");
+      return false;
+    }
     return Object.values(formData).every((value) => value.trim() !== "");
   };
 

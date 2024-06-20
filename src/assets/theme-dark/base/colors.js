@@ -25,9 +25,10 @@ const colors = {
     focus: "#BAFFF7",
   },
 
+  // pencil (edit profile) color
   primary: {
-    main: "#fff",
-    focus: "#fff",
+    main: "#9ce325",
+    focus: "#9ce325",
   },
 
   secondary: {

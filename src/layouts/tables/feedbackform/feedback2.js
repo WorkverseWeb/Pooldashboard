@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./feedbackstyle.css";
 import typography from "assets/theme/base/typography";
 
 export default function Feedback2() {

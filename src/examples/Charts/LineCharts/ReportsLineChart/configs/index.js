@@ -23,8 +23,8 @@ function configs(labels, datasets) {
           tension: 0,
           pointRadius: 5,
           pointBorderColor: "transparent",
-          pointBackgroundColor: "rgb(156, 227, 37)", //green
-          borderColor: "rgba(255, 255, 255, .8)",
+          pointBackgroundColor: "#fff", //green
+          borderColor: "rgb(156, 227, 37)",
           borderWidth: 4,
           backgroundColor: "transparent",
           fill: true,

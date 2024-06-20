@@ -12,9 +12,10 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import Icon from "@mui/material/Icon";
-
+import { Avatar } from "@mui/material";
 import MDButton from "components/MDButton";
 import { useAuth0 } from "@auth0/auth0-react";
+import MenuItem from "@mui/material/MenuItem";
 
 // toast
 import InfoIcon from "@mui/icons-material/Info";
@@ -66,6 +67,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
+  const [openNotification, setOpenNotification] = useState(false);
+  const [showCustomMenu, setShowCustomMenu] = useState(false);
+  const [customMenuAnchor, setCustomMenuAnchor] = useState(null);
 
   // toast
   // const [notifications, setNotifications] = useState([]);
@@ -118,59 +122,77 @@ function DashboardNavbar({ absolute, light, isMini }) {
   }, [dispatch, fixedNavbar, isAuthenticated, isLoading, user]);
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
-  const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
+  const handleConfiguratorOpen = () => {
+    setOpenConfigurator(dispatch, !openConfigurator);
+    handleClickMenuItem();
+  };
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
+  const handleClickMenuItem = () => {
+    handleCloseMenu();
+  };
+
+  const handleOpenNotification = (event) => {
+    setOpenNotification(event.currentTarget);
+  };
+  const handleCloseNotification = () => setOpenNotification(false);
   const { sidenavColor } = controller;
-  // Render the notifications menu
-  const renderMenu = () => (
-    <Menu
-      anchorEl={openMenu}
-      anchorReference={null}
-      anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "left",
-      }}
-      open={Boolean(openMenu)}
-      onClose={handleCloseMenu}
-      sx={{ mt: 2 }}
-    >
-      {/* <NotificationItem icon={<Icon>email</Icon>} title="Check new messages" />
-      <NotificationItem icon={<Icon>podcasts</Icon>} title="Manage Podcast sessions" />
-      <NotificationItem icon={<Icon>shopping_cart</Icon>} title="Payment successfully completed" /> */}
-      <ul
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        openNotification &&
+        !event.target.closest(".custom-menu") &&
+        !event.target.closest(".notification-button")
+      ) {
+        handleCloseNotification();
+      }
+    };
+
+    if (openNotification) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openNotification]);
+
+  const renderMenu = () =>
+    openNotification && (
+      <div
         style={{
-          width: "150px",
-          listStyleType: "none",
-          margin: 0,
-          padding: 0,
+          position: "absolute",
+          top: "100px",
+          right: "155px",
+          background: "#0000006e",
+          zIndex: " 1300",
+          borderRadius: "7px",
+          padding: "5px",
+          fontSize: "13px",
         }}
       >
-        {/* {notifications.length > 0 ? (
-          notifications.map((notification, index) => (
-            <li
-              key={index}
-              style={{
-                borderBottom: "1px solid #bafff7",
-                padding: "5px",
-              }}
-            >
-              {notification.message}
-            </li>
-          ))
-        ) : ( */}
-        <li
+        <ul
           style={{
-            padding: "5px",
-            textAlign: "center",
+            width: "150px",
+            listStyleType: "none",
+            margin: 0,
+            padding: 0,
           }}
         >
-          No new notifications
-        </li>
-        {/* )} */}
-      </ul>
-    </Menu>
-  );
+          <li
+            style={{
+              padding: "5px",
+              textAlign: "center",
+            }}
+          >
+            No new notifications
+          </li>
+        </ul>
+      </div>
+    );
   // Styles for the navbar icons
   const iconsStyle = ({ palette: { dark, white, text }, functions: { rgba } }) => ({
     color: () => {
@@ -188,6 +210,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   // const isSigningUp = !isAuthenticated;
   const handleLogout = () => {
     logout({ returnTo: window.location.origin });
+    handleClickMenuItem();
   };
 
   return (
@@ -205,75 +228,89 @@ function DashboardNavbar({ absolute, light, isMini }) {
           </MDBox>
           {isMini ? null : (
             <MDBox sx={(darkMode) => navbarRow(darkMode, { isMini })}>
-              <MDBox color={light ? "white" : "inherit"}>
-                <IconButton
-                  size="small"
-                  disableRipple
-                  color="inherit"
-                  sx={navbarMobileMenu}
-                  onClick={handleMiniSidenav}
-                >
-                  <Icon sx={iconsStyle} fontSize="medium">
-                    {miniSidenav ? "menu_open" : "menu"}
-                  </Icon>
-                </IconButton>
-                <IconButton
-                  size="small"
-                  disableRipple
-                  color="inherit"
-                  // sx={navbarIconButton}
-                  aria-controls="build"
-                  aria-haspopup="true"
-                  variant="contained"
+              <IconButton
+                size="small"
+                disableRipple
+                color="inherit"
+                onClick={handleOpenMenu}
+                style={{ fontSize: "35px", background: "#0000006e", borderRadius: "25px" }}
+              >
+                <Icon style={{ fontSize: "35px" }}>person_rounded</Icon>
+              </IconButton>
+
+              <Menu anchorEl={openMenu} open={Boolean(openMenu)} onClose={handleCloseMenu}>
+                {/* <MenuItem onClick={handleMiniSidenav}>
+                  <IconButton size="small" disableRipple color="inherit">
+                    <Icon sx={iconsStyle} fontSize="medium">
+                      {isMini ? "menu_open" : "menu"}
+                    </Icon>
+                  </IconButton>
+                  Mini Sidenav
+                </MenuItem> */}
+                <MenuItem
                   onClick={handleConfiguratorOpen}
+                  sx={{ borderBottom: "1px solid #fff", borderRadius: "0" }}
                 >
-                  <Icon sx={iconsStyle}>support_agent</Icon>
-                </IconButton>
-                <IconButton
-                  size="small"
-                  disableRipple
-                  color="inherit"
-                  // sx={navbarIconButton}
-                  aria-controls="notification-menu"
-                  aria-haspopup="true"
-                  variant="contained"
-                  onClick={handleOpenMenu}
+                  <IconButton size="small" disableRipple color="inherit">
+                    <Icon sx={iconsStyle}>support_agent</Icon>
+                  </IconButton>
+                  Support
+                </MenuItem>
+                <MenuItem
+                  onClick={handleOpenNotification}
+                  sx={{ borderBottom: "1px solid #fff", borderRadius: "0" }}
                 >
-                  <Icon sx={iconsStyle}>notifications</Icon>
-                </IconButton>
-                {renderMenu()}
-              </MDBox>
-              {isAuthenticated ? (
-                <div className="border-container" style={{ marginLeft: "5px" }}>
-                  <MDButton
-                    // component=""
-                    // target="_blank"
-                    rel="noreferrer"
-                    variant="gradient"
-                    color={sidenavColor}
-                    onClick={handleLogout}
-                    className="border"
-                    style={{ boxShadow: "none", background: "#021b215e" }}
-                  >
-                    Sign Out
-                  </MDButton>
-                </div>
-              ) : (
-                <div className="border-container" style={{ marginLeft: "5px" }}>
-                  <MDButton
-                    // component=""
-                    // target="_blank"
-                    rel="noreferrer"
-                    variant="gradient"
-                    color={sidenavColor}
-                    onClick={() => loginWithRedirect()}
-                    className="border"
-                    style={{ boxShadow: "none" }}
-                  >
-                    Sign In
-                  </MDButton>
-                </div>
-              )}
+                  <IconButton size="small" disableRipple color="inherit">
+                    <Icon sx={iconsStyle}>notifications</Icon>
+                  </IconButton>
+                  Notifications
+                </MenuItem>
+
+                {isAuthenticated ? (
+                  <MenuItem>
+                    <IconButton size="small" disableRipple color="inherit">
+                      <Icon sx={iconsStyle}>logout</Icon>
+                    </IconButton>
+                    {/* Replace with your logo icon */}
+                    <MDButton
+                      rel="noreferrer"
+                      variant="gradient"
+                      color={sidenavColor}
+                      onClick={handleLogout}
+                      style={{
+                        boxShadow: "none",
+                        width: "100%",
+                        background: "transparent",
+                        justifyContent: "start",
+                        padding: "0",
+                      }}
+                    >
+                      Sign Out
+                    </MDButton>
+                  </MenuItem>
+                ) : (
+                  <MenuItem onClick={() => loginWithRedirect()}>
+                    <IconButton size="small" disableRipple color="inherit">
+                      <Icon sx={iconsStyle}>logout</Icon>
+                    </IconButton>
+                    <MDButton
+                      rel="noreferrer"
+                      variant="gradient"
+                      color={sidenavColor}
+                      style={{
+                        boxShadow: "none",
+                        width: "100%",
+                        background: "transparent",
+                        justifyContent: "start",
+                        padding: "0",
+                      }}
+                    >
+                      Sign In
+                    </MDButton>
+                  </MenuItem>
+                )}
+              </Menu>
+              {renderMenu()}
             </MDBox>
           )}
         </Toolbar>
