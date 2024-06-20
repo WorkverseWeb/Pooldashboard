@@ -249,9 +249,9 @@ export default function Cart() {
                                       </button>
                                     </div>
                                     <span>{e.qnty}</span>
-                                    <div className="border-container">
+                                    <div className="border-container-left">
                                       <button
-                                        className=" border"
+                                        className=" border-left"
                                         style={{
                                           padding: "0 6px",
                                           fontSize: "20px",

@@ -74,7 +74,7 @@
 .feedback-content {
   padding: 10px 0;
   border-style: solid;
-  border-image: linear-gradient(to right, rgba(49, 49, 49, 0), #1effe59e, rgba(49, 49, 49, 0)) 1;
+  border-image: linear-gradient(to right, rgba(49, 49, 49, 0), #fff, rgba(49, 49, 49, 0)) 1;
   border-width: 2px 0 0 0;
 }
 

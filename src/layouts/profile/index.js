@@ -65,36 +65,35 @@ function Overview() {
       >
         {isAuthenticated ? (
           <>
-            <Header>
-              <MDBox mt={5} mb={3}>
-                {/* <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} /> */}
-                {userData ? (
-                  <ProfileInfoCard
-                    title="profile information"
-                    description=""
-                    info={{
-                      fullName: userData.fullName,
-                      mobile: "+91 " + userData.number,
-                      email: userData.email,
-                      // creatingFor: userData.poolForCreator,
-                      organization: userData.organization,
-                      designation: userData.designation,
-                      state: userData.state,
-                      city: userData.city,
-                      location: "India",
-                      // linkedIn: userData.linkedInURL,
-                    }}
-                    action={{ route: "", tooltip: "Edit Profile" }}
-                    shadow={false}
-                  />
-                ) : (
-                  <div>Loading...</div>
-                )}
-                <Grid item xs={12} mt={5} md={6} xl={6}>
-                  <PlatformSettings />
-                </Grid>
-              </MDBox>
-            </Header>
+            <Header />
+            <MDBox mb={3}>
+              {/* <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} /> */}
+              {userData ? (
+                <ProfileInfoCard
+                  // title="profile information"
+                  description=""
+                  info={{
+                    fullName: userData.fullName,
+                    mobile: "+91 " + userData.number,
+                    email: userData.email,
+                    // creatingFor: userData.poolForCreator,
+                    organization: userData.organization,
+                    designation: userData.designation,
+                    state: userData.state,
+                    city: userData.city,
+                    location: "India",
+                    // linkedIn: userData.linkedInURL,
+                  }}
+                  action={{ route: "", tooltip: "Edit Profile" }}
+                  shadow={false}
+                />
+              ) : (
+                <div>Loading...</div>
+              )}
+              <Grid item xs={12} mt={5} md={6} xl={6}>
+                <PlatformSettings />
+              </Grid>
+            </MDBox>
           </>
         ) : (
           <Login />

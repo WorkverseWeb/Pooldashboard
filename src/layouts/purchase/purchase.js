@@ -185,14 +185,14 @@ export default function Purchase() {
                                 padding: "0",
                                 margin: "20px auto",
                               }}
-                              className="border-container-green"
+                              className="border-container"
                             >
                               <button
                                 style={{
                                   fontFamily: typography.fontFamily,
                                   padding: "10px",
                                 }}
-                                className="border-green"
+                                className="border"
                                 onClick={() => send(e)}
                               >
                                 Add to Cart

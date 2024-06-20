@@ -46,11 +46,12 @@ function Invoices() {
         </MDBox>
         <MDBox p={2}>
           <MDBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
-            <Invoice date="April, 22, 2024" id="#MS-415646" price="Rs. 4000/-" />
+            {/*  <Invoice date="April, 22, 2024" id="#MS-415646" price="Rs. 4000/-" />
+             <Invoice date="April, 20, 2024" id="#RV-126749" price="Rs. 300000/-" noGutter />
             <Invoice date="April, 20, 2024" id="#RV-126749" price="Rs. 300000/-" noGutter />
             <Invoice date="April, 20, 2024" id="#RV-126749" price="Rs. 300000/-" noGutter />
-            <Invoice date="April, 20, 2024" id="#RV-126749" price="Rs. 300000/-" noGutter />
-            <Invoice date="April, 20, 2024" id="#RV-126749" price="Rs. 300000/-" noGutter />
+            <Invoice date="April, 20, 2024" id="#RV-126749" price="Rs. 300000/-" noGutter /> */}
+            No Invoices Available
           </MDBox>
         </MDBox>
       </div>

@@ -86,9 +86,9 @@ function PlatformSettings() {
       sx={{
         boxShadow: "none",
       }}
-      className="border-container-box"
+      className="border-container-top"
     >
-      <div className="border-box">
+      <div className="border-top">
         <MDBox p={2}>
           <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
             platform settings
