@@ -19,7 +19,7 @@ const CustomGroups = () => {
     const fetchDepartments = async () => {
       try {
         if (user && user.email) {
-          const response = await axios.get(`http://localhost:8000/group/${user.email}`);
+          const response = await axios.get(`BASE_URL/group/${user.email}`);
           if (response.status === 200 && response.data.groupname) {
             const dbDepartments = response.data.groupname.filter((dept) => dept.trim() !== "");
             setDepartments(dbDepartments);
@@ -79,14 +79,14 @@ const CustomGroups = () => {
     try {
       if (user && user.email) {
         try {
-          const response = await axios.get(`http://localhost:8000/group/${user.email}`);
+          const response = await axios.get(`BASE_URL/group/${user.email}`);
           if (response.status === 200) {
-            await axios.patch(`http://localhost:8000/group/${user.email}`, {
+            await axios.patch(`BASE_URL/group/${user.email}`, {
               groupname: nonEmptyDepartments,
             });
           }
         } catch (error) {
-          await axios.post(`http://localhost:8000/group`, {
+          await axios.post(`BASE_URL/group`, {
             email: user.email,
             groupname: nonEmptyDepartments,
           });
@@ -114,7 +114,7 @@ const CustomGroups = () => {
     const fetchData = async () => {
       if (isAuthenticated && user) {
         try {
-          const response = await axios.get("http://localhost:8000/assignUsers", {
+          const response = await axios.get("BASE_URL/assignUsers", {
             params: {
               authenticatedUserEmail: user.email,
             },
@@ -143,7 +143,7 @@ const CustomGroups = () => {
   useEffect(() => {
     const fetchSlotDetails = async (email, totalCount) => {
       try {
-        const response = await axios.get(`http://localhost:8000/slots/${email}`);
+        const response = await axios.get(`BASE_URL/slots/${email}`);
         if (response.status === 200) {
           const data = response.data;
 
