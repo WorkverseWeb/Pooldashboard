@@ -51,7 +51,7 @@ function Billing() {
 
   const fetchSlotDetails = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/slots/${user.email}`);
+      const response = await axios.get(`BASE_URL/slots/${user.email}`);
       if (response.status === 200) {
         const data = response.data;
 

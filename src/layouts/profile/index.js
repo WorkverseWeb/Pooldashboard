@@ -28,7 +28,7 @@ function Overview() {
     const fetchUserData = async () => {
       try {
         if (user && user.email) {
-          const response = await axios.get(`http://localhost:8000/users?email=${user.email}`);
+          const response = await axios.get(`BASE_URL/users?email=${user.email}`);
           // console.log("API Response:", response.data);
           setUserData(response.data);
         }

@@ -83,8 +83,8 @@ export default function Cart() {
       };
 
       const [firstApiResult, secondApiResult] = await Promise.all([
-        axios.get(`http://localhost:8000/slots/${user.email}`).catch(() => null),
-        axios.get(`http://localhost:8000/initialslot/${user.email}`).catch(() => null),
+        axios.get(`BASE_URL/slots/${user.email}`).catch(() => null),
+        axios.get(`BASE_URL/initialslot/${user.email}`).catch(() => null),
       ]);
 
       // Handle first API
@@ -92,10 +92,10 @@ export default function Cart() {
         await updateCartData(
           firstApiResult.data,
           cartData,
-          `http://localhost:8000/slots/${user.email}`
+          `BASE_URL/slots/${user.email}`
         );
       } else {
-        await createCartData(cartData, `http://localhost:8000/slots`);
+        await createCartData(cartData, `BASE_URL/slots`);
       }
 
       // Handle second API
@@ -103,10 +103,10 @@ export default function Cart() {
         await updateCartData(
           secondApiResult.data,
           cartData,
-          `http://localhost:8000/initialslot/${user.email}`
+          `BASE_URL/initialslot/${user.email}`
         );
       } else {
-        await createCartData(cartData, `http://localhost:8000/initialslot`);
+        await createCartData(cartData, `BASE_URL/initialslot`);
       }
 
       // Success messages

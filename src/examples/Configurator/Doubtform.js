@@ -28,7 +28,7 @@ export default function Doubtform() {
     };
 
     try {
-      const response = await axios.post(`http://localhost:8000/api/issues/${user.email}`, formData);
+      const response = await axios.post(`BASE_URL/api/issues/${user.email}`, formData);
 
       // Handle success
       console.log("Issue submitted:", response.data);
