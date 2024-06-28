@@ -16,13 +16,20 @@ import "react-toastify/dist/ReactToastify.css";
 // @mui material components'
 import Card from "@mui/material/Card";
 import PopupForm from "./popup/feedback";
+import RenderRazorpay from "./renderRazorPay";
 
 export default function Cart() {
   const getdata = useSelector((state) => state.cartreducer.carts);
   const dispatch = useDispatch();
   const [price, setPrice] = useState(0);
   const { isAuthenticated, user } = useAuth0();
+  const [orderDetails, setOrderDetails] = useState({
+    orderId: null,
+    currency: null,
+    amount: null,
+  });
   const [showFeedback1, setShowFeedback1] = useState(false);
+  const [displayRazorpay, setDisplayRazorpay] = useState(false);
 
   // total
   useEffect(() => {
@@ -109,14 +116,34 @@ export default function Cart() {
         await createCartData(cartData, `${process.env.REACT_APP_BASE_URL}/initialslot`);
       }
 
+      // Initiate Razorpay payment
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/order`, {
+        amount: totalAmount * 100,
+        currency: "INR",
+      });
+
+      // Update state with order details
+      setOrderDetails({
+        orderId: response.data.order_id,
+        currency: response.data.currency,
+        amount: response.data.amount,
+      });
+
+      // Display Razorpay checkout modal
+      setDisplayRazorpay(true);
+
       // Success messages
-      toast.success("Purchase successful!");
-      setTimeout(() => {
-        dispatch(RESET());
-        toast.info("Cart reset!");
-      }, 2000);
+      // toast.success("Purchase successful!");
+      // setTimeout(() => {
+      //   dispatch(RESET());
+      //   toast.info("Cart reset!");
+      // }, 1000);
 
       // feedback
+      // setTimeout(() => {
+      //   setShowFeedback1(true);
+      // }, 1 * 60 * 1000);
+
       setTimeout(() => {
         setShowFeedback1(true);
       }, 1 * 60 * 1000);
@@ -151,6 +178,34 @@ export default function Cart() {
     await axios.post(apiUrl, cartData);
   };
 
+  const handlePaymentSuccess = async (paymentResponse) => {
+    try {
+      await axios.patch(
+        `${process.env.REACT_APP_BASE_URL}/order/${paymentResponse.razorpay_order_id}`,
+        {
+          paymentStatus: "Success",
+        }
+      );
+
+      dispatch(RESET());
+      toast.success("Payment successful!");
+      toast.info("Cart reset!");
+      // toast.success("Payment successful!");
+      // setTimeout(() => {
+      //   dispatch(RESET());
+      //   toast.info("Cart reset!");
+      // }, 2000);
+    } catch (error) {
+      console.error("Error updating payment status:", error);
+      toast.error("Failed to update payment status. Please contact support.");
+    }
+  };
+
+  const handlePaymentError = (error) => {
+    console.error("Payment error:", error);
+    toast.error("Payment failed. Please try again.");
+  };
+
   useEffect(() => {
     let timer1;
 
@@ -158,7 +213,7 @@ export default function Cart() {
       if (isAuthenticated) {
         timer1 = setTimeout(() => {
           setShowFeedback1(true);
-        }, 20 * 60 * 1000);
+        }, 1 * 60 * 1000);
       }
     };
 
@@ -343,6 +398,16 @@ export default function Cart() {
       </MDBox>
 
       {showFeedback1 && <PopupForm />}
+
+      {displayRazorpay && (
+        <RenderRazorpay
+          displayRazorpay={displayRazorpay}
+          orderDetails={orderDetails}
+          onSuccess={handlePaymentSuccess}
+          onError={handlePaymentError}
+          setDisplayRazorpay={setDisplayRazorpay}
+        />
+      )}
 
       <Footer />
     </DashboardLayout>

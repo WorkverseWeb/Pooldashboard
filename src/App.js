@@ -26,7 +26,7 @@ import themeDark from "assets/theme-dark";
 
 // React routes
 import routes from "routes";
-
+import typography from "assets/theme/base/typography";
 // React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
@@ -122,6 +122,7 @@ export default function App() {
               fontSize: "15px",
               backgroundColor: "#000000",
               color: "#ffffff",
+              fontFamily: typography.fontFamily,
               // border: "1px solid #fff",
             }}
           />

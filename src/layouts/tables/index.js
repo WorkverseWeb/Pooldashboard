@@ -69,6 +69,7 @@ function Tables() {
   // allocate user
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [FormOpen, setFormOpen] = useState(false);
+  const [userStatus, setUserStatus] = useState(null);
 
   const toggleForm = () => {
     setIsFormOpen(!isFormOpen);
@@ -104,6 +105,27 @@ function Tables() {
 
     if (isAuthenticated && user) {
       fetchData();
+    }
+  }, [isAuthenticated, user]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        if (user && user.email) {
+          const response = await axios.get(
+            `${process.env.REACT_APP_BASE_URL}/users?email=${user.email}`
+          );
+          // console.log("API Response:", response.data);
+          setUserStatus(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        // toast.error("Error fetching user data");
+      }
+    };
+
+    if (isAuthenticated) {
+      fetchUserData();
     }
   }, [isAuthenticated, user]);
 
@@ -173,99 +195,135 @@ function Tables() {
         }
       >
         {isAuthenticated ? (
-          <>
-            <CustomGroups />
-
-            <div
+          userStatus && userStatus.status == "NotVerified" ? (
+            <MDBox
+              px={3}
+              pb={3}
               style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "40px 20px",
+                width: "100%",
+                height: "500px",
+                backgroundColor: "#0000006e",
+                backdropFilter: "blur(7px)",
+                borderRadius: "8px",
               }}
+              className="border-container-top"
             >
-              <FilterGroup
-                setSelectedGroup={setSelectedGroup}
-                onGroupChange={handleSelectedGroupChange}
-              />
+              <div className="border-top" style={{ padding: "0" }}>
+                <MDTypography
+                  variant="h5"
+                  color="text"
+                  fontWeight="light"
+                  style={{ marginBottom: "10px" }}
+                >
+                  Verification Pending{" "}
+                  <span className="loader">
+                    <span>.</span>
+                    <span>.</span>
+                    <span>.</span>
+                  </span>
+                </MDTypography>
+                <MDTypography variant="body1" color="text" style={{ fontSize: "14px" }}>
+                  To see this page contents first verify your account . For a quick verification
+                  email us at dev@workverse.in{" "}
+                  <span>. If already done , please wait for approval.</span>
+                </MDTypography>
+              </div>
+            </MDBox>
+          ) : (
+            <>
+              <CustomGroups />
 
               <div
                 style={{
                   display: "flex",
-                  gap: "15px",
+                  justifyContent: "space-between",
                   alignItems: "center",
+                  padding: "40px 20px",
                 }}
               >
-                <div className="border-container">
-                  <button
-                    style={{
-                      padding: "9px 18px",
-                      fontWeight: "600",
-                    }}
-                    className="popup-btn border"
-                    onClick={toggleForm}
-                  >
-                    <IconButton
-                      size="small"
-                      disableRipple
-                      color="inherit"
-                      aria-controls="add"
-                      aria-haspopup="true"
-                      variant="contained"
-                      style={{ padding: "0 ", marginRight: "7px" }}
+                <FilterGroup
+                  setSelectedGroup={setSelectedGroup}
+                  onGroupChange={handleSelectedGroupChange}
+                />
+
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "15px",
+                    alignItems: "center",
+                  }}
+                >
+                  <div className="border-container">
+                    <button
+                      style={{
+                        padding: "9px 18px",
+                        fontWeight: "600",
+                      }}
+                      className="popup-btn border"
+                      onClick={toggleForm}
                     >
-                      <Icon>add_outlined</Icon>
-                    </IconButton>
-                    assign user
-                  </button>
-                  {isFormOpen && <AddUser onClose={toggleForm} />}
-                </div>
-                <div className="border-container">
-                  <button
-                    style={{
-                      padding: "9px 10px",
-                      fontWeight: "600",
-                    }}
-                    className="popup-btn border"
-                    onClick={uploadForm}
-                  >
-                    <IconButton
-                      size="small"
-                      disableRipple
-                      color="inherit"
-                      aria-controls="upload"
-                      aria-haspopup="true"
-                      variant="contained"
-                      style={{ padding: "0 2px" }}
+                      <IconButton
+                        size="small"
+                        disableRipple
+                        color="inherit"
+                        aria-controls="add"
+                        aria-haspopup="true"
+                        variant="contained"
+                        style={{ padding: "0 ", marginRight: "7px" }}
+                      >
+                        <Icon>add_outlined</Icon>
+                      </IconButton>
+                      assign user
+                    </button>
+                    {isFormOpen && <AddUser onClose={toggleForm} />}
+                  </div>
+                  <div className="border-container">
+                    <button
+                      style={{
+                        padding: "9px 10px",
+                        fontWeight: "600",
+                      }}
+                      className="popup-btn border"
+                      onClick={uploadForm}
                     >
-                      <Icon>file_upload_outlined</Icon>
-                    </IconButton>
-                    Upload to assign
-                  </button>
-                  {FormOpen && <UploadUser onClose={uploadForm} />}
+                      <IconButton
+                        size="small"
+                        disableRipple
+                        color="inherit"
+                        aria-controls="upload"
+                        aria-haspopup="true"
+                        variant="contained"
+                        style={{ padding: "0 2px" }}
+                      >
+                        <Icon>file_upload_outlined</Icon>
+                      </IconButton>
+                      Upload to assign
+                    </button>
+                    {FormOpen && <UploadUser onClose={uploadForm} />}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <Grid container spacing={6} style={{ marginTop: "0" }}>
-              <Grid item xs={12} style={{ paddingTop: "0" }}>
-                <Card className="border-container-box">
-                  <div className="border-box">
-                    <MDBox pt={3}>
-                      <DataTable
-                        table={{ columns, rows }}
-                        isSorted={false}
-                        entriesPerPage={false}
-                        showTotalEntries={true}
-                        noEndBorder
-                      />
-                      {/* <Data selectedGroup={selectedGroup} /> */}
-                    </MDBox>
-                  </div>
-                </Card>
+              <Grid container spacing={6} style={{ marginTop: "0" }}>
+                <Grid item xs={12} style={{ paddingTop: "0" }}>
+                  <Card className="border-container-box">
+                    <div className="border-box">
+                      <MDBox pt={3}>
+                        <DataTable
+                          table={{ columns, rows }}
+                          isSorted={false}
+                          entriesPerPage={false}
+                          showTotalEntries={true}
+                          noEndBorder
+                        />
+                        {/* <Data selectedGroup={selectedGroup} /> */}
+                      </MDBox>
+                    </div>
+                  </Card>
+                </Grid>
               </Grid>
-            </Grid>
-          </>
+            </>
+          )
         ) : (
           <Login />
         )}

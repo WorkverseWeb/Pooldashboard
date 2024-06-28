@@ -3,8 +3,8 @@ import typography from "assets/theme/base/typography";
 
 export default function Feedback3() {
   const [showForm, setShowForm] = useState(true);
-
   const [selectedEmoji, setSelectedEmoji] = useState(null);
+  const emojis = ["😄", "🙂", "😑", "😤", "😡"];
 
   const handleEmojiSelection = (emoji) => {
     setSelectedEmoji(emoji);
@@ -30,55 +30,31 @@ export default function Feedback3() {
               </span>
             </div>
 
-            <div className="feedback-content">
-              <p>
-                Do you think that the group played the game is doing better in there career compared
-                to other?
-              </p>
-              <div className="emoji-buttons">
-                {/* Displaying clickable emoji buttons */}
-                <button
-                  onClick={() => handleEmojiSelection("😄")}
-                  className={selectedEmoji === "😄" ? "selected" : ""}
-                >
-                  😄
-                </button>
-                <button
-                  onClick={() => handleEmojiSelection("🙂")}
-                  className={selectedEmoji === "🙂" ? "selected" : ""}
-                >
-                  🙂
-                </button>
-                <button
-                  onClick={() => handleEmojiSelection("😑")}
-                  className={selectedEmoji === "😑" ? "selected" : ""}
-                >
-                  😑
-                </button>
-                <button
-                  onClick={() => handleEmojiSelection("😤")}
-                  className={selectedEmoji === "😤" ? "selected" : ""}
-                >
-                  😤
-                </button>
-                <button
-                  onClick={() => handleEmojiSelection("😡")}
-                  className={selectedEmoji === "😡" ? "selected" : ""}
-                >
-                  😡
+            <form onSubmit={handleSubmit}>
+              <div className="feedback-content">
+                <p>
+                  Do you think that the group played the game is doing better in there career
+                  compared to other?
+                </p>
+                <div className="emoji-buttons">
+                  {emojis.map((emoji, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleEmojiSelection(index)}
+                      className={selectedEmoji === index ? "selected" : ""}
+                      type="button"
+                    >
+                      {emoji}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="btn border-container" style={{ marginTop: "15px", left: "280px" }}>
+                <button type="submit" className="border" disabled={!selectedEmoji}>
+                  Submit
                 </button>
               </div>
-            </div>
-            <div className="btn border-container" style={{ marginTop: "15px", left: "280px" }}>
-              <button
-                type="submit"
-                className="border"
-                onClick={handleSubmit}
-                disabled={!selectedEmoji}
-              >
-                Submit
-              </button>
-            </div>
+            </form>
           </div>
         </div>
       )}

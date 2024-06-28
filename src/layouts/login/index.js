@@ -11,20 +11,18 @@ const Login = () => {
       <img src={brandWhite} alt="Login Icon" style={{ width: "200px", height: "125px" }} />
 
       <MenuItem onClick={() => loginWithRedirect()} style={{ justifyContent: "center" }}>
-        <MDButton
-          rel="noreferrer"
-          variant="gradient"
-          style={{
-            boxShadow: "none",
-            fontSize: "15px",
-            fontWeight: "500",
-            background: "transparent",
-            justifyContent: "start",
-            padding: "0",
-          }}
-        >
-          Kindly Login
-        </MDButton>
+        <div className="border-container">
+          <MDButton
+            rel="noreferrer"
+            variant="gradient"
+            style={{
+              background: "transparent",
+            }}
+            className="border"
+          >
+            Kindly Login
+          </MDButton>
+        </div>
       </MenuItem>
     </div>
   );

@@ -43,6 +43,7 @@ function Dashboard() {
   const [slotsAvailable, setSlotsAvailable] = useState(0);
   const [totalPlayers, setTotalPlayers] = useState(0);
   const [userData, setUserData] = useState(null);
+  const [image, setImage] = useState(null);
   // checking active users
   // const [activePlayers, setActivePlayers] = useState(0);
 
@@ -165,6 +166,23 @@ function Dashboard() {
     }
   }, [isAuthenticated, user]);
 
+  const fetchImageData = async () => {
+    try {
+      if (user && user.email) {
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/upload/${user.email}`);
+        setImage(response.data.imageUrl);
+      }
+    } catch (error) {
+      console.error("Error fetching image data:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchImageData();
+    }
+  }, [isAuthenticated, user]);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -187,12 +205,46 @@ function Dashboard() {
         }
       >
         {isAuthenticated ? (
-          <>
-            {userData && (
-              <>
+          userData && userData.status == "NotVerified" ? (
+            <MDBox
+              px={3}
+              pb={3}
+              style={{
+                width: "100%",
+                height: "500px",
+                backgroundColor: "#0000006e",
+                backdropFilter: "blur(7px)",
+                borderRadius: "8px",
+              }}
+              className="border-container-top"
+            >
+              <div className="border-top" style={{ padding: "0" }}>
+                <MDTypography
+                  variant="h5"
+                  color="text"
+                  fontWeight="light"
+                  style={{ marginBottom: "10px" }}
+                >
+                  Verification Pending{" "}
+                  <span className="loader">
+                    <span>.</span>
+                    <span>.</span>
+                    <span>.</span>
+                  </span>
+                </MDTypography>
+                <MDTypography variant="body1" color="text" style={{ fontSize: "14px" }}>
+                  To see this page contents first verify your account . For a quick verification
+                  email us at dev@workverse.in{" "}
+                  <span>. If already done , please wait for approval.</span>
+                </MDTypography>
+              </div>
+            </MDBox>
+          ) : (
+            <>
+              {userData ? (
                 <Grid container pt={4} pb={5} spacing={3} alignItems="center">
                   <Grid item>
-                    <MDAvatar src={""} alt="profile-image" size="xl" shadow="sm" />
+                    <MDAvatar src={image || user.img} alt="profile-image" size="xl" shadow="sm" />
                   </Grid>
                   <Grid item>
                     <MDBox height="100%" mt={0.5} lineHeight={1}>
@@ -209,77 +261,76 @@ function Dashboard() {
                     </MDBox>
                   </Grid>
                 </Grid>
-              </>
-            )}
+              ) : (
+                <p>Loading</p>
+              )}
 
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6} lg={3}>
-                <MDBox mb={1.5}>
-                  <ComplexStatisticsCard
-                    color="primary"
-                    icon="person_add"
-                    title="User"
-                    count={totalPlayers}
-                    percentage={{
-                      color: "success",
-                      amount: "0",
-                      label: "Active players",
-                    }}
-                  />
-                </MDBox>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={6} lg={3}>
+                  <MDBox mb={1.5}>
+                    <ComplexStatisticsCard
+                      color="primary"
+                      icon="person_add"
+                      title="User"
+                      count={totalPlayers}
+                      percentage={{
+                        color: "success",
+                        amount: "0",
+                        label: "Active players",
+                      }}
+                    />
+                  </MDBox>
+                </Grid>
+                <Grid item xs={12} md={6} lg={3}>
+                  <MDBox mb={1.5}>
+                    <ComplexStatisticsCard
+                      color="primary"
+                      icon="group_rounded"
+                      title="Total Purchased Users"
+                      count={totalQuantity}
+                      percentage={{
+                        color: "success",
+                        amount: slotsAvailable,
+                        label: "Slots avalable",
+                      }}
+                    />
+                  </MDBox>
+                </Grid>
+                <Grid item xs={12} md={6} lg={3}>
+                  <MDBox mb={1.5}>
+                    <ComplexStatisticsCard
+                      color="primary"
+                      icon="attach_money"
+                      title="Total amount paid"
+                      // count={totalAmount}
+                      count={totalAmount}
+                      percentageComponent={
+                        <CustomPercentageComponent
+                          color="success"
+                          label="Paid Using"
+                          amount="credit card"
+                        />
+                      }
+                    />
+                  </MDBox>
+                </Grid>
+                <Grid item xs={12} md={6} lg={3}>
+                  <MDBox mb={1.5}>
+                    <ComplexStatisticsCard
+                      color="primary"
+                      icon="leaderboard"
+                      title="WIP generated"
+                      count="0"
+                      percentage={{
+                        color: "success",
+                        amount: "0",
+                        label: "Finished the game this month",
+                      }}
+                    />
+                  </MDBox>
+                </Grid>
               </Grid>
-              <Grid item xs={12} md={6} lg={3}>
-                <MDBox mb={1.5}>
-                  <ComplexStatisticsCard
-                    color="primary"
-                    icon="group_rounded"
-                    title="Total Purchased Users"
-                    count={totalQuantity}
-                    percentage={{
-                      color: "success",
-                      amount: slotsAvailable,
-                      label: "Slots avalable",
-                    }}
-                  />
-                </MDBox>
-              </Grid>
-              <Grid item xs={12} md={6} lg={3}>
-                <MDBox mb={1.5}>
-                  <ComplexStatisticsCard
-                    color="primary"
-                    icon="attach_money"
-                    title="Total amount paid"
-                    // count={totalAmount}
-                    count={totalAmount}
-                    percentageComponent={
-                      <CustomPercentageComponent
-                        color="success"
-                        label="Paid Using"
-                        amount="credit card"
-                      />
-                    }
-                  />
-                </MDBox>
-              </Grid>
-              <Grid item xs={12} md={6} lg={3}>
-                <MDBox mb={1.5}>
-                  <ComplexStatisticsCard
-                    color="primary"
-                    icon="leaderboard"
-                    title="WIP generated"
-                    count="0"
-                    percentage={{
-                      color: "success",
-                      amount: "0",
-                      label: "Finished the game this month",
-                    }}
-                  />
-                </MDBox>
-              </Grid>
-            </Grid>
 
-            {/* {activePlayers > 0 ? ( */}
-            <>
               <MDBox mt={4.5}>
                 <Grid container spacing={3}>
                   <Grid item xs={12} md={6} lg={4}>
@@ -309,17 +360,6 @@ function Dashboard() {
                       />
                     </MDBox>
                   </Grid>
-                  {/* <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsBarChart
-                  color="info"
-                  title="Game complition this week"
-                  description="Last week Performance"
-                  date="sent 1 days ago"
-                  chart={reportsBarChartData}
-                />
-              </MDBox>
-            </Grid> */}
                   <Grid item xs={12} md={6} lg={4}>
                     <MDBox mb={3}>
                       <ReportsLineChart
@@ -343,26 +383,10 @@ function Dashboard() {
                   <Grid item xs={12} md={6} lg={8}>
                     <Projects />
                   </Grid>
-                  {/* <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
-            </Grid> */}
                 </Grid>
               </MDBox>
             </>
-            {/* ) : (
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  // minHeight: "50vh",
-                  padding: "30px 0",
-                }}
-              >
-                Currently, there are no Players who started their game. Please check back later !
-              </div>
-            )} */}
-          </>
+          )
         ) : (
           <Login />
         )}

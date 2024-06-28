@@ -5,7 +5,8 @@ import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import { Icon, IconButton } from "@mui/material";
-
+import NewReleases from "@mui/icons-material/NewReleases";
+import Verified from "@mui/icons-material/Verified";
 // React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -23,6 +24,15 @@ import boxShadow from "assets/theme/functions/boxShadow";
 function Header({ children }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
+  const [userData, setUserData] = useState(null);
+  const { isAuthenticated, user } = useAuth0();
+  const [image, setImage] = useState(null);
+
+  const [isTextVisible, setIsTextVisible] = useState(false);
+
+  const handleToggleText = () => {
+    setIsTextVisible((prevState) => !prevState);
+  };
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -46,43 +56,78 @@ function Header({ children }) {
 
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
 
-  // profile image
-  const [image, setImage] = useState(null);
+  // const handleImageChange = (event) => {
+  //   const file = event.target.files[0];
+  //   const reader = new FileReader();
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     setImage(reader.result);
+  //   };
 
-    reader.onloadend = () => {
-      setImage(reader.result);
-    };
+  //   if (file) {
+  //     reader.readAsDataURL(file);
+  //     uploadImage(file);
+  //   }
+  // };
 
-    if (file) {
-      reader.readAsDataURL(file);
+  const fetchUserData = async () => {
+    try {
+      if (user && user.email) {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/users?email=${user.email}`
+        );
+        // console.log("API Response:", response.data);
+
+        setUserData(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      // toast.error("Error fetching user data");
     }
   };
 
-  const { isAuthenticated, user } = useAuth0();
-  const [userData, setUserData] = useState(null);
+  const fetchImageData = async () => {
+    try {
+      if (user && user.email) {
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/upload/${user.email}`);
+        setImage(response.data.imageUrl);
+      }
+    } catch (error) {
+      console.error("Error fetching image data:", error);
+    }
+  };
+
+  const handleImageChange = async (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("email", user.email);
+
+      try {
+        const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/upload`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        const { imageUrl } = response.data;
+        setImage(imageUrl);
+
+        console.log("Image uploaded and user updated successfully");
+
+        fetchImageData();
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    }
+  };
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        if (user && user.email) {
-          const response = await axios.get(
-            `${process.env.REACT_APP_BASE_URL}/users?email=${user.email}`
-          );
-          // console.log("API Response:", response.data);
-          setUserData(response.data);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        // toast.error("Error fetching user data");
-      }
-    };
-
     if (isAuthenticated) {
       fetchUserData();
+      fetchImageData();
     }
   }, [isAuthenticated, user]);
 
@@ -131,11 +176,14 @@ function Header({ children }) {
               id="upload-image"
             />
             <MDAvatar
-              src={image}
+              src={image || user.img}
               alt="profile-image"
               size="xl"
               shadow="sm"
-              style={{ background: "#00000096", boxShadow: "none" }}
+              style={{
+                background: "#00000096",
+                boxShadow: "none",
+              }}
             />
           </Grid>
 
@@ -156,31 +204,42 @@ function Header({ children }) {
                 </MDBox>
               </Grid>
 
-              {/* <div
-                style={{
-                  marginLeft: "auto",
-                  color: "#fff",
-                  fontSize: "14px",
-                  textAlign: "end",
-                  padding: "30px 10px 0",
-                }}
-              >
+              <Grid item style={{ paddingTop: "0", marginLeft: "20px" }}>
                 <MDTypography
                   variant="h6"
                   fontWeight="small"
-                  style={{
-                    fontSize: "14px",
-                  }}
+                  style={{ fontSize: "14px", color: "#fff" }}
                 >
-                  Status :
-                  <span style={{ color: "#fff", fontWeight: "400", marginLeft: "5px" }}>
-                    {userData.status}
+                  <span style={{ display: "flex", alignItems: "center" }}>
+                    {userData.status && userData.status.includes("NotVerified") ? (
+                      <>
+                        <NewReleases
+                          style={{ color: "red", marginRight: "5px", cursor: "pointer" }}
+                          onClick={handleToggleText}
+                        />
+                        <span style={{ fontSize: "14px", fontWeight: "300" }}>
+                          Verification Pending
+                          <span className="loader" style={{ fontSize: "10px", marginLeft: "5px" }}>
+                            <span style={{ fontSize: "30px", lineHeight: "0px" }}>.</span>
+                            <span style={{ fontSize: "30px", lineHeight: "0px" }}>.</span>
+                            <span style={{ fontSize: "30px", lineHeight: "0px" }}>.</span>
+                          </span>
+                        </span>
+                        {isTextVisible && (
+                          <span style={{ fontSize: "14px", marginLeft: "5px", fontWeight: "300" }}>
+                            ( For a quick verification email us at dev@workverse.in )
+                          </span>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <Verified style={{ color: "rgb(156, 227, 37)", marginRight: "5px" }} />
+                        <span style={{ color: "rgb(156, 227, 37)" }}>Verified</span>
+                      </>
+                    )}
                   </span>
                 </MDTypography>
-                {userData && userData.status && userData.status.includes("NotVerified") && (
-                  <p> Email at dev@workverse to complete verification quickly.</p>
-                )}
-              </div> */}
+              </Grid>
             </>
           )}
         </Grid>

@@ -21,7 +21,6 @@ export default function Doubtform() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Assuming issue and doubt are controlled components managed by state
     const formData = {
       issue,
       doubt,

@@ -101,3 +101,11 @@
 .feedback-content .emoji-buttons button.selected {
   transform: scale(1.6);
 }
+
+.border:disabled {
+  cursor: not-allowed;
+}
+
+.border:not(:disabled) {
+  cursor: pointer;
+}
