@@ -35,8 +35,14 @@ const RenderRazorpay = ({
 
     const rzp1 = new window.Razorpay(options);
 
-    rzp1.on("payment.success", onSuccess);
-    rzp1.on("payment.error", onError);
+    rzp1.on("payment.success", (response) => {
+      console.log("Payment successful inside Razorpay instance:", response);
+      onSuccess(response);
+    });
+    rzp1.on("payment.error", (error) => {
+      console.log("Payment error inside Razorpay instance:", error);
+      onError(error);
+    });
     rzp1.on("payment.cancel", () => {
       console.log("Payment cancelled.");
     });
@@ -54,21 +60,9 @@ const RenderRazorpay = ({
         description: "Payment for your order",
         order_id: orderDetails.orderId,
         handler: (response) => {
-          console.log("Payment successful:", response);
+          console.log("Payment successful inside handler:", response);
           paymentId.current = response.razorpay_payment_id;
-
-          // const generatedSignature = CryptoJS.createHmac(
-          //   "sha256",
-          //   process.env.REACT_APP_RAZORPAY_KEY_SECRET
-          // )
-          //   .update(`${response.razorpay_order_id}|${response.razorpay_payment_id}`)
-          //   .digest("hex");
-
-          // if (generatedSignature === response.razorpay_signature) {
-          //   onSuccess(response);
-          // } else {
-          //   onError({ error: "Invalid Signature" });
-          // }
+          onSuccess(response);
         },
         prefill: {
           name: "Customer Name",

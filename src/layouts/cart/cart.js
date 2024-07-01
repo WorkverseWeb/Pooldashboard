@@ -131,22 +131,6 @@ export default function Cart() {
 
       // Display Razorpay checkout modal
       setDisplayRazorpay(true);
-
-      // Success messages
-      // toast.success("Purchase successful!");
-      // setTimeout(() => {
-      //   dispatch(RESET());
-      //   toast.info("Cart reset!");
-      // }, 1000);
-
-      // feedback
-      // setTimeout(() => {
-      //   setShowFeedback1(true);
-      // }, 1 * 60 * 1000);
-
-      setTimeout(() => {
-        setShowFeedback1(true);
-      }, 1 * 60 * 1000);
     } catch (error) {
       console.error("Error purchasing:", error);
       toast.error("Failed to purchase. Please try again later.");
@@ -180,21 +164,22 @@ export default function Cart() {
 
   const handlePaymentSuccess = async (paymentResponse) => {
     try {
-      await axios.patch(
+      console.log("Payment response:", paymentResponse);
+
+      const response = await axios.patch(
         `${process.env.REACT_APP_BASE_URL}/order/${paymentResponse.razorpay_order_id}`,
         {
           paymentStatus: "Success",
         }
       );
 
+      console.log("Payment status:", response.data);
+
       dispatch(RESET());
-      toast.success("Payment successful!");
       toast.info("Cart reset!");
-      // toast.success("Payment successful!");
-      // setTimeout(() => {
-      //   dispatch(RESET());
-      //   toast.info("Cart reset!");
-      // }, 2000);
+      setTimeout(() => {
+        setShowFeedback1(true);
+      }, 10000);
     } catch (error) {
       console.error("Error updating payment status:", error);
       toast.error("Failed to update payment status. Please contact support.");

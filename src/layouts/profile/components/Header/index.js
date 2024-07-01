@@ -85,12 +85,15 @@ function Header({ children }) {
       // toast.error("Error fetching user data");
     }
   };
-
   const fetchImageData = async () => {
     try {
       if (user && user.email) {
-        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/upload/${user.email}`);
-        setImage(response.data.imageUrl);
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/upload/${user.email}`, {
+          responseType: "arraybuffer",
+        });
+        const imageBlob = new Blob([response.data], { type: "image/jpeg" });
+        const imageUrl = URL.createObjectURL(imageBlob);
+        setImage(imageUrl);
       }
     } catch (error) {
       console.error("Error fetching image data:", error);
@@ -102,7 +105,7 @@ function Header({ children }) {
 
     if (file) {
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("image", file);
       formData.append("email", user.email);
 
       try {
@@ -112,12 +115,9 @@ function Header({ children }) {
           },
         });
 
-        const { imageUrl } = response.data;
-        setImage(imageUrl);
+        console.log("Image uploaded successfully");
 
-        console.log("Image uploaded and user updated successfully");
-
-        fetchImageData();
+        fetchImageData(); // Fetch the image data after uploading
       } catch (error) {
         console.error("Error uploading image:", error);
       }

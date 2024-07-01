@@ -37,7 +37,6 @@ import DataTable from "examples/Tables/DataTable";
 
 // Data
 import data from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
 
 import Login from "layouts/login";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -56,7 +55,6 @@ function Tables() {
   const [selectedGroup, setSelectedGroup] = useState("");
   const { isAuthenticated, user } = useAuth0();
   const { columns, rows } = data({ selectedGroup });
-  const { columns: pColumns, rows: pRows } = projectsTableData();
 
   const [userData, setUserData] = useState([]);
   const [showFeedback2, setShowFeedback2] = useState(false);
